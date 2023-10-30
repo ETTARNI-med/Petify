@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
-import CollectionHover from "../CollectionHover";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme-provider";
 import {
@@ -30,6 +29,8 @@ import {
 } from "lucide-react";
 import SignUp from "../SignSheet/SignUp";
 import SignIn from "../SignSheet/SignIn";
+import { Separator } from "@radix-ui/react-separator";
+import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
@@ -45,11 +46,6 @@ const NavBar = () => {
         <Link to="/">
           <Logo width="90" className="block dark:hidden" />
           <DarkLogo width="90" className="hidden dark:block" />
-        </Link>
-        <Link to="/collections">
-          <Button variant={"outline"}>
-            <CollectionHover />
-          </Button>
         </Link>
         <span className="searchIcon">
           <Search size={20} />
@@ -134,21 +130,25 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <SignUp></SignUp>
-            <SignIn></SignIn>
+            <div className="w-44 flex justify-between">
+              <SignUp></SignUp>
+              <SignIn></SignIn>
+            </div>
           </>
         )}
+      </div>
+      <div className="h-10 relative flex mt-1">
+        <div className="w-full flex justify-evenly uppercase font-medium">
+          <Cat></Cat>
+          <Dog></Dog>
+          <Bird></Bird>
+          <Fish></Fish>
+          <SmallPet></SmallPet>
+          <Separator className="absolute bottom-0 w-full h-px right-0 bg-slate-300" />
+        </div>
       </div>
     </div>
   );
 };
 
 export default NavBar;
-/* 
-dark mode
-import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/mode-toggle";
-      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-        <ModeToggle></ModeToggle>
-      </ThemeProvider>
-*/

@@ -64,7 +64,11 @@ const SignIn = () => {
         </div>
         <SheetFooter className="sm:justify-center flex-row flex items-center justify-center">
           <SheetClose asChild>
-            <Button type="submit" className="uppercase">
+            <Button
+              type="submit"
+              variant={"outline"}
+              className="uppercase w-3/6"
+            >
               LOG IN
             </Button>
           </SheetClose>
