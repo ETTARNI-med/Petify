@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "../Home";
 import NavBar from "../components/NavBar/NavBar";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 import Collections from "../Collections";
 import Favorites from "../Favorites";
 import Orders from "../Orders";
