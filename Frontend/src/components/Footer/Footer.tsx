@@ -1,30 +1,37 @@
 import React from 'react';
 // import '../styles/Footer.css';
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Instagram, Facebook, Twitter } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 export default function Footer() {
   return (
-    <div className='Footer-section'>
-      <div>
-        <div className='flex justify-between border-slate-950'>
-          <div className='font-sans'>
-            <h4>Follow Us</h4>
+    <div className=''>
+      <div className='content-center'>
+        <div className='flex justify-around '>
+          <div className='flex justify-evenly flex-col items-center '>
+            <h4 className='underline'>Follow Us</h4>
             <a href="/instagram">
-              <p>Instagram</p>
+            <Instagram />
             </a>
             <a href="/Facebook">
-              <p>Facebook</p>
-            </a>
-            <a href="/TikTok">
-              <p>TikTok</p>
+            <Facebook />
             </a>
             <a href="/Twitter">
-              <p>Twitter</p>
+            <Twitter />
             </a>
           </div>
-          <div>
-            <h4>About Petify</h4>
-            <a href="Who-we-are">
-              <p>Who we are ?</p>
+          <div className='flex justify-evenly flex-col items-center '>
+            <h4 className='bold underline'>About Petify</h4>
+            <a href="Contact">
+              <p>Contact us</p>
             </a>
             <a href="/Privacy-policy">
               <p>Privacy Policy</p>
@@ -33,36 +40,49 @@ export default function Footer() {
               <p>Terms Of Use</p>
             </a>
             <a href="/Cookie-notice">
-              <p>Cookie Notice</p>
+              <p>Help !</p>
             </a>
           </div>
-          <div>
+        
+         <div className='   '>
             <h4 className='underline'>Subscribe to our newsletter</h4>
-            <p>Stay updated on new releases and features, guides, and Products.</p>
-            <div className="input">
-              <input placeholder="Your Email" type="text" className='w-64 rounded-full text-white px-3' />
-              <br />
-              <br />
-              <button className="w-48 bg-cyan-500 hover:bg-cyan-600 rounded-full">Subscribe</button>
+            <p>Stay updated on new releases and features, guides,<br /> and Products.</p>
+            <br />
+            <div className="flex w-full max-w-sm items-center space-x-2">
+              <Input type="email" placeholder="Email" />
+              <Button type="submit">Subscribe</Button>
             </div>
           </div>
-          <div>
-            <h4>Other</h4>
-            <a href="/Help">
-              <p>Help</p>
-            </a>
-            <a href="/Contact">
-              <p>Contact</p>
-            </a>
-            <a href="/About-us">
-              <p>About us</p>
-            </a>
+        </div>
+        <div className='container mt-10'>
+          <h4 className='underline'>FAQ</h4>
+          <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Who We Are </AccordionTrigger>
+        <AccordionContent>
+          Yes. It adheres to the WAI-ARIA design pattern.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Return Policy</AccordionTrigger>
+        <AccordionContent>
+          Yes. It comes with default styles that matches the other
+          components&apos; aesthetic.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
+        <AccordionTrigger>Is it animated?</AccordionTrigger>
+        <AccordionContent>
+          Yes. It's animated by default, but you can disable it if you prefer.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
           </div>
-        </div>
-        <div className='mt-8 tracking-widest border-t-2 border-slate-950'>
-          <p>All rights reserved to © Petify 2023</p>
-        </div>
       </div>
+     
+        <div className='flex justify-center	 mt-10 tracking-widest border-t-2 border-slate-950'>
+          <p className='m-5'>All rights reserved to © Petify 2023</p>
+        </div>
     </div>
   );
 }
