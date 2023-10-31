@@ -72,3 +72,4 @@ UserSchema.virtual("last_update").get(function () {
 const User = mongoose.model("User", UserSchema);
 
 export default User;
+ 
