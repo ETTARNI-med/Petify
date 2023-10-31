@@ -1,6 +1,6 @@
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-// import Customer from "../models/Customer.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import Customer from "../models/Customer.js";
 
 // //Register new customer
 // export const register = async (req, res) => {
