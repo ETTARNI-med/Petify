@@ -58,7 +58,7 @@ export default function Footer() {
           <h4 className='underline'>FAQ</h4>
           <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
-        <AccordionTrigger>Who We Are </AccordionTrigger>
+        <AccordionTrigger>Who We Are? </AccordionTrigger>
         <AccordionContent>
           Yes. It adheres to the WAI-ARIA design pattern.
         </AccordionContent>

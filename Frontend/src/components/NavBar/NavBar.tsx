@@ -1,4 +1,5 @@
-import Logo from "../Logo";
+import petlogo from "@/assets/petlogo.png";
+import petlogodark from "@/assets/petlogodark.png";
 import DarkLogo from "../Logo/Dark";
 import { SearchInput } from "@/components/ui/searchInput";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,8 +45,9 @@ const NavBar = () => {
         }}
       >
         <Link to="/">
-          <Logo width="90" className="block dark:hidden" />
-          <DarkLogo width="90" className="hidden dark:block" />
+          <img src={petlogo} alt="logo" className="w-16 block dark:hidden"/>
+          <img src={petlogodark} alt="logo" className="w-16 hidden dark:block"/>
+          {/* <DarkLogo width="90" className="hidden dark:block" /> */}
         </Link>
         <span className="searchIcon">
           <Search size={20} />
