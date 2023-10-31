@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer components {
+  .App {
+    @apply relative;
+  }
   #root {
-    @apply w-[80vw] m-auto mt-2;
+    @apply w-[80vw] mx-auto mt-2;
   }
   .searchIcon {
     @apply relative;

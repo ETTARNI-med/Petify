@@ -43,9 +43,7 @@ const NavBar = () => {
         }}
       >
         <Link to="/">
-          <img src={PetifyLogo} alt="logo" className="w-10 "/>
-         
-          {/* <DarkLogo width="90" className="hidden dark:block" /> */}
+          <img src={PetifyLogo} alt="logo" className="w-10 " />
         </Link>
         <span className="searchIcon">
           <Search size={20} />
