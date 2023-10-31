@@ -6,12 +6,11 @@ import cors from "cors";
 import dotEnv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-import multer from "multer";
+
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import { register } from "./controllers/customersController";
-import customersRoutes from "./routes/customersRoutes";
 
+import router from './routes/router.js'
 //Setting up some configurations
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,24 +27,13 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-//File storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage });
 
-//Middleware to upload our files locally
-app.post("/v1/customers", upload.single("picture"), register);
+
+
 
 //Routes
-app.use("/v1/customers", customersRoutes);
+app.use("/v1",router);
 
 //Connecting to mongoDB
 mongoose
