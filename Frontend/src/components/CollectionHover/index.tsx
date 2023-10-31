@@ -12,7 +12,7 @@ export const Bird = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-lg"
+          className="w-fit flex justify-between items-center text-sm"
         >
           Bird <ChevronDown />
         </Link>
@@ -49,7 +49,7 @@ export const Cat = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-lg"
+          className="w-fit flex justify-between items-center text-sm"
         >
           Cat <ChevronDown />
         </Link>
@@ -86,7 +86,7 @@ export const Dog = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-lg"
+          className="w-fit flex justify-between items-center text-sm"
         >
           Dog <ChevronDown />
         </Link>
@@ -123,7 +123,7 @@ export const Fish = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-lg"
+          className="w-fit flex justify-between items-center text-sm"
         >
           Fish <ChevronDown />
         </Link>
@@ -160,7 +160,7 @@ export const SmallPet = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-lg"
+          className="w-fit flex justify-between items-center text-sm"
         >
           Small Pet <ChevronDown />
         </Link>

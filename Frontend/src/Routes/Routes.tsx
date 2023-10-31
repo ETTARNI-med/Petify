@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "../Home";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
+import Contact from "../components/Contact/Contact";
 import Collections from "../Collections";
 import Favorites from "../Favorites";
 import Orders from "../Orders";
@@ -14,6 +15,7 @@ const Layout = () => {
     <div className="App">
       <NavBar />
       <Outlet />
+      {/* <Contact></Contact> */}
       <Footer />
     </div>
   );
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+       {
+        path: "/Contact",
+        element: <Contact/>,
       },
     ],
   },

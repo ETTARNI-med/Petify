@@ -9,12 +9,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+// import { Outlet, Link } from "react-router-dom";
+// import Contact from "../Contact/Contact"
+
+
+
 
 
 export default function Footer() {
   return (
-    <div className=''>
-      <div className='content-center'>
+    <div className='border-t-2 border-slate-950 '>
+      <div className='content-center  mt-10'>
         <div className='flex justify-around '>
           <div className='flex justify-evenly flex-col items-center '>
             <h4 className='underline'>Follow Us</h4>
@@ -30,7 +35,9 @@ export default function Footer() {
           </div>
           <div className='flex justify-evenly flex-col items-center '>
             <h4 className='bold underline'>About Petify</h4>
-            <a href="Contact">
+        
+            <a href="/Contact">
+              
               <p>Contact us</p>
             </a>
             <a href="/Privacy-policy">
