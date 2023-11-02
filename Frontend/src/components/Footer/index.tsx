@@ -15,7 +15,7 @@ import { Separator } from "../ui/separator";
 export default function Footer() {
   return (
     <div className="mt-auto grid grid-rows-3">
-      <div className="h-16 font-semibold text-white bg-slate-400 p-2 rounded-t row-span-1 flex justify-evenly items-center">
+      <div className="h-16 font-semibold text-white bg-fifthcolor p-2 rounded-t row-span-1 flex justify-evenly items-center">
         <p>Our experts are available 24/7:</p>
         <div className="flex items-center gap-2">
           <Phone size={20} strokeWidth={3} />
@@ -23,7 +23,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center gap-2">
           <Mail size={20} strokeWidth={3} />
-          <Link to="/">email us</Link>
+          <Link to="/Contact">email us</Link>
         </div>
         <div className="flex items-center gap-2">
           <MapPin size={20} strokeWidth={3} />
@@ -55,14 +55,13 @@ export default function Footer() {
               <AccordionItem value="item-1">
                 <AccordionTrigger>Who We Are? </AccordionTrigger>
                 <AccordionContent>
-                  Yes. It adheres to the WAI-ARIA design pattern.
+                  Petify, an e-commerce website dedicated to providing pet-related products and services. At Petify, we are committed to protecting your privacy and safeguarding your personal information. This Privacy Policy is designed to help you understand how we collect, use, disclose, and safeguard your personal data when you use our website and services.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>Return Policy</AccordionTrigger>
                 <AccordionContent>
-                  Yes. It comes with default styles that matches the other
-                  components&apos; aesthetic.
+                If you receive a damaged or defective product, please contact our customer support within 10 days for a replacement or refund. We do not accept returns for items that have been used, altered, or damaged by the customer.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
@@ -137,7 +136,7 @@ export default function Footer() {
               />
               <Button
                 type="submit"
-                className="rounded-l-none uppercase"
+                className="rounded-l-none uppercase bg-secondcolor hover:bg-thirdcolor"
                 variant={"outline"}
               >
                 Subscribe

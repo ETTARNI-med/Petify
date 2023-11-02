@@ -48,14 +48,14 @@ const NavBar = () => {
           {/* <DarkLogo width="90" className="hidden dark:block" /> */}
         </Link>
         <span className="searchIcon">
-          <Search size={25} />
+          <Search size={20} />
           <SearchInput
             type="search"
             placeholder="Search..."
             className={"w-[400px]"}
           />
         </span>
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme" >
           <ModeToggle ></ModeToggle>
         </ThemeProvider>
         <Link to="/favorites">
