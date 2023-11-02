@@ -43,10 +43,12 @@ const NavBar = () => {
         }}
       >
         <Link to="/">
-          <img src={PetifyLogo} alt="logo" className="w-10 " />
+          <img src={PetifyLogo} alt="logo" className="w-14 "/>
+         
+          {/* <DarkLogo width="90" className="hidden dark:block" /> */}
         </Link>
         <span className="searchIcon">
-          <Search size={20} />
+          <Search size={25} />
           <SearchInput
             type="search"
             placeholder="Search..."
@@ -54,7 +56,7 @@ const NavBar = () => {
           />
         </span>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-          <ModeToggle></ModeToggle>
+          <ModeToggle ></ModeToggle>
         </ThemeProvider>
         <Link to="/favorites">
           <Button variant={"outline"}>
