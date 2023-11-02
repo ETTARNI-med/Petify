@@ -43,9 +43,7 @@ const NavBar = () => {
         }}
       >
         <Link to="/">
-          <img src={PetifyLogo} alt="logo" className="w-14 "/>
-         
-          {/* <DarkLogo width="90" className="hidden dark:block" /> */}
+          <img src={PetifyLogo} alt="logo" className="w-14 " />
         </Link>
         <span className="searchIcon">
           <Search size={20} />
@@ -55,16 +53,16 @@ const NavBar = () => {
             className={"w-[400px]"}
           />
         </span>
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme" >
-          <ModeToggle ></ModeToggle>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+          <ModeToggle></ModeToggle>
         </ThemeProvider>
         <Link to="/favorites">
-          <Button variant={"outline"}>
+          <Button variant={"outline"} size="icon">
             <Heart size={20} />
           </Button>
         </Link>
         <Link to="/cart">
-          <Button variant={"outline"}>
+          <Button variant={"outline"} size="icon">
             <ShoppingCart size={20} />
           </Button>
         </Link>

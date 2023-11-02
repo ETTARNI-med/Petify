@@ -17,24 +17,24 @@ export const Bird = () => {
           Bird <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
+      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>HEALTH & WELLNESS</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>SUPPLIES</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>TREATS</span>
           </div>
         </HoverCard>
@@ -54,24 +54,24 @@ export const Cat = () => {
           Cat <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
+      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>HEALTH & WELLNESS</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>SUPPLIES</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>TREATS</span>
           </div>
         </HoverCard>
@@ -91,24 +91,24 @@ export const Dog = () => {
           Dog <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
+      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>HEALTH & WELLNESS</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>SUPPLIES</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>TREATS</span>
           </div>
         </HoverCard>
@@ -128,24 +128,24 @@ export const Fish = () => {
           Fish <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
+      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>HEALTH & WELLNESS</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>SUPPLIES</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>TREATS</span>
           </div>
         </HoverCard>
@@ -165,24 +165,24 @@ export const SmallPet = () => {
           Small Pet <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
+      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>HEALTH & WELLNESS</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>SUPPLIES</span>
           </div>
         </HoverCard>
         <HoverCard>
-          <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
+          <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>TREATS</span>
           </div>
         </HoverCard>

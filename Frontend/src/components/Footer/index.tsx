@@ -14,8 +14,8 @@ import { Separator } from "../ui/separator";
 
 export default function Footer() {
   return (
-    <div className="mt-auto grid grid-rows-3">
-      <div className="h-16 font-semibold text-white bg-fifthcolor p-2 rounded-t row-span-1 flex justify-evenly items-center">
+    <div className="mt-auto grid">
+      <div className="z-10 h-16 font-semibold text-white bg-fifthcolor p-2 rounded-t flex justify-evenly items-center">
         <p>Our experts are available 24/7:</p>
         <div className="flex items-center gap-2">
           <Phone size={20} strokeWidth={3} />
@@ -27,10 +27,10 @@ export default function Footer() {
         </div>
         <div className="flex items-center gap-2">
           <MapPin size={20} strokeWidth={3} />
-          <Link to="/">Street Cairo, Hassan, Rabat</Link>
+          <span>Street Cairo, Hassan, Rabat</span>
         </div>
       </div>
-      <div className="-mt-6 p-2  row-span-2">
+      <div className="p-2">
         <div className="flex justify-evenly items-center font-semibold uppercase">
           <Link className="hover:opacity-80" to="/">
             Home
@@ -48,25 +48,33 @@ export default function Footer() {
             Blog
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-20 justify-items-center items-center pt-4">
+        <div className="grid grid-cols-2 gap-20 text-center justify-items-center items-center pt-4">
           <div className="w-10/12">
-            <span className="font-semibold text-center uppercase">FAQs</span>
+            <span className="font-semibold uppercase">FAQs</span>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger>Who We Are? </AccordionTrigger>
-                <AccordionContent>
-                  Petify, an e-commerce website dedicated to providing pet-related products and services. At Petify, we are committed to protecting your privacy and safeguarding your personal information. This Privacy Policy is designed to help you understand how we collect, use, disclose, and safeguard your personal data when you use our website and services.
+                <AccordionContent className="text-justify">
+                  Petify, an e-commerce website dedicated to providing
+                  pet-related products and services. At Petify, we are committed
+                  to protecting your privacy and safeguarding your personal
+                  information. This Privacy Policy is designed to help you
+                  understand how we collect, use, disclose, and safeguard your
+                  personal data when you use our website and services.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>Return Policy</AccordionTrigger>
-                <AccordionContent>
-                If you receive a damaged or defective product, please contact our customer support within 10 days for a replacement or refund. We do not accept returns for items that have been used, altered, or damaged by the customer.
+                <AccordionContent className="text-justify">
+                  If you receive a damaged or defective product, please contact
+                  our customer support within 10 days for a replacement or
+                  refund. We do not accept returns for items that have been
+                  used, altered, or damaged by the customer.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>Is it animated?</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-justify">
                   Yes. It's animated by default, but you can disable it if you
                   prefer.
                 </AccordionContent>
@@ -74,10 +82,10 @@ export default function Footer() {
             </Accordion>
           </div>
           <div className="w-10/12 flex flex-col">
-            <span className="font-semibold uppercase  text-center">
+            <span className="font-semibold uppercase w-full text-center">
               newsletter
             </span>
-            <p className="text-slate-500">
+            <p className="text-slate-500 text-justify">
               Subscribe to our newsletter and stay updated on new Releases and
               Features, Guides, and Products.
             </p>
@@ -136,7 +144,7 @@ export default function Footer() {
               />
               <Button
                 type="submit"
-                className="rounded-l-none uppercase bg-secondcolor hover:bg-thirdcolor"
+                className="rounded-l-none uppercase bg-secondcolor hover:bg-thirdcolor dark:bg-thirdcolor dark:hover:bg-secondcolor dark:hover:text-black"
                 variant={"outline"}
               >
                 Subscribe
@@ -145,7 +153,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="relative h-16 p-2 row-span-3 flex justify-between items-center text-slate-500 font-medium">
+      <div className="relative h-16 p-2 flex justify-between items-center text-slate-500 font-medium">
         <Separator className="absolute top-0 w-full h-px bg-slate-200" />
         <span>Copyright &copy; 2023, Petify</span>
         <span className="cursor-pointer">Terms of Sale</span>
