@@ -17,7 +17,7 @@ export const Bird = () => {
           Bird <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52">
+      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
         <HoverCard>
           <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -54,7 +54,7 @@ export const Cat = () => {
           Cat <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52">
+      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
         <HoverCard>
           <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -91,7 +91,7 @@ export const Dog = () => {
           Dog <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52">
+      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
         <HoverCard>
           <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -128,7 +128,7 @@ export const Fish = () => {
           Fish <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52">
+      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
         <HoverCard>
           <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -165,7 +165,7 @@ export const SmallPet = () => {
           Small Pet <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 w-52">
+      <HoverCardContent className="flex flex-col py-4 px-2 w-52 text-sm">
         <HoverCard>
           <div className="flex justify-start py-2 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
