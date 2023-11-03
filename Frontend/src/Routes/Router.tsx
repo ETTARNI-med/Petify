@@ -7,6 +7,12 @@ import Cart from "../Cart";
 import AddSold from "../AddSold";
 import Profile from "../Profile";
 import Contact from "../components/Contact/Contact";
+import ShippingPolicy from "../components/Pages/ShippingPolicy";
+import TermsOfSale from "../components/Pages/TermsOfSale";
+import RefundPolicy from "../components/Pages/RefundPolicy";
+import PrivacyPolicy from "../components/Pages/PrivacyPolicy";
+import Blog from "../components/Pages/Blog";
+import AboutUs from "../components/Pages/AboutUs";
 import Layout from "./Layout";
 
 const Router = createBrowserRouter([
@@ -45,6 +51,25 @@ const Router = createBrowserRouter([
       {
         path: "/Contact",
         element: <Contact />,
+      },
+      {
+        path: "/TermsOfSale",
+        element: <TermsOfSale />,
+      },  {
+        path: "/ShippingPolicy",
+        element: <ShippingPolicy />,
+      },  {
+        path: "/PrivacyPolicy",
+        element: <PrivacyPolicy />,
+      },  {
+        path: "/RefundPolicy",
+        element: <RefundPolicy />,
+      },{
+        path: "/AboutUs",
+        element: <AboutUs />,
+      },{
+        path: "/Blog",
+        element: <Blog />,
       },
     ],
   },
