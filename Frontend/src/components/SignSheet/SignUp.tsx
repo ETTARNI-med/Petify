@@ -22,7 +22,7 @@ const SignUp = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="uppercase">
+        <Button variant="outline" className="uppercase px-2">
           Sing up
         </Button>
       </SheetTrigger>

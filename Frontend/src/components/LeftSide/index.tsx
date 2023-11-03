@@ -4,7 +4,7 @@ import X from "@/assets/X";
 
 const LeftSide = () => {
   return (
-    <div className="fixed -rotate-90 h-5 w-56 origin-left-bottom flex items-center justify-between -left-10 bottom-40">
+    <div className="fixed -rotate-90 h-5 w-56 origin-left-bottom flex items-center justify-between sm:-left-16 -left-10 bottom-40">
       <Link
         to="/instagram"
         className="hover:rotate-90 transition-all duration-300"

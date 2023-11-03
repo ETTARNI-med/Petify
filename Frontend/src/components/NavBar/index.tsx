@@ -14,7 +14,6 @@ import { useState } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/components/theme-provider";
 import {
   Search,
   Heart,
@@ -33,24 +32,18 @@ import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
-  const { theme } = useTheme();
   return (
     <div className="w-full grid grid-rows-2">
-      <div
-        className="flex justify-around items-center"
-        onMouseEnter={() => {
-          console.log(theme);
-        }}
-      >
+      <div className="flex justify-around items-center">
         <Link to="/">
-          <img src={PetifyLogo} alt="logo" className="w-14 " />
+          <img src={PetifyLogo} alt="logo" className="sm:w-12 lg:w-14" />
         </Link>
         <span className="searchIcon">
           <Search size={20} />
           <SearchInput
             type="search"
             placeholder="Search..."
-            className={"w-[400px]"}
+            className={"w-[30vw]"}
           />
         </span>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -128,7 +121,7 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <div className="w-44 flex justify-between">
+            <div className="sm:w-[18vw] lg:w-[14vw] flex justify-between  text-sm">
               <SignUp></SignUp>
               <SignIn></SignIn>
             </div>
