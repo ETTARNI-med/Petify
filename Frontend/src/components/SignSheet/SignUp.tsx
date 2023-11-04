@@ -88,7 +88,7 @@ const SignUp = () => {
           </div>
         </div>
 
-        <SheetFooter className="sm:justify-center flex-row flex items-center justify-center">
+        <SheetFooter className="md:justify-center flex-row flex items-center justify-center">
           <SheetClose asChild>
             <Button
               type="submit"

@@ -10,8 +10,8 @@ export function ModeToggle() {
   return (
     <>
       <Button variant={"outline"} size="icon" onClick={clickHandler}>
-        <Sun size={20} className="hidden dark:block" />
-        <Moon size={20} className="block dark:hidden" />
+        <Sun size={20} className="sm:w-4 sm:h-auto md:w-5 hidden dark:block" />
+        <Moon size={20} className="sm:w-4 sm:h-auto md:w-5 block dark:hidden" />
       </Button>
     </>
   );

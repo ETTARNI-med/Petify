@@ -22,7 +22,10 @@ const SignIn = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="uppercase  px-2">
+        <Button
+          variant="outline"
+          className="px-2 sm:text-sm md:text-base uppercase"
+        >
           LOG IN
         </Button>
       </SheetTrigger>
@@ -62,7 +65,7 @@ const SignIn = () => {
             </Label>
           </div>
         </div>
-        <SheetFooter className="sm:justify-center flex-row flex items-center justify-center">
+        <SheetFooter className="md:justify-center flex-row flex items-center justify-center">
           <SheetClose asChild>
             <Button
               type="submit"

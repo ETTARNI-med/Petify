@@ -1,4 +1,8 @@
-const X = () => {
+interface Props {
+  className: string;
+}
+
+const X = ({ className }: Props) => {
   return (
     <svg
       version="1.0"
@@ -6,6 +10,7 @@ const X = () => {
       width="20"
       viewBox="0 0 488.000000 459.000000"
       preserveAspectRatio="xMidYMid meet"
+      className={className}
     >
       <g
         transform="translate(0.000000,459.000000) scale(0.100000,-0.100000)"

@@ -12,12 +12,12 @@ export const Bird = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-sm"
+          className="w-fit flex justify-between items-center sm:text-sm lg:text-base"
         >
           Bird <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
+      <HoverCardContent className="flex flex-col py-4 px-2 sm:text-sm lg:text-base">
         <HoverCard>
           <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -49,12 +49,12 @@ export const Cat = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-sm"
+          className="sm:text-sm lg:text-base w-fit flex justify-between items-center "
         >
           Cat <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
+      <HoverCardContent className="sm:text-sm lg:text-base flex flex-col py-4 px-2 ">
         <HoverCard>
           <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -86,12 +86,12 @@ export const Dog = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-sm"
+          className="sm:text-sm lg:text-base w-fit flex justify-between items-center "
         >
           Dog <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
+      <HoverCardContent className="sm:text-sm lg:text-base flex flex-col py-4 px-2 ">
         <HoverCard>
           <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -123,12 +123,12 @@ export const Fish = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-sm"
+          className=" sm:text-sm lg:text-base w-fit flex justify-between items-center"
         >
           Fish <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
+      <HoverCardContent className=" sm:text-sm lg:text-base flex flex-col py-4 px-2">
         <HoverCard>
           <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>
@@ -160,12 +160,12 @@ export const SmallPet = () => {
       <HoverCardTrigger>
         <Link
           to="/"
-          className="w-fit flex justify-between items-center text-sm"
+          className=" sm:text-sm lg:text-base w-fit flex justify-between items-center"
         >
           Small Pet <ChevronDown />
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col py-4 px-2 text-sm">
+      <HoverCardContent className=" sm:text-sm lg:text-base flex flex-col py-4 px-2">
         <HoverCard>
           <div className="px-2 py-1 hover:text-[#FFCC81] cursor-pointer">
             <span>FOOD</span>

@@ -21,7 +21,10 @@ const RightSide = () => {
     <>
       {showIcon && (
         <div className="scroll-icon">
-          <Link to="#top" className="fixed sm:right-4 right-10 bottom-32">
+          <Link
+            to="#top"
+            className="sm:right-2 md:right-4 lg:right-10 fixed bottom-32"
+          >
             <ChevronUpSquare size={40} />
           </Link>
         </div>
