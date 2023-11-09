@@ -130,7 +130,7 @@ const NavBar = () => {
           <>
             <div className="w-44 flex justify-between">
               <SignUp></SignUp>
-              <SignIn></SignIn>
+              <SignIn ></SignIn>
             </div>
           </>
         )}

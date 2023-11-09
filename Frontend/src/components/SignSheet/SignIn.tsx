@@ -22,7 +22,7 @@ const SignIn = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="uppercase">
+        <Button variant="outline" className="uppercase bg-secondcolor hover:bg-thirdcolor ">
           LOG IN
         </Button>
       </SheetTrigger>

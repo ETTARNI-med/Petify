@@ -73,10 +73,14 @@ export default function Footer() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger>Is it animated?</AccordionTrigger>
+                <AccordionTrigger>
+                  Are the products on Petify safe for my pet?
+                </AccordionTrigger>
                 <AccordionContent className="text-justify">
-                  Yes. It's animated by default, but you can disable it if you
-                  prefer.
+                  Yes, we prioritize the safety and well-being of your pets. Our
+                  products are sourced from reputable brands and undergo quality
+                  checks. If you have specific concerns, feel free to contact
+                  our customer support for more information.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -156,10 +160,22 @@ export default function Footer() {
       <div className="relative h-16 p-2 flex justify-between items-center text-slate-500 font-medium">
         <Separator className="absolute top-0 w-full h-px bg-slate-200" />
         <span>Copyright &copy; 2023, Petify</span>
-        <Link className="hover:opacity-80" to="/TermsOfSale"> Terms of Sale</Link>
-        <Link className="hover:opacity-80" to="/ShippingPolicy"> Shipping Policy</Link>
-        <Link className="hover:opacity-80" to="/PrivacyPolicy"> Privacy Policy</Link>
-        <Link className="hover:opacity-80" to="/RefundPolicy"> Refund Policy</Link>
+        <Link className="hover:opacity-80" to="/TermsOfSale">
+          {" "}
+          Terms of Sale
+        </Link>
+        <Link className="hover:opacity-80" to="/ShippingPolicy">
+          {" "}
+          Shipping Policy
+        </Link>
+        <Link className="hover:opacity-80" to="/PrivacyPolicy">
+          {" "}
+          Privacy Policy
+        </Link>
+        <Link className="hover:opacity-80" to="/RefundPolicy">
+          {" "}
+          Refund Policy
+        </Link>
       </div>
     </div>
   );

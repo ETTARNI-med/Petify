@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Tourney:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -71,4 +74,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+@font-face {
+  font-family: 'tourney';
+  src: url('./assets/fonts/Tourney-Bold.ttf') format('ttf'),
+       
 }
