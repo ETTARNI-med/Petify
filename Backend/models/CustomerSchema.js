@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 // Declare the schema of the customer
 const CustomerSchema = new mongoose.Schema(
     {
@@ -53,10 +54,10 @@ const CustomerSchema = new mongoose.Schema(
         //     default: false,
         // },
 
-        // active:{
-        //     type: Boolean,
-        //     default: false,
-        // },
+        active:{
+            type: Boolean,
+            default: false,
+        },
 
         // role: {
                 
@@ -67,10 +68,18 @@ const CustomerSchema = new mongoose.Schema(
         //     updateAt: "last_login",
         // },
     }
-)
+);
 
+CustomerSchema.pre('save' , async function (next) {
 
+const salt = await bcrypt.genSaltSync(10);
+this.password= await bcrypt.hash(this.password, salt);
 
-const Customer = mongoose.model("Customers",CustomerSchema, "Customer")
+});
+CustomerSchema.methods.isPasswordMatched = async function (enteredPassword){
+    return await bcrypt.compare(enteredPassword,this.password);
+} 
+
+const Customer = mongoose.model("Customers",CustomerSchema, "Customer");
 
 module.exports = Customer
