@@ -19,7 +19,7 @@ customerRoutes.post("/customers/login",login)
 customerRoutes.post("/customers", registerCustomer)
 
 // Get all the customers list ==> ADMIN
-customerRoutes.get("/customers",allCustomers)
+// customerRoutes.get("/customers",allCustomers)
 
 
 //Search for a customer ==> ADMIN

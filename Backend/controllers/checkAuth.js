@@ -46,33 +46,36 @@ token:generateToken(findCustomer?._id),
 
 // Get all users
 
-const allCustomers = asyncHandler(async (req, res) => {
-  try {
-    const getCustomers = await Customer.find();
-    res.json(getCustomers);
-  } catch (error) {
-    throw new Error(error);
-  }
-});
+
 
 //search for a customer
 const searchCustomer = asyncHandler(async (req, res) => {
-  const { query, sort } = req.query;
+  const { query } = req.query;
 
-  try {
-    // Find the customer based on the search query
-    const customer = await Customer.find(query,sort);
-
-    if (!customer) {
-      return res.status(404).json({ message: 'Customer not found' });
+  if(typeof query === "undefined"){
+    try {
+      const getCustomers = await Customer.find();
+      res.json(getCustomers);
+    } catch (error) {
+      throw new Error(error);
     }
-
-    res.json({
-      customer,
-    });
-  } catch (error) {
-    throw new Error(error);
+  }else{
+    try {
+      // Find the customer based on the search query
+      const customer = await Customer.find({$or:[{first_name:query},{last_name:query},{email:query}]});
+  
+      if (!customer) {
+        return res.status(404).json({ message: 'Customer not found' });
+      }
+  
+      res.json({
+        customer,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
+  
 });
 
 
@@ -107,4 +110,4 @@ const deleteCustomer = asyncHandler( async (req,res)=>{
   }
   );
 
-module.exports = {registerCustomer,login,allCustomers,customerById,deleteCustomer,searchCustomer};
+module.exports = {registerCustomer,login,customerById,deleteCustomer,searchCustomer};
