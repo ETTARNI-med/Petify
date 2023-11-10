@@ -7,7 +7,7 @@ const asyncHandler = require("express-async-handler");
 
 const registerCustomer = asyncHandler(async (req, res) => {
   const email = req.body.email;
-  const username = req.body.username;
+ 
 
   const findCustomer = await Customer.findOne({ email });
   if (!findCustomer) {

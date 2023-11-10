@@ -1,11 +1,11 @@
 const mongoose =require( "mongoose");
-
-const ProductSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+const ProductSchema = new Schema(
   {
-    _id: Schema.Types.UUID,
     sku: {
       type: String,
       require: true,
+      unique: true,
     },
     product_image: {
       type: String,
@@ -14,6 +14,7 @@ const ProductSchema = new mongoose.Schema(
     product_name: {
       type: String,
       require: true,
+      unique: true,
       min: 3,
       max: 20,
     },
@@ -24,7 +25,7 @@ const ProductSchema = new mongoose.Schema(
     short_description: {
       type: String,
       require: true,
-      max: 20,
+      max: 39,
     },
     long_description: {
       type: String,
@@ -47,12 +48,8 @@ const ProductSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-  },
-  {
-    timestamps: false,
   }
 );
 
 const Product = mongoose.model("Product", ProductSchema);
-
-export default Product;
+module.exports = Product;

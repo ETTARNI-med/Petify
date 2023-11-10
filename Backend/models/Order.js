@@ -1,13 +1,14 @@
 const mongoose =require( "mongoose");
+const { Schema } = mongoose;
 const OrderSchema = new mongoose.Schema(
   {
     _id: Schema.Types.UUID,
     customer_id: {
-      type: String,
+      type: String ,
       require: true,
     },
     order_items: {
-      type: [string],
+      type: [],
       require: true,
     },
     order_date: {
@@ -28,6 +29,6 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
-const Order = mongoose.model("Order", OrderSchema);
+const Order = mongoose.model("Orders", OrderSchema,"Order");
 
-export default Order;
+module.exports = Order;
