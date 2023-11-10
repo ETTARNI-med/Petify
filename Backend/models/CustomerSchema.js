@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
 // Declare the schema of the customer
 const CustomerSchema = new mongoose.Schema(
   {
     
-
     first_name: {
       type: String,
       require: true,
@@ -55,10 +54,10 @@ const CustomerSchema = new mongoose.Schema(
   }
 );
 
-CustomerSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSaltSync(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+// CustomerSchema.pre("save", async function (next) {
+//   const salt = await bcrypt.genSaltSync(10);
+//   this.password = await bcrypt.hash(this.password, salt);
+// });
 CustomerSchema.methods.isPasswordMatched = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
