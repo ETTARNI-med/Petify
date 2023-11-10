@@ -73,14 +73,10 @@ export default function Footer() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger>
-                  Are the products on Petify safe for my pet?
-                </AccordionTrigger>
+                <AccordionTrigger>Is it animated?</AccordionTrigger>
                 <AccordionContent className="text-justify">
-                  Yes, we prioritize the safety and well-being of your pets. Our
-                  products are sourced from reputable brands and undergo quality
-                  checks. If you have specific concerns, feel free to contact
-                  our customer support for more information.
+                  Yes. It's animated by default, but you can disable it if you
+                  prefer.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
