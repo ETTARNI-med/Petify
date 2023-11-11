@@ -2,19 +2,19 @@ const express = require("express");
 const products = express.Router();
 const {
   createNewProduct,
-  allProducts
-  // searchForProducts,
-  // getProductsById,
-  // updateProducts,
-  // deleteProducts,
+  
+  searchForProducts,
+  getProductsById,
+  updateProducts,
+  deleteProduct,
 } = require("../controllers/productsController");
 //products routes
 
 products.post("/", createNewProduct);
-products.get("/", allProducts);
-  // .get("/", searchForProducts)
-  // .get("/:id", getProductsById)
-  // .patch("/:id", updateProducts)
-  // .delete("/:id", deleteProducts);
+
+products.get("/", searchForProducts);
+products.get("/:id", getProductsById);
+products.patch("/:id", updateProducts);
+products.delete("/:id", deleteProduct);
 
 module.exports = products;
