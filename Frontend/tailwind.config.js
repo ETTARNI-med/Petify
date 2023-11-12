@@ -24,6 +24,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        tourney: ['Tourney', 'sans-serif'],
+        kanit: ['Kanit', 'sans-serif'],
+        Raleway: ['Raleway', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -63,6 +68,7 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+    
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

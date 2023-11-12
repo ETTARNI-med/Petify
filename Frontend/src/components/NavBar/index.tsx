@@ -124,7 +124,7 @@ const NavBar = () => {
           <>
             <div className="hidden sm:flex sm:w-[20vw] sm:text-sm md:w-[20vw] lg:text-base lg:w-[16vw] justify-between">
               <SignUp></SignUp>
-              <SignIn></SignIn>
+              <SignIn ></SignIn>
             </div>
           </>
         )}

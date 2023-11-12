@@ -234,10 +234,10 @@ export default function Footer() {
           <Link className="hover:opacity-80" to="/cart">
             Cart
           </Link>
-          <Link className="hover:opacity-80" to="/">
-            About
+          <Link className="hover:opacity-80" to="/AboutUs">
+            About US
           </Link>
-          <Link className="hover:opacity-80" to="/">
+          <Link className="hover:opacity-80" to="/Blog">
             Blog
           </Link>
         </div>
@@ -354,10 +354,22 @@ export default function Footer() {
       <div className="hidden sm:flex sm:text-xs md:text-sm lg:text-base relative h-16 p-2  justify-between items-center text-slate-500 font-medium">
         <Separator className="absolute top-0 w-full h-px bg-slate-50 left-0" />
         <span>Copyright &copy; 2023, Petify</span>
-        <span className="cursor-pointer">Terms of Sale</span>
-        <span className="cursor-pointer">Shipping Policy</span>
-        <span className="cursor-pointer">Privacy Policy</span>
-        <span className="cursor-pointer">Refund Policy</span>
+        <Link className="hover:opacity-80" to="/TermsOfSale">
+          {" "}
+          Terms of Sale
+        </Link>
+        <Link className="hover:opacity-80" to="/ShippingPolicy">
+          {" "}
+          Shipping Policy
+        </Link>
+        <Link className="hover:opacity-80" to="/PrivacyPolicy">
+          {" "}
+          Privacy Policy
+        </Link>
+        <Link className="hover:opacity-80" to="/RefundPolicy">
+          {" "}
+          Refund Policy
+        </Link>
       </div>
       <div className="flex sm:hidden w-full items-center">
         <div className="flex w-11/12 flex-col text-xs relative h-16 p-2 justify-center items-center text-slate-500 font-medium">

@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+const mongoose =require( "mongoose");
 const SubCategorySchema = new mongoose.Schema(
   {
     _id: Schema.Types.UUID,

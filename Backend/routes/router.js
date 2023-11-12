@@ -1,21 +1,21 @@
 
-const express = require("express")
-const router = express.Router();
+// const express = require("express")
+// const router = express();
+// const customerRoutes = require('./customerRoutes')
+// // const users = require('./users');
 
-import users from './users';
-import customers from './customers'
-import categories from './categories'
-import subcategories from './subcategories'
-import products from './products'
-import orders from './orders'
+// // import categories from './categories'
+// // import subcategories from './subcategories'
+// // import products from './products'
+// // import orders from './orders'
 
 
-router.route('/')
-.use('/users', users)
-.use('/customers', customers)
-.use('/categories', categories)
-.use('/subcategories', subcategories)
-.use('/products', products)
-.use('/orders', orders);
 
-module.exports = router;
+// //  router.use('/users', users);
+//   router.use('/customers', customerRoutes);
+// //  router.use('/categories', categories);
+// //  router.use('/subcategories', subcategories);
+// //  router.use('/products', products);
+// //  router.use('/orders', orders);
+
+// module.exports = router;
