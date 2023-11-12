@@ -72,13 +72,13 @@ const SheetContent = React.forwardRef<
       {children}
       <Separator
         orientation="vertical"
-        className="w-px h-[52px] absolute top-0 bg-slate-300 right-12"
+        className="w-px h-[52px] absolute top-0 bg-slate-200 right-12"
       />
       <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
-      <Separator className="w-full h-px absolute top-[52px] right-0 bg-slate-300" />
+      <Separator className="w-full h-px absolute top-[52px] right-0 bg-slate-200" />
     </SheetPrimitive.Content>
   </SheetPortal>
 ));

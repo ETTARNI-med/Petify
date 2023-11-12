@@ -18,27 +18,27 @@ import {
   Search,
   Heart,
   ShoppingCart,
-  Wallet,
   UserCircle2,
-  Receipt,
   History,
   LogOut,
   ChevronDown,
 } from "lucide-react";
-import SignUp from "../SignSheet/SignUp";
-import SignIn from "../SignSheet/SignIn";
+import SignUp from "../Sheets/SignUp";
+import SignIn from "../Sheets/SignIn";
 import { Separator } from "@radix-ui/react-separator";
 import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
+import LeftMenu from "@/components/Sheets/LeftMenu"
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
   return (
     <div className="w-full grid grid-rows-2">
-      <div className="flex justify-around items-center">
+      <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center">
+        <LeftMenu />
         <Link to="/">
-          <img src={PetifyLogo} alt="logo" className="sm:w-9 md:w-12 lg:w-14" />
+          <img src={PetifyLogo} alt="logo" className="w-9 md:w-12 lg:w-14" />
         </Link>
-        <span className="searchIcon">
+        <span className="searchIcon hidden sm:flex">
           <Search className="sm:w-4 sm:h-auto md:w-5" />
           <SearchInput
             type="search"
@@ -49,26 +49,20 @@ const NavBar = () => {
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <ModeToggle></ModeToggle>
         </ThemeProvider>
-        <Link to="/favorites">
+        <Separator className="sm:hidden absolute top-12 w-full h-px right-0 bg-slate-200" />
+        <Link to="/favorites" className="hidden sm:flex">
           <Button variant={"outline"} size="icon">
             <Heart size={20} className="sm:w-4 sm:h-auto md:w-5" />
           </Button>
         </Link>
-        <Link to="/cart">
+        <Link to="/cart" className="hidden sm:flex">
           <Button variant={"outline"} size="icon">
             <ShoppingCart size={20} className="sm:w-4 sm:h-auto md:w-5" />
           </Button>
         </Link>
         {singIn ? (
           <>
-            <span className="flex w-16 justify-between">
-              <Wallet size={20} className="sm:w-4 sm:h-auto md:w-5" />
-              <span>
-                <span id="currency">$</span>
-                <span id="sold">0.00</span>
-              </span>
-            </span>
-            <span className="account">
+            <span className="hidden sm:flex account">
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center">
                   <Avatar>
@@ -95,19 +89,6 @@ const NavBar = () => {
                         strokeWidth={1.75}
                       />
                       <span>Profile</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link
-                      to="/addsold"
-                      className="flex items-center w-full space-x-2"
-                    >
-                      <Receipt
-                        size={20}
-                        className="sm:w-4 sm:h-auto md:w-5"
-                        strokeWidth={1.75}
-                      />
-                      <span>Add Sold</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
@@ -141,14 +122,14 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <div className="sm:w-[20vw] sm:text-sm md:w-[19vw] lg:text-base lg:w-[14vw] flex justify-between">
+            <div className="hidden sm:flex sm:w-[20vw] sm:text-sm md:w-[20vw] lg:text-base lg:w-[16vw] justify-between">
               <SignUp></SignUp>
               <SignIn></SignIn>
             </div>
           </>
         )}
       </div>
-      <div className="h-10 relative flex mt-1">
+      <div className="hidden sm:flex h-10 relative mt-1">
         <div className="w-full flex justify-evenly uppercase font-medium">
           <Cat></Cat>
           <Dog></Dog>

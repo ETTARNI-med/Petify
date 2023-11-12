@@ -22,11 +22,14 @@ const SignUp = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="uppercase px-2">
-          Sing up
+        <Button
+          variant="ghost"
+          className="px-2 sm:border sm:border-input sm:bg-background sm:hover:bg-accent sm:hover:text-accent-foreground sm:text-sm md:text-base uppercase"
+        >
+          SIGN UP
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="sm:w-6/12 md:5/12">
         <SheetHeader>
           <SheetTitle className="uppercase">sign up</SheetTitle>
           <SheetDescription className="uppercase py-2">

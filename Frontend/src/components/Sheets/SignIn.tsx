@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Eye, EyeOff } from "lucide-react";
+import { EyeOff } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 // import { useState } from "react";
 
@@ -23,13 +23,13 @@ const SignIn = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          variant="outline"
-          className="px-2 sm:text-sm md:text-base uppercase"
+          variant="ghost"
+          className="px-2 sm:border sm:border-input sm:bg-background sm:hover:bg-accent sm:hover:text-accent-foreground sm:text-sm md:text-base uppercase"
         >
           LOG IN
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="sm:w-6/12 md:5/12">
         <SheetHeader>
           <SheetTitle className="uppercase">LOG IN</SheetTitle>
           <SheetDescription className="py-2">
