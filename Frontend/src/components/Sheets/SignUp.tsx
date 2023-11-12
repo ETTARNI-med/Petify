@@ -16,27 +16,43 @@ import { Eye, EyeOff } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 // import { useState } from "react";
 
-const SignIn = () => {
+const SignUp = () => {
   // const [getType, setType] = useState({ login: false, reset: false, register: false });
   // type === "register" ? setType({login : false, reset : false , register : true}) : type === "login" ? setType({login : true, reset : false , register : false}) :setType({login : false, reset : true , register : false});
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="uppercase  ">
-          LOG IN
+        <Button
+          variant="ghost"
+          className="px-2 sm:border sm:border-input sm:bg-background sm:hover:bg-accent sm:hover:text-accent-foreground sm:text-sm md:text-base uppercase"
+        >
+          SIGN UP
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="sm:w-6/12 md:5/12">
         <SheetHeader>
-          <SheetTitle className="uppercase">LOG IN</SheetTitle>
-          <SheetDescription className="py-2">
-            <span className="uppercase">Welcome back.</span>{" "}
-            <span className="underline absolute right-7 text-sm">
-              Forgot your password?
-            </span>
+          <SheetTitle className="uppercase">sign up</SheetTitle>
+          <SheetDescription className="uppercase py-2">
+            Create your account to discover our special offers.
           </SheetDescription>
         </SheetHeader>
         <div className="grid py-4">
+          <div className="grid grid-cols-4 items-center py-1">
+            <Input
+              id="first_name"
+              placeholder="First Name"
+              className="col-span-4"
+            />
+            <span className="absolute right-8 text-xl text-red-600">*</span>
+          </div>
+          <div className="grid grid-cols-4 items-center py-1">
+            <Input
+              id="last_name"
+              placeholder="Last Name"
+              className="col-span-4"
+            />
+            <span className="absolute right-8 text-xl text-red-600">*</span>
+          </div>
           <div className="grid grid-cols-4 items-center py-1">
             <Input id="email" placeholder="Email" className="col-span-4" />
             <span className="absolute right-8 text-xl text-red-600">*</span>
@@ -52,24 +68,37 @@ const SignIn = () => {
             </span>
             <span className="absolute right-16 text-xl text-red-600">*</span>
           </div>
+          <div className="grid grid-cols-4 items-center py-1">
+            <Input
+              id="duplicate_password"
+              placeholder="Repeat Password"
+              className="col-span-4"
+            />
+            <span className="absolute right-8">
+              <Eye size={20} strokeWidth={1.75} />
+            </span>
+            <span className="absolute right-16 text-xl text-red-600">*</span>
+          </div>
           <div className="flex items-center space-x-2 pt-1 pb-3">
-            <Checkbox id="remember" />
+            <Checkbox id="terms" />
+            <span className="text-xl text-red-600">*</span>
             <Label
-              htmlFor="remember"
+              htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Remember me
+              I confirm that I have read and accept the terms and conditions
             </Label>
           </div>
         </div>
-        <SheetFooter className="sm:justify-center flex-row flex items-center justify-center">
+
+        <SheetFooter className="md:justify-center flex-row flex items-center justify-center">
           <SheetClose asChild>
             <Button
               type="submit"
               variant={"outline"}
               className="uppercase w-3/6"
             >
-              LOG IN
+              Create account
             </Button>
           </SheetClose>
         </SheetFooter>
@@ -78,4 +107,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

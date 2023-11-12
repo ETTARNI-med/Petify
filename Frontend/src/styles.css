@@ -10,7 +10,7 @@
     @apply relative;
   }
   #root {
-    @apply w-[80vw] mx-auto mt-2;
+    @apply w-full sm:w-[80vw] mx-auto mt-2;
   }
   .searchIcon {
     @apply relative;
