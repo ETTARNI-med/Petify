@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/Users");
 const asyncHandler = require("express-async-handler");
-
+const JWT = require ('jsonwebtoken')
 const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
@@ -38,9 +38,40 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 //login controller
-const login = (req, res) => {
-  console.log("heey the login is working");
-  res.send("heey loger");
+const login = async (req, res) => {
+  // console.log("heey the login is working");
+  // res.send("heey loger");
+
+  const email = req.body.email;
+  const user_name = req.body.user_name;
+  const password = req.body.password;
+
+  try {
+
+    const findEmail = await User.findOne({email})
+    const findUsername = await User.findOne({user_name})
+
+    if (!findEmail && !findUsername){
+      res.status(501).json({
+        msg: "Invalid credentials",
+      })
+    }
+    
+    const matched = await bcrypt.compare(password, findEmail.password);
+    
+    if (matched){
+      res.status(200).json({
+        msg: " Welcome"
+      })
+    } else {
+      res.status(501).json({
+        msg: "Check email or Password"
+      })
+    }
+   
+  } catch (error) {
+    throw new Error("error");
+  }
 };
 
 //addNewUser controller
