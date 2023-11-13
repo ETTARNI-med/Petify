@@ -2,10 +2,38 @@ const express = require("express");
 const User = require("../models/Users");
 const asyncHandler = require("express-async-handler");
 
-//register function
+const bcrypt = require("bcrypt");
+
+const saltRounds = 10;
 
 const registerUser = asyncHandler(async (req, res) => {
+  const email = req.body.email;
+  const role = req.body.role;
+  const password = req.body.password;
 
+ 
+    const findUser = await User.findOne({ email });
+    try{
+    if (!findUser && role === "2") {
+      const salt = await bcrypt.genSalt(saltRounds);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const newUser = await User.create({
+        ...req.body,
+        password: hashedPassword,
+      });
+
+      res.status(200).json({
+        msg: "Succesfully added",
+      });
+    }
+  else{
+    res.status(401).json("this user is unauthorized or already existed")
+  } }
+    
+  catch(error) {
+    throw new Error("error");
+  }
 });
 
 //login controller

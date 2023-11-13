@@ -4,7 +4,7 @@ const router = express();
 const customerRoutes = require('./customerRoutes')
 const users = require('./users');
 
-// import categories from './categories'
+const categories =require ('./categories');
 // import subcategories from './subcategories'
 const  products = require('./products') ;
 // import orders from './orders'
@@ -13,7 +13,7 @@ const  products = require('./products') ;
 
   router.use('/users', users);
   router.use('/customers', customerRoutes);
-//  router.use('/categories', categories);
+ router.use('/categories', categories);
 //  router.use('/subcategories', subcategories);
  router.use('/products', products);
 //  router.use('/orders', orders);
