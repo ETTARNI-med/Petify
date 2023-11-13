@@ -8,15 +8,14 @@ const saltRounds = 10;
 
 const registerUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
-  const role = req.body.role;
-  const username = req.body.user_name
+  const user_name = req.body.user_name
   const password = req.body.password;
 
  
     const findUser = await User.findOne({ email });
-    const findUsername = await User.findOne({username});
+    const findUsername = await User.findOne({user_name});
     try{
-    if (!findUser && !findUsername ) {
+    if ((!findUser) && (!findUsername) ) {
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
 
