@@ -4,10 +4,7 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
-    _id: {
-      type: Schema.Types.UUID,
-      description: "User's ID",
-    },
+    
     first_name: {
       type: String,
       required: true,
@@ -51,7 +48,7 @@ const UserSchema = new Schema(
     },
     creation_date: {
       type: Date,
-      required: true,
+      
       description: "User's creation date",
     },
     last_login: {
@@ -82,10 +79,10 @@ UserSchema.pre("save", function (next) {
   next();
 });
 
-UserSchema.virtual("last_update").get(function () {
+UserSchema.virtual("updatedAt").get(function () {
   return this.updatedAt;
 });
 
 const User = mongoose.model("User", UserSchema);
 
-export default User;
+module.exports=  User;

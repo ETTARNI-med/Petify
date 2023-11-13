@@ -19,6 +19,7 @@ const createNewProduct = asyncHandler(async (req, res) => {
 
 //search for product
 const searchForProducts = asyncHandler(async (req, res) => {
+  //list all products
   let { query } = req.query;
   if (typeof query === "undefined") {
     try {
@@ -29,6 +30,7 @@ const searchForProducts = asyncHandler(async (req, res) => {
     }
   } else {
     try {
+      //list the products that we're quering
       query = query.toLocaleLowerCase();
       const regex = new RegExp(query, "i");
 
@@ -69,13 +71,16 @@ const getProductsById = asyncHandler(async (req, res) => {
 
 const updateProducts = asyncHandler(async (req, res) => {
   const id = req.params.id;
+  const product=await Product.findById({id});
   try {
-    const updateProduct = await Product.findOneAndUpdate(
-      { _id: id },
+    if(product){
+    const updateProduct = await Product.findByIdAndUpdate(
+      {id} ,
       req.body,
       { new: true }
     );
-    res.json(updateProduct);
+    res.json(updateProduct);}
+    else{ res.json("id does not exist")}
   } catch (error) {
     throw new Error(error);
   }
@@ -96,6 +101,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 module.exports = {
   createNewProduct,
   updateProducts,

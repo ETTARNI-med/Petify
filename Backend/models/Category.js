@@ -1,7 +1,7 @@
 const mongoose =require( "mongoose");
 const CategorySchema = new mongoose.Schema(
   {
-    _id: Schema.Types.UUID,
+ 
     category_name: {
       type: String,
       require: true,
@@ -20,4 +20,4 @@ const CategorySchema = new mongoose.Schema(
 
 const Category = mongoose.model("Category", CategorySchema);
 
-export default Category;
+module.exports= Category;
