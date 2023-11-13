@@ -73,15 +73,16 @@ try{
 const updateCategorie = asyncHandler(async(req,res)=>{
     const {id}=req.params;
     const categorieName=req.body.category_name;
-    console.log(categorieName)
+    const checkCategorieNme = await Category.findOne({category_name:categorieName})
     const checkCategorie = await Category.findById({_id:id});
+    console.log(checkCategorie)
     try{
-        if(checkCategorie && !categorieName){
+        if(checkCategorie && !checkCategorieNme){
             const updateCategorie = await Category.findByIdAndUpdate({_id:id},req.body,{new:true});
             res.status(201).json("successfully updated");
         } else if (!checkCategorie){
             res.json("id does not exist")
-        }else if(categorieName){
+        }else if(checkCategorieNme){
             res.json("the categorie name already exist")
         }
     } catch(error){
