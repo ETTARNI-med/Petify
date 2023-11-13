@@ -13,7 +13,7 @@ const {
 // Users routes
 
 users.post("/login", login);
-users.post("/", registerUser);
+users.post("/register", registerUser);
 users.get("/", getAllUsers);
 users.get("/:id", getUserById);
 users.get("/search", searchForUser);
