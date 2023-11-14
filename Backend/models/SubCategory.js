@@ -1,7 +1,8 @@
 const mongoose =require( "mongoose");
+
 const SubCategorySchema = new mongoose.Schema(
   {
-    _id: Schema.Types.UUID,
+   
     subcategory_name: {
       type: String,
       require: true,
@@ -24,4 +25,4 @@ const SubCategorySchema = new mongoose.Schema(
 
 const SubCategory = mongoose.model("SubCategory", SubCategorySchema);
 
-export default SubCategory;
+module.exports = SubCategory;
