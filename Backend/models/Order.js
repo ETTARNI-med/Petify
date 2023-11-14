@@ -1,34 +1,35 @@
-const mongoose =require( "mongoose");
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
 const OrderSchema = new mongoose.Schema(
   {
-    _id: Schema.Types.UUID,
     customer_id: {
-      type: String ,
-      require: true,
+      type: String,
+      required: true,
     },
     order_items: {
       type: [],
-      require: true,
+      required: true,
     },
     order_date: {
       type: Date,
-      require: true,
+      default: Date.now,
     },
     cart_total_price: {
       type: Schema.Types.Decimal128,
-      require: true,
+      required: true,
     },
     status: {
       type: String,
-      require: true,
+      required: true,
+      
     },
   },
   {
-    timestamps: false,
+    timestamps: true,
   }
 );
 
-const Order = mongoose.model("Orders", OrderSchema,"Order");
+const Order = mongoose.model("Order", OrderSchema);
 
 module.exports = Order;

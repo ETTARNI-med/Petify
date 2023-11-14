@@ -1,16 +1,24 @@
 const Product = require("../models/Product");
 
 const asyncHandler = require("express-async-handler");
+const subcategories = require("../routes/subcategories");
+const SubCategory = require("../models/SubCategory");
 
 //create a new product
 const createNewProduct = asyncHandler(async (req, res) => {
   const { body } = req;
   const productName = req.body.product_name;
+  const productSku = req.body.sku;
+  const findProduct = await Product.findOne({ product_name: productName });
+  const findSku = await Product.findOne({ sku: productSku });
   try {
-    const findProduct = await Product.findOne({ productName });
-    if (!findProduct) {
+    if (!findProduct && !findSku) {
       const newProduct = await Product.create(body);
       res.status(200).json(newProduct);
+    } else if (findProduct) {
+      res.status(401).json("this Product name already existed");
+    } else {
+      res.status(401).json("this sku is already existed");
     }
   } catch (error) {
     throw new Error(error);
@@ -59,9 +67,13 @@ const searchForProducts = asyncHandler(async (req, res) => {
 //get product by id
 const getProductsById = asyncHandler(async (req, res) => {
   const id = req.params.id;
+  const ProductById = await Product.findOne({ _id: id });
   try {
-    const ProductById = await Product.findOne({ _id:id });
-    res.json(ProductById);
+    if (ProductById) {
+      res.json(ProductById);
+    } else {
+      res.status(401).json("the products does not exist");
+    }
   } catch (error) {
     throw new Error(error);
   }
@@ -71,16 +83,28 @@ const getProductsById = asyncHandler(async (req, res) => {
 
 const updateProducts = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const product=await Product.findById({id});
+  const productName = req.body.product_name;
+  const productSku = req.body.sku;
+  const findByName = await Product.findOne({ product_name: productName });
+  const findBySku = await Product.findOne({ sku: productSku });
+  const product = await Product.findById({ _id: id });
   try {
-    if(product){
-    const updateProduct = await Product.findByIdAndUpdate(
-      {id} ,
-      req.body,
-      { new: true }
-    );
-    res.json(updateProduct);}
-    else{ res.json("id does not exist")}
+    if (product && !findByName && !findBySku) {
+      const updateProduct = await Product.findByIdAndUpdate(
+        { _id: id },
+        req.body,
+        {
+          new: true,
+        }
+      );
+      res.json(updateProduct);
+    } else if (!product) {
+      res.status(401).json("this id does not exist");
+    } else if (findByName) {
+      res.status(401).json("this name already existed");
+    } else {
+      res.status(401).json("the Sku already existed");
+    }
   } catch (error) {
     throw new Error(error);
   }
@@ -102,10 +126,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
+
+
 module.exports = {
   createNewProduct,
   updateProducts,
   getProductsById,
   searchForProducts,
   deleteProduct,
+  
 };
