@@ -26,7 +26,7 @@ export default function Footer() {
   return (
     // ********* Responsive footer section ***************
 
-    <div className="mt-auto grid">
+    <div className="mt-auto grid ">
       <Separator className="xs:hidden" />
 
       <div className="text-xs md:text-sm lg:text-base p-2 ">
@@ -206,57 +206,17 @@ export default function Footer() {
 
         {/************************  Normal webpage size  Section  **************************/}
 
-     
         <div className="bg-secondcolor px-4 py-3 text-black rounded">
           <p className="text-center text-sm font-medium">
-          Our experts are available 24/7
+            Our experts are available 24/7
           </p>
         </div>
         {/* <!--============================== Footer normal size ==============================--> */}
 
-        {/* <div className="hidden sm:flex justify-evenly items-center font-semibold uppercase">
-          <Link className="hover:opacity-80" to="/">
-            Home
-          </Link>
-          <Link className="hover:opacity-80" to="/favorites">
-            Favorites
-          </Link>
-          <Link className="hover:opacity-80" to="/cart">
-            Cart
-          </Link>
-          <Link className="hover:opacity-80" to="/AboutUs">
-            About US
-          </Link>
-          <Link className="hover:opacity-80" to="/Blog">
-            Blog
-          </Link>
-        </div> */}
-        <div className="hidden sm:grid gap-5 md:gap-10 lg:gap-8  grid-cols-2  justify-items-center  pt-4">
-          <div className="hidden text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-col ">
-            <div className="flex flex-col justify-start items-center">
-              <p className="font-semibold">CONTACT US</p>
-              <div className="flex items-center gap-4">
-                <Phone size={20} strokeWidth={3} />
-                <Link to="/">+2126-6424-6323</Link>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail size={20} strokeWidth={3} />
-                <Link to="/Contact">Email us</Link>
-              </div>
-              <div className="hidden lg:flex items-center gap-2">
-                <MapPin size={20} strokeWidth={3} />
-                <span>Street Cairo, Hassan, Rabat</span>
-              </div>
-            </div>
-            <div className="flex justify-evenly items-center lg:hidden pt-2">
-              <div className="flex items-center gap-2">
-                <MapPin size={20} strokeWidth={3} />
-                <span>Street Cairo, Hassan, Rabat</span>
-              </div>
-            </div>
-          </div>
-          <div className="w-full sm:w-11/12 lg:w-10/12 flex flex-col">
-            <span className="font-semibold uppercase w-full text-center">
+        <div className="hidden sm:grid gap-5 md:gap-10 lg:gap-8  grid-cols-2  justify-items-center pt-4 ">
+          {/*<!---==The news subscribtion for the normal size page ==----> */}
+          <div className="w-full sm:w-11/12 lg:w-10/12 flex flex-col font-kanit text-sm ">
+            <span className="font-semibold uppercase w-full text-center text-base">
               newsletter
             </span>
             <p className="text-slate-500 text-justify">
@@ -322,17 +282,42 @@ export default function Footer() {
               />
               <Button
                 type="submit"
-                className="xs:h-8 xs:text-xs xs:w-4/12 md:text-sm lg:text-base rounded-l-none uppercase bg-secondcolor hover:bg-thirdcolor dark:bg-thirdcolor dark:hover:bg-secondcolor dark:hover:text-black"
+                className="font-kanit xs:h-8 xs:text-xs xs:w-4/12 md:text-sm lg:text-base ml-5 uppercase bg-secondcolor hover:bg-thirdcolor dark:bg-thirdcolor dark:hover:bg-secondcolor dark:hover:text-black"
                 variant={"outline"}
               >
                 Subscribe
               </Button>
             </div>
           </div>
+          <div className="hidden font-kanit text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-end ">
+            <div className="">
+              <p className="font-semibold text-center">CONTACT US</p>
+              <div className="flex items-center gap-4">
+                <Phone size={20} strokeWidth={3} />
+                <Link to="/">+2126-6424-6323</Link>
+              </div>
+              <div className="flex items-center gap-4">
+                <Mail size={20} strokeWidth={3} />
+                <Link to="/Contact">Email us</Link>
+              </div>
+              <div className="hidden lg:flex items-center gap-4">
+                <MapPin size={20} strokeWidth={3} />
+                <span>Street Cairo, Hassan, Rabat</span>
+              </div>
+            </div>
+            <div className="flex justify-evenly items-center lg:hidden pt-2">
+              <div className="flex items-center gap-4">
+                <MapPin size={20} strokeWidth={3} />
+                <span>Street Cairo, Hassan, Rabat</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      {/* The Contact us section in the footer for the normal size of the web page */}
 
       <div className="hidden sm:flex sm:text-xs md:text-sm lg:text-base relative h-16 p-2  justify-between items-center text-slate-500 font-medium">
+        {/* The last section of the footer for both the normal size and the Responsive of the web page */}
         <Separator className="absolute top-0 w-full h-px bg-slate-50 left-0" />
         <span>Copyright &copy; 2023, Petify</span>
         <Link className="hover:opacity-80" to="/TermsOfSale">
