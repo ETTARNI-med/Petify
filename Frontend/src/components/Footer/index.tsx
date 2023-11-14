@@ -293,21 +293,21 @@ export default function Footer() {
             <div className="">
               <p className="font-semibold text-center">CONTACT US</p>
               <div className="flex items-center gap-4">
-                <Phone size={20} strokeWidth={3} />
+                <Phone size={20} strokeWidth={2} />
                 <Link to="/">+2126-6424-6323</Link>
               </div>
               <div className="flex items-center gap-4">
-                <Mail size={20} strokeWidth={3} />
+                <Mail size={20} strokeWidth={2} />
                 <Link to="/Contact">Email us</Link>
               </div>
               <div className="hidden lg:flex items-center gap-4">
-                <MapPin size={20} strokeWidth={3} />
+                <MapPin size={20} strokeWidth={2} />
                 <span>Street Cairo, Hassan, Rabat</span>
               </div>
             </div>
             <div className="flex justify-evenly items-center lg:hidden pt-2">
               <div className="flex items-center gap-4">
-                <MapPin size={20} strokeWidth={3} />
+                <MapPin size={20} strokeWidth={2} />
                 <span>Street Cairo, Hassan, Rabat</span>
               </div>
             </div>
