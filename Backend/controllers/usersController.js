@@ -3,6 +3,8 @@ const User = require("../models/Users");
 const asyncHandler = require("express-async-handler");
 const JWT = require ('jsonwebtoken')
 const bcrypt = require("bcrypt");
+const users = require("../routes/users");
+const JWT_SECRET = process.env.JWT_SECRET
 
 const saltRounds = 10;
 
@@ -23,9 +25,14 @@ const registerUser = asyncHandler(async (req, res) => {
         ...req.body,
         password: hashedPassword,
       });
-
-      res.status(200).json({
+      const token = await JWT.sign({
+        user_name,
+        },JWT_SECRET, {
+          expiresIn: 1800 
+        })
+       res.status(200).json({
         msg: "Succesfully added",
+        token
       });
     }
   else{
@@ -37,10 +44,8 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-//login controller
+//Login Controller
 const login = async (req, res) => {
-  // console.log("heey the login is working");
-  // res.send("heey loger");
 
   const email = req.body.email;
   const user_name = req.body.user_name;
@@ -50,9 +55,9 @@ const login = async (req, res) => {
 
     const findEmail = await User.findOne({email})
     const findUsername = await User.findOne({user_name})
-
+    const findRole = findEmail.role
     if (!findEmail && !findUsername){
-      res.status(501).json({
+     return  res.status(501).json({
         msg: "Invalid credentials",
       })
     }
@@ -60,11 +65,18 @@ const login = async (req, res) => {
     const matched = await bcrypt.compare(password, findEmail.password);
     
     if (matched){
-      res.status(200).json({
-        msg: " Welcome"
+      const token = await JWT.sign({
+        //findRole we will need it to check to Auth in the  middleware
+        findRole,
+        },JWT_SECRET, {
+          expiresIn: 1800 
+        })
+     res.status(200).json({
+        
+        token
       })
     } else {
-      res.status(501).json({
+      return res.status(501).json({
         msg: "Check email or Password"
       })
     }
@@ -74,35 +86,40 @@ const login = async (req, res) => {
   }
 };
 
-//addNewUser controller
+//Add New User controller
 
 const addNewUser = () => {
   console.log(" hey the addNewUser is working");
 };
 
-//addNewUser getAllUsers
+//Get All Users 
 
-const getAllUsers = () => {
-  console.log(" hey the getAllUsers is working");
+const getAllUsers = async (req,res) => {
+  
+  const all = await User.find()
+
+  res.status(200).json(all)
+
 };
 
-//addNewUser getUserById
+//Get User By ID 
 
 const getUserById = () => {
-  console.log(" hey the getUserById is working");
+  console.log(" hey the getUserById is working")
+  
 };
 
-//addNewUser searchForUser
+//Search For User  
 const searchForUser = () => {
   console.log(" hey the searchForUser is working");
 };
 
-//addNewUser updateUser
+//Update User updateUser
 const updateUser = () => {
   console.log(" hey the searchForUser is working");
 };
 
-//addNewUser deleteUser
+//Delete User  
 const deleteUser = () => {
   console.log(" hey the deleteUser is working");
 };

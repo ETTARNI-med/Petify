@@ -10,11 +10,12 @@ const {
   registerUser,
 } = require("../controllers/usersController");
 
+const checkIfUser = require('../midllewares/checkUserAuth')
 // Users routes
 
-users.post("/login", login);
+users.post("/login" ,login);
 users.post("/register", registerUser);
-users.get("/", getAllUsers);
+users.get("/users",checkIfUser ,getAllUsers);
 users.get("/:id", getUserById);
 users.get("/search", searchForUser);
 users.put("/:id", updateUser);
