@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 // Declare the schema of the customer
 const CustomerSchema = new mongoose.Schema(
   {
-    
+    username:{
+      type:String,
+      min:3
+    },
     first_name: {
       type: String,
       require: true,
