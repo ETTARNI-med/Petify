@@ -8,15 +8,17 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 const saltRounds = 10;
 
-const registerUser = asyncHandler(async (req, res) => {
+const addUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
   const user_name = req.body.user_name
   const password = req.body.password;
-
- 
+  
+  // Check if email and username if they are already exist
     const findUser = await User.findOne({ email });
     const findUsername = await User.findOne({user_name});
+    
     try{
+      // If not 
     if ((!findUser) && (!findUsername) ) {
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -24,15 +26,12 @@ const registerUser = asyncHandler(async (req, res) => {
       const newUser = await User.create({
         ...req.body,
         password: hashedPassword,
-      });
-      const token = await JWT.sign({
-        user_name,
-        },JWT_SECRET, {
-          expiresIn: 1800 
-        })
+      })
+      
        res.status(200).json({
         msg: "Succesfully added",
-        token
+        newUser
+        
       });
     }
   else{
@@ -56,6 +55,7 @@ const login = async (req, res) => {
     const findEmail = await User.findOne({email})
     const findUsername = await User.findOne({user_name})
     const findRole = findEmail.role
+    
     if (!findEmail && !findUsername){
      return  res.status(501).json({
         msg: "Invalid credentials",
@@ -66,7 +66,7 @@ const login = async (req, res) => {
     
     if (matched){
       const token = await JWT.sign({
-        //findRole we will need it to check to Auth in the  middleware
+        //findRole: we will need the role to check if he has the right to login
         findRole,
         },JWT_SECRET, {
           expiresIn: 1800 
@@ -86,11 +86,11 @@ const login = async (req, res) => {
   }
 };
 
-//Add New User controller
+//Add New User controller // Check addUser above
 
-const addNewUser = () => {
-  console.log(" hey the addNewUser is working");
-};
+// const addNewUser = () => {
+//   console.log(" hey the addNewUser is working");
+// };
 
 //Get All Users 
 
@@ -131,5 +131,5 @@ module.exports = {
   searchForUser,
   getUserById,
   getAllUsers,
-  registerUser,
+  addUser,
 };
