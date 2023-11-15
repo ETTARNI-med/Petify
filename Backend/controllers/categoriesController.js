@@ -5,8 +5,7 @@ const asyncHandler = require("express-async-handler");
 
 const createNewCategorie = asyncHandler(async (req, res) => {
   const Categoriename = req.body.category_name;
-  const categorie = await Category.findOne({ category_name:Categoriename });
- 
+  const categorie = await Category.findOne({ Categoriename });
   try {
     if (!categorie) {
       const createCategorie = await Category.create(req.body);
@@ -71,30 +70,18 @@ try{
 })
 
 //update categorie function
-    const updateCategorie = asyncHandler(async(req,res)=>{
+const updateCategorie = asyncHandler(async(req,res)=>{
     const {id}=req.params;
     const categorieName=req.body.category_name;
-<<<<<<< Updated upstream
     console.log(categorieName)
     const checkCategorie = await Category.findById({_id:id});
     try{
         if(checkCategorie && !categorieName){
-=======
-    const checkCategorieName = await Category.findOne({category_name:categorieName})
-    const checkCategorie = await Category.findById({_id:id});
-   
-    try{
-        if(checkCategorie && !checkCategorieName){
->>>>>>> Stashed changes
             const updateCategorie = await Category.findByIdAndUpdate({_id:id},req.body,{new:true});
             res.status(201).json("successfully updated");
         } else if (!checkCategorie){
             res.json("id does not exist")
-<<<<<<< Updated upstream
         }else if(categorieName){
-=======
-        }else if(checkCategorieName){
->>>>>>> Stashed changes
             res.json("the categorie name already exist")
         }
     } catch(error){
