@@ -33,8 +33,8 @@ import LeftMenu from "@/components/Sheets/LeftMenu"
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
   return (
-    <div className="w-full grid grid-rows-2 gap-5 font-Poppins ">
-      <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center">
+    <div className="w-full grid grid-rows-2 gap-5 font-Poppins rounded-lg">
+      <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center ">
         <LeftMenu />
         <Link to="/">
           <img src={PetifyLogo} alt="logo" className="w-9 md:w-12 lg:w-14" />

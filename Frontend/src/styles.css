@@ -79,8 +79,3 @@
     @apply bg-background text-foreground;
   }
 }
-@font-face {
-  font-family: 'tourney';
-  src: url('./assets/fonts/Tourney-Bold.ttf') format('ttf'),
-       
-}

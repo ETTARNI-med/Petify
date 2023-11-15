@@ -22,7 +22,6 @@ const Layout = () => {
       <NavBar />
       <LeftSide />
       <Outlet />
-
       <RightSide />
       <Footer />
     </div>
