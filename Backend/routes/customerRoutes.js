@@ -2,7 +2,7 @@ const express = require('express')
 const customerRoutes = express.Router();
 //const { Router } = require('express')
 
-const{ registerCustomer,login,customerById,deleteCustomer,searchCustomer} = require('../controllers/checkAuth')
+const{ registerCustomer,login,customerById,deleteCustomer,searchCustomer} = require('../controllers/customersController')
 
 // Customer authentication
 customerRoutes.post("/login",login)

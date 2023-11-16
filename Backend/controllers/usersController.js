@@ -50,19 +50,21 @@ const login = async (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
 
-  try {
+  try { 
 
-    const findEmail = await User.findOne({email})
-    const findUsername = await User.findOne({user_name})
-    const findRole = findEmail.role
+    const find = await User.findOne({$or : [{user_name},{email}]})
+    const findRole = find.role
     
-    if (!findEmail && !findUsername){
-     return  res.status(501).json({
-        msg: "Invalid credentials",
-      })
+    
+    if ( !find){
+        return res.status(400).json({
+          msg: "Invalid credentials",
+        })
+       
+      
     }
     
-    const matched = await bcrypt.compare(password, findEmail.password);
+    const matched = await bcrypt.compare(password, find.password);
     
     if (matched){
       const token = await JWT.sign({
@@ -72,17 +74,18 @@ const login = async (req, res) => {
           expiresIn: 1800 
         })
      res.status(200).json({
-        
+
         token
       })
     } else {
-      return res.status(501).json({
+       return res.status(501).json({
         msg: "Check email or Password"
       })
     }
    
   } catch (error) {
-    throw new Error("error");
+    // throw new Error("error");
+    return  res.status(400).json({msg:"error"}) 
   }
 };
 
