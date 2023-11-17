@@ -28,12 +28,13 @@ import SignIn from "../Sheets/SignIn";
 import { Separator } from "@radix-ui/react-separator";
 import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
 import LeftMenu from "@/components/Sheets/LeftMenu"
+// import Faq from "../Sheets/Faq"
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
   return (
-    <div className="w-full grid grid-rows-2">
-      <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center">
+    <div className="w-full grid grid-rows-2 gap-5 font-Poppins rounded-lg">
+      <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center ">
         <LeftMenu />
         <Link to="/">
           <img src={PetifyLogo} alt="logo" className="w-9 md:w-12 lg:w-14" />
@@ -130,13 +131,15 @@ const NavBar = () => {
         )}
       </div>
       <div className="hidden sm:flex h-10 relative mt-1">
-        <div className="w-full flex justify-evenly uppercase font-medium">
+        <div className="w-full flex justify-evenly uppercase font-Poppins">
           <Cat></Cat>
           <Dog></Dog>
           <Bird></Bird>
           <Fish></Fish>
           <SmallPet></SmallPet>
-          <Separator className="absolute bottom-0 w-full h-px right-0 bg-slate-300" />
+          {/* <Faq></Faq> */}
+          
+          {/* <Separator className="absolute bottom-0 w-full h-px right-0 bg-slate-300" /> */}
         </div>
       </div>
     </div>
