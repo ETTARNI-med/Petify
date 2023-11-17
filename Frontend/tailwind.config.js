@@ -28,7 +28,8 @@ module.exports = {
         tourney: ['Tourney', 'sans-serif'],
         kanit: ['Kanit', 'sans-serif'],
         Raleway: ['Raleway', 'sans-serif'],
-        Poppins:['Poppins', 'sans-serif']
+        Poppins:['Poppins', 'sans-serif'],
+        Avenir:['AvenirLTStd-Book', 'sans-serif']
       },
       colors: {
         border: "hsl(var(--border))",

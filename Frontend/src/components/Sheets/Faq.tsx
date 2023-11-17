@@ -23,15 +23,15 @@ import { Label } from "@radix-ui/react-label";
 const Faq = () => {
   return (
     <>
-           <div className="">
+           <div className="font-Poppins">
 
-      <Sheet>
-        <SheetTrigger asChild className="sm:text-sm lg:text-base w-fit items-center cursor-pointer">
+      <Sheet >
+        <SheetTrigger asChild className="sm:text-sm lg:text-base w-fit items-center cursor-pointer font-Poppins">
           <Label onClick={( )=> Faq()} >FAQs</Label>
           {/* <Button variant='ghost'>FAQs</Button> */}
         </SheetTrigger>
      
-        <SheetContent>
+        <SheetContent className="font-Poppins">
           <SheetHeader>
             <SheetTitle>FAQS</SheetTitle>
             <SheetDescription>

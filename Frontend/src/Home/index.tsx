@@ -14,27 +14,31 @@ import "../styles/swiper.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 // import products
-import React, { useState, useEffect } from 'react';
-import ProductList from './productList';
+// import React, { useState, useEffect } from 'react';
+// import ProductList from './productList';
+// import product from '../data/Product.js';
 
 
-interface Product {
-  id: number;
-  title: string;
-  price: string;
-  image: string;
-}
+
+// interface product {
+//   id: number;
+//   title: string;
+//   price: string;
+//   image: string;
+// }
 
 
-const Home: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+const Home = () => {
 
-  useEffect(() => {
-    fetch('Product.json')
-      .then((response) => response.json())
-      .then((data: Product[]) => setProducts(data))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+  
+  // const [products, setProducts] = useState<Product[]>([]);
+
+  // useEffect(() => {
+  //   fetch('')
+  //     .then((response) => response.json())
+  //     .then((data: Product[]) => setProducts(data))
+  //     .catch((error) => console.error('Error fetching data:', error));
+  // }, []);
   return (
     <>
     {/************************ * Swiper section ************** */}
@@ -71,10 +75,10 @@ const Home: React.FC = () => {
       </Swiper>
 
 
-      <div className="App">
+      {/* <div className="App">
       <h1>E-commerce Collection</h1>
-      <ProductList products={products} />
-    </div>
+      <ProductList products={product} />
+    </div> */}
       
 </>
      

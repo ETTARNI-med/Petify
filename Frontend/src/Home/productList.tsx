@@ -1,6 +1,7 @@
 import React from 'react';
 import Product from './product';
 
+
 interface ProductListProps {
   products: Product[];
 }

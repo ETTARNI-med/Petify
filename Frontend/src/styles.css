@@ -26,7 +26,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 20, 100%, 97%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -78,4 +78,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  font-family: 'AvenirLTStd', sans-serif;
+  src: url('./assets/fonts/AvenirLTStd-Book.otf');
 }
