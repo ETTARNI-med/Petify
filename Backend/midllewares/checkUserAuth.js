@@ -13,8 +13,10 @@ const checkIfUser = async (req, res, next) => {
    try {
     let user = await JWT.verify(token, JWT_SECRET)
     // req.user to check if user ADMIN && MANAGER 
-    req.user = user.findRole;
-    console.log(req.user);
+    req.user = user.findRole 
+    req.userId = user.findId;
+    console.log(req.userId)
+    
     next()
    } catch (error) {
     return res.status(403).json({
