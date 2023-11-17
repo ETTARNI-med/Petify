@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Home";
-import Collections from "../Collections";
-import Favorites from "../Favorites";
-import Orders from "../Orders";
+import Collections from "../components/Collections";
+import Favorites from "../components/Favorites";
+import Orders from "../components/Orders";
 import Cart from "../Cart";
-import AddSold from "../AddSold";
-import Profile from "../Profile";
+import AddSold from "../components/AddSold";
+import Profile from "../components/Profile";
 import Contact from "../components/Contact/Contact";
 import ShippingPolicy from "../components/Pages/ShippingPolicy";
 import TermsOfSale from "../components/Pages/TermsOfSale";
