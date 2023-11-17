@@ -54,6 +54,7 @@ const login = async (req, res) => {
 
     const find = await User.findOne({$or : [{user_name},{email}]})
     const findRole = find.role
+    const findId = find._id
     
     
     if ( !find){
@@ -69,12 +70,12 @@ const login = async (req, res) => {
     if (matched){
       const token = await JWT.sign({
         //findRole: we will need the role to check if he has the right to login
-        findRole,
+        findRole, findId,
         },JWT_SECRET, {
           expiresIn: 1800 
         })
      res.status(200).json({
-
+      
         token
       })
     } else {
@@ -107,9 +108,32 @@ const getAllUsers = async (req,res) => {
 
 //Get User By ID 
 
-const getUserById = () => {
-  console.log(" hey the getUserById is working")
-  
+const getUserById = async(req,res) => {
+ //console.log(req.params)
+ //console.log(req.user)
+//const {token} = req.params;
+ //const {id} = token.findId;
+ //console.log(token)
+ //console.log(id)
+
+// ***** Get the User Id from the token (Check CheckIf) *******
+ const hisID = await User.findById(req.userId)
+ const infos = {
+    fist_name : hisID.first_name,
+    last_name : hisID.last_name,
+    email : hisID.email,
+    role : hisID.role,
+    user_name : hisID.user_name,
+  }
+
+  try {
+    res.status(200).json({infos})
+  } catch (error) {
+    return  res.status(400).json({
+      "status": 403,
+      "message": "you don't have enough privilege"}) 
+  }
+ 
 };
 
 //Search For User  
