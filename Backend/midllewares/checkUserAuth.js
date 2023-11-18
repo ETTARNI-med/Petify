@@ -1,5 +1,7 @@
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET
+const User = require('../models/Users')
+
 
 const checkIfUser = async (req, res, next) => {
     const token = req.header('x-auth-token');
@@ -15,9 +17,26 @@ const checkIfUser = async (req, res, next) => {
     // req.user to check if user ADMIN && MANAGER 
     req.user = user.findRole 
     req.userId = user.findId;
+    // check the id if i
+    const userExist = await User.findOne({_id: req.userId})
     console.log(req.userId)
     
-    next()
+    if (userExist){
+
+        next()
+    } else { 
+        return res.status(403).json({
+            "error" : 
+                {
+                    "status": 403,
+                    "message": "you don't have enough privilege 1333", 
+                                            
+                  }
+        })
+    }
+
+
+
    } catch (error) {
     return res.status(403).json({
         "error" : [
