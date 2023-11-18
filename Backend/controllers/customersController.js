@@ -7,6 +7,8 @@ const asyncHandler = require("express-async-handler");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+
 const registerCustomer = asyncHandler(async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

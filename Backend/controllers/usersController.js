@@ -99,10 +99,18 @@ const login = async (req, res) => {
 //Get All Users 
 
 const getAllUsers = async (req,res) => {
-  
-  const all = await User.find()
 
-  res.status(200).json(all)
+  try {
+
+
+    const all = await User.find()
+
+    res.status(200).json(all)
+  } catch (error) {
+
+    return  res.status(400).json({msg:"error"}) 
+  }
+  
 
 };
 
@@ -111,7 +119,7 @@ const getAllUsers = async (req,res) => {
 const getUserById = async(req,res) => {
  //console.log(req.params)
  //console.log(req.user)
-//const {token} = req.params;
+ //const {token} = req.params;
  //const {id} = token.findId;
  //console.log(token)
  //console.log(id)
@@ -137,8 +145,8 @@ const getUserById = async(req,res) => {
 };
 
 //Search For User  
-const searchForUser = () => {
-  console.log(" hey the searchForUser is working");
+const searchForUser = async(req, res) => {
+  
 };
 
 //Update User updateUser
