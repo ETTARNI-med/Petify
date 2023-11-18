@@ -146,7 +146,44 @@ const getUserById = async(req,res) => {
 
 //Search For User  
 const searchForUser = async(req, res) => {
-  
+  let {query} = req.query;
+
+  if (typeof query === "undefined"){
+    try {
+      const getUsers = await User.find();
+
+      res.json(getUsers);
+    } catch (error) {
+      throw new Error(error);
+    }
+  } else {
+    try {
+      query = query.toLocaleLowerCase();
+
+      const regex = new RegExp(query,"i");
+      // Find the user based on the search query /
+
+      const userInfo = await User.find({
+       $or : [
+          {first_name : {$regex : regex}},
+          {last_name : {$regex : regex}},
+          {email : {$regex : regex}},
+          {role : {$regex : regex}},
+       ],
+      });
+
+      if (!userInfo) {
+        return res.status(404).json({ message: "Customer not found" });
+      }
+
+      res.json({
+        userInfo,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
 };
 
 //Update User updateUser
