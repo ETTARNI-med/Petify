@@ -13,23 +13,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, ChevronDownIcon } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -45,78 +38,113 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Alert from "./components/Alert";
+import AddUser from "./components/AddUser";
 
 const data: Payment[] = [
   {
     id: "m5gr84i9",
-    amount: 316,
-    status: "Admin",
     email: "ken99@yahoo.com",
-    username: "ken99",
+    username: "en99",
+    date: "23-11-2023",
+    firstName: "ken",
+    lastName: "aguero",
   },
   {
     id: "3u1reuv4",
-    amount: 242,
-    status: "Manager",
-    email: "Abe45@gmail.com",
-    username: "Abe45",
+    email: "abe45@gmail.com",
+    username: "ae45",
+    date: "12-11-2023",
+    firstName: "abla",
+    lastName: "beka",
   },
   {
     id: "derv1ws0",
-    amount: 837,
-    status: "Admin",
-    email: "Monserrat44@gmail.com",
-    username: "Monserrat44",
+    email: "monserrat44@gmail.com",
+    username: "onserrat44",
+    date: "17-11-2023",
+    firstName: "monser",
+    lastName: "rat",
   },
   {
     id: "5kma53ae",
-    amount: 874,
-    status: "Manager",
-    email: "Silas22@gmail.com",
-    username: "Silas22",
+    email: "silas22@gmail.com",
+    username: "ilas22",
+    date: "07-11-2023",
+    firstName: "silas",
+    lastName: "syla",
   },
   {
     id: "bhqecj4p",
-    amount: 721,
-    status: "Manager",
     email: "carmella@hotmail.com",
-    username: "carmella",
+    username: "armella",
+    date: "09-11-2023",
+    firstName: "carmella",
+    lastName: "mella",
   },
 ];
 
 export type Payment = {
   id: string;
-  amount: number;
-  status: "Admin" | "Manager";
   email: string;
   username: string;
+  date: string;
+  firstName: string;
+  lastName: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    accessorKey: "role",
+    header: () => {
+      return <Button variant="ghost">Role</Button>;
+    },
+    cell: () => {
+      return (
+        <Select defaultValue="manager">
+          <SelectTrigger className="max-w-[110px]">
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="manager">Manager</SelectItem>
+          </SelectContent>
+        </Select>
+      );
+    },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "lastName",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          last Name
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="lowercase">{row.getValue("lastName")}</div>
+    ),
+  },
+  {
+    accessorKey: "firstName",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          first Name
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("firstName")}</div>
     ),
   },
   {
@@ -128,7 +156,7 @@ export const columns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Username
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -145,70 +173,31 @@ export const columns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
     id: "actions",
-    header: () => <div className="text-right">Actions</div>,
-    cell: ({ row }) => {
-      const id = row.original;
-
+    header: () => {
       return (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Owner
-              <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="p-0" align="end">
-            <Command>
-              <CommandInput placeholder="Select new role..." />
-              <CommandList>
-                <CommandEmpty>No roles found.</CommandEmpty>
-                <CommandGroup>
-                  <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                    <p>Admin</p>
-                    <p className="text-sm text-muted-foreground">
-                      Access to all resources.
-                    </p>
-                  </CommandItem>
-                  <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                    <p>Manager</p>
-                    <p className="text-sm text-muted-foreground">
-                      Can Add, Remove and Update Products also he can ...
-                    </p>
-                  </CommandItem>
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+        <Button variant="ghost" className="w-20 py-px lg:py-2">
+          Action
+        </Button>
       );
+    },
+    cell: () => {
+      return <Alert />;
     },
   },
 ];
 
-export default function OrdersPage() {
+{
+  /* Page for managing users */
+}
+export default function UsersPage() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -237,20 +226,26 @@ export default function OrdersPage() {
   });
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className="w-[95vw]">
+      {/* Table controllers for xsm and bigger scr */}
+      <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+          placeholder="Filter by username..."
+          value={
+            (table.getColumn("username")?.getFilterValue() as string) ?? ""
           }
-          className="max-w-sm"
+          onChange={(event) => {
+            table.getColumn("username")?.setFilterValue(event.target.value);
+          }}
+          className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
+        <div className="ml-auto">
+          <AddUser />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
+              Columns <ChevronDown className="ml-1 lg:ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -274,14 +269,61 @@ export default function OrdersPage() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
-        <Table>
+      {/* Table controllers for smaller scr */}
+      <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter by username..."
+            value={
+              (table.getColumn("username")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) => {
+              table.getColumn("username")?.setFilterValue(event.target.value);
+            }}
+            className="w-36 xs:w-auto"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDown className="ml-1 lg:ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className="mx-auto">
+          <AddUser />
+        </div>
+      </div>
+      <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
+        <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      className="sm:text-xs lg:text-base"
+                      key={header.id}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -302,7 +344,10 @@ export default function OrdersPage() {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      className="sm:text-xs lg:text-base"
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -323,30 +368,6 @@ export default function OrdersPage() {
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
       </div>
     </div>
   );
