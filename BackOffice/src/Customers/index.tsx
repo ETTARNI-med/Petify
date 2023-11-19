@@ -13,16 +13,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown } from "lucide-react";
+import {
+  ArrowUpDown,
+  Check,
+  ChevronDown,
+  Wifi,
+  WifiOff,
+  X,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -40,81 +40,88 @@ import {
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
 import AddUser from "./components/AddUser";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const data: Payment[] = [
   {
     id: "m5gr84i9",
     email: "ken99@yahoo.com",
-    username: "en99",
+    valid: false,
+    active: true,
     date: "23-11-2023",
-    firstName: "ken",
-    lastName: "aguero",
+    first_name: "ken",
+    last_name: "aguero",
   },
   {
     id: "3u1reuv4",
     email: "abe45@gmail.com",
-    username: "ae45",
+    valid: true,
+    active: false,
     date: "12-11-2023",
-    firstName: "abla",
-    lastName: "beka",
+    first_name: "abla",
+    last_name: "beka",
   },
   {
     id: "derv1ws0",
     email: "monserrat44@gmail.com",
-    username: "onserrat44",
+    valid: false,
+    active: true,
     date: "17-11-2023",
-    firstName: "monser",
-    lastName: "rat",
+    first_name: "monser",
+    last_name: "rat",
   },
   {
     id: "5kma53ae",
     email: "silas22@gmail.com",
-    username: "ilas22",
+    valid: true,
+    active: true,
     date: "07-11-2023",
-    firstName: "silas",
-    lastName: "syla",
+    first_name: "silas",
+    last_name: "syla",
   },
   {
     id: "bhqecj4p",
     email: "carmella@hotmail.com",
-    username: "armella",
+    valid: true,
+    active: true,
     date: "09-11-2023",
-    firstName: "carmella",
-    lastName: "mella",
+    first_name: "carmella",
+    last_name: "mella",
   },
 ];
 
 export type Payment = {
   id: string;
   email: string;
-  username: string;
+  valid: boolean;
+  active: boolean;
   date: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "role",
-    header: () => {
-      return <Button variant="ghost">Role</Button>;
-    },
-    cell: () => {
-      return (
-        <Select defaultValue="manager">
-          <SelectTrigger className="max-w-[110px]">
-            <SelectValue placeholder="Select" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="admin">Admin</SelectItem>
-            <SelectItem value="manager">Manager</SelectItem>
-          </SelectContent>
-        </Select>
-      );
-    },
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
-    accessorKey: "lastName",
+    accessorKey: "last_name",
     header: ({ column }) => {
       return (
         <Button
@@ -127,11 +134,11 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("lastName")}</div>
+      <div className="lowercase">{row.getValue("last_name")}</div>
     ),
   },
   {
-    accessorKey: "firstName",
+    accessorKey: "first_name",
     header: ({ column }) => {
       return (
         <Button
@@ -144,24 +151,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("firstName")}</div>
-    ),
-  },
-  {
-    accessorKey: "username",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Username
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("username")}</div>
+      <div className="lowercase">{row.getValue("first_name")}</div>
     ),
   },
   {
@@ -178,6 +168,67 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "active",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          active
+          <ArrowUpDown className="h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="ml-5 lowercase">
+        {row.getValue("active") ? (
+          <Wifi className="text-green-700 w-6" />
+        ) : (
+          <WifiOff className="text-red-700 w-6" />
+        )}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "valid",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          valid
+          <ArrowUpDown className="h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="ml-5 lowercase">
+        {row.getValue("valid") ? (
+          <Check className="text-green-700 w-6" />
+        ) : (
+          <X className="text-red-700 w-6" />
+        )}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
   },
   {
     id: "actions",
@@ -230,12 +281,10 @@ export default function UsersPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by username..."
-          value={
-            (table.getColumn("username")?.getFilterValue() as string) ?? ""
-          }
+          placeholder="Filter by valid..."
+          value={(table.getColumn("valid")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
-            table.getColumn("username")?.setFilterValue(event.target.value);
+            table.getColumn("valid")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
@@ -273,12 +322,10 @@ export default function UsersPage() {
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by username..."
-            value={
-              (table.getColumn("username")?.getFilterValue() as string) ?? ""
-            }
+            placeholder="Filter by valid..."
+            value={(table.getColumn("valid")?.getFilterValue() as string) ?? ""}
             onChange={(event) => {
-              table.getColumn("username")?.setFilterValue(event.target.value);
+              table.getColumn("valid")?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
           />

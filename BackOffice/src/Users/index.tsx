@@ -47,40 +47,40 @@ const data: Payment[] = [
     email: "ken99@yahoo.com",
     username: "en99",
     date: "23-11-2023",
-    firstName: "ken",
-    lastName: "aguero",
+    first_name: "ken",
+    last_name: "aguero",
   },
   {
     id: "3u1reuv4",
     email: "abe45@gmail.com",
     username: "ae45",
     date: "12-11-2023",
-    firstName: "abla",
-    lastName: "beka",
+    first_name: "abla",
+    last_name: "beka",
   },
   {
     id: "derv1ws0",
     email: "monserrat44@gmail.com",
     username: "onserrat44",
     date: "17-11-2023",
-    firstName: "monser",
-    lastName: "rat",
+    first_name: "monser",
+    last_name: "rat",
   },
   {
     id: "5kma53ae",
     email: "silas22@gmail.com",
     username: "ilas22",
     date: "07-11-2023",
-    firstName: "silas",
-    lastName: "syla",
+    first_name: "silas",
+    last_name: "syla",
   },
   {
     id: "bhqecj4p",
     email: "carmella@hotmail.com",
     username: "armella",
     date: "09-11-2023",
-    firstName: "carmella",
-    lastName: "mella",
+    first_name: "carmella",
+    last_name: "mella",
   },
 ];
 
@@ -89,8 +89,8 @@ export type Payment = {
   email: string;
   username: string;
   date: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -114,7 +114,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "lastName",
+    accessorKey: "last_name",
     header: ({ column }) => {
       return (
         <Button
@@ -127,11 +127,11 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("lastName")}</div>
+      <div className="lowercase">{row.getValue("last_name")}</div>
     ),
   },
   {
-    accessorKey: "firstName",
+    accessorKey: "first_name",
     header: ({ column }) => {
       return (
         <Button
@@ -144,7 +144,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("firstName")}</div>
+      <div className="lowercase">{row.getValue("first_name")}</div>
     ),
   },
   {
@@ -178,6 +178,21 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
   },
   {
     id: "actions",
