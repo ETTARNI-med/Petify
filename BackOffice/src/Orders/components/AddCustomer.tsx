@@ -8,13 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
@@ -24,14 +17,14 @@ export default function AddUser() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          User <Plus className="ml-2 h-4 w-4" />
+          Customer <Plus className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add New User</DialogTitle>
+          <DialogTitle>Add New Customer</DialogTitle>
           <DialogDescription>
-            Add user in a easy way. Click save when you're done.
+            Add Customer in a easy way. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -48,12 +41,6 @@ export default function AddUser() {
             <Input id="last_name" placeholder="Doe" className="col-span-3" />
           </div>
           <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="username" className="xsm:text-right pl-2">
-              Username
-            </Label>
-            <Input id="username" placeholder="Dohn23" className="col-span-3" />
-          </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
             <Label htmlFor="email" className="xsm:text-right pl-2">
               Email
             </Label>
@@ -63,20 +50,6 @@ export default function AddUser() {
               placeholder="johndoe@gmail.com"
               className="col-span-3"
             />
-          </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4   items-center gap-4">
-            <Label htmlFor="role" className="xsm:text-right pl-2">
-              Role
-            </Label>
-            <Select defaultValue="manager">
-              <SelectTrigger id="role" className="ml-auto min-w-fit col-span-3">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="manager">Manager</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
           <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
             <Label htmlFor="password" className="xsm:text-right pl-2">
