@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 interface Props {
-  rows?: number;
+  rows: number;
 }
 
 export default function Alert({ rows }: Props) {
@@ -24,15 +24,15 @@ export default function Alert({ rows }: Props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          {typeof rows !== "undefined" ? (
+          {rows > 1 ? (
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete all the{" "}
-              {rows} accounts and remove there data from our servers.
+              {rows} Products and remove there data from our servers.
             </AlertDialogDescription>
           ) : (
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
-              customer account and remove his data from our servers.
+              Product and remove his data from our servers.
             </AlertDialogDescription>
           )}
         </AlertDialogHeader>

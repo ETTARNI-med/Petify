@@ -39,7 +39,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
-import AddUser from "./components/AddCustomer";
+import AddCustomer from "./components/AddCustomer";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const data: Payment[] = [
@@ -184,22 +184,21 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "last_name",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          last Name
+          Email
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("last_name")}</div>
-    ),
+    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
+
   {
     accessorKey: "first_name",
     header: ({ column }) => {
@@ -218,19 +217,21 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "last_name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          last Name
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("last_name")}</div>
+    ),
   },
   {
     accessorKey: "active",
@@ -352,7 +353,7 @@ export default function UsersPage() {
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
         <div className="ml-auto">
-          <AddUser />
+          <AddCustomer />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -427,7 +428,7 @@ export default function UsersPage() {
           </DropdownMenu>
         </div>
         <div className="mx-auto">
-          <AddUser />
+          <AddCustomer />
         </div>
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
@@ -486,7 +487,7 @@ export default function UsersPage() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end space-x-2 py-4  mr-6">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.

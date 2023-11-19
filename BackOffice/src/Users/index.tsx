@@ -95,59 +95,6 @@ export type Payment = {
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "role",
-    header: () => {
-      return <Button variant="ghost">Role</Button>;
-    },
-    cell: () => {
-      return (
-        <Select defaultValue="manager">
-          <SelectTrigger className="max-w-[110px]">
-            <SelectValue placeholder="Select" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="admin">Admin</SelectItem>
-            <SelectItem value="manager">Manager</SelectItem>
-          </SelectContent>
-        </Select>
-      );
-    },
-  },
-  {
-    accessorKey: "last_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          last Name
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("last_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "first_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          first Name
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("first_name")}</div>
-    ),
-  },
-  {
     accessorKey: "username",
     header: ({ column }) => {
       return (
@@ -178,6 +125,59 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "role",
+    header: () => {
+      return <Button variant="ghost">Role</Button>;
+    },
+    cell: () => {
+      return (
+        <Select defaultValue="manager">
+          <SelectTrigger className="max-w-[110px]">
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="manager">Manager</SelectItem>
+          </SelectContent>
+        </Select>
+      );
+    },
+  },
+  {
+    accessorKey: "first_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          first Name
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("first_name")}</div>
+    ),
+  },
+  {
+    accessorKey: "last_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          last Name
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("last_name")}</div>
+    ),
   },
   {
     accessorKey: "date",

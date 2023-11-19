@@ -14,12 +14,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import {
+  ArrowDownRight,
   ArrowUpDown,
-  Check,
   ChevronDown,
-  Wifi,
-  WifiOff,
-  X,
+  Minus,
+  Package,
+  PackageOpen,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -39,128 +39,142 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
-import AddUser from "./components/AddCustomer";
+import AddProduct from "./components/AddProduct";
 import { Checkbox } from "@/components/ui/checkbox";
+import UpdateProduct from "./components/updateProduct";
 
 const data: Payment[] = [
   {
     id: "m5gr84i9",
-    email: "ken99@yahoo.com",
-    valid: false,
+    sku: "2980203",
     active: true,
-    date: "23-11-2023",
-    first_name: "ken",
-    last_name: "aguero",
+    price: 69,
+    discount_price: 55,
+    subcategory_id: "toy",
+    product_name: "toy1",
+    short_description: "toy",
   },
   {
     id: "3u1reuv4",
-    email: "abe45@gmail.com",
-    valid: true,
+    sku: "2321203",
     active: false,
-    date: "12-11-2023",
-    first_name: "abla",
-    last_name: "beka",
+    price: 89,
+    discount_price: 79,
+    subcategory_id: "toy",
+    product_name: "toy2",
+    short_description: "toy",
   },
   {
     id: "derv1ws0",
-    email: "monserrat44@gmail.com",
-    valid: false,
+    sku: "2789203",
     active: true,
-    date: "17-11-2023",
-    first_name: "monser",
-    last_name: "rat",
+    price: 89,
+    discount_price: 89,
+    subcategory_id: "toy",
+    product_name: "toy3",
+    short_description: "toy",
   },
   {
     id: "5kma53ae",
-    email: "silas22@gmail.com",
-    valid: true,
+    sku: "0909203",
     active: true,
-    date: "07-11-2023",
-    first_name: "silas",
-    last_name: "syla",
+    price: 89,
+    discount_price: 82,
+    subcategory_id: "home",
+    product_name: "home1",
+    short_description: "home",
   },
   {
     id: "bhqecj4p",
-    email: "carmella@hotmail.com",
-    valid: true,
+    sku: "9973232",
     active: true,
-    date: "09-11-2023",
-    first_name: "carmella",
-    last_name: "mella",
+    price: 79,
+    discount_price: 75,
+    subcategory_id: "food",
+    product_name: "food1",
+    short_description: "food",
   },
   {
     id: "bhfecj4p",
-    email: "ahmedmohammadi@hotmail.com",
-    valid: true,
+    sku: "0973833",
     active: true,
-    date: "09-23-2023",
-    first_name: "Ahamed",
-    last_name: "mohammadi",
+    price: 39,
+    discount_price: 35,
+    subcategory_id: "treatment",
+    product_name: "treat1",
+    short_description: "treat",
   },
   {
     id: "bhfexj4p",
-    email: "younnesjbari@hotmail.com",
-    valid: true,
+    sku: "0390909",
     active: false,
-    date: "09-22-2023",
-    first_name: "younnes",
-    last_name: "jbari",
+    price: 39,
+    discount_price: 32,
+    subcategory_id: "treatment",
+    product_name: "treat2",
+    short_description: "treat",
   },
   {
     id: "bhfecj0p",
-    email: "younnestayeb@hotmail.com",
-    valid: true,
+    sku: "0390876",
     active: false,
-    date: "09-24-2023",
-    first_name: "younnes",
-    last_name: "tayeb",
+    price: 29,
+    discount_price: 29,
+    subcategory_id: "home",
+    product_name: "home2",
+    short_description: "home",
   },
   {
     id: "bxxecj0p",
-    email: "houssamarabi@hotmail.com",
-    valid: false,
+    sku: "8290876",
     active: false,
-    date: "09-24-2023",
-    first_name: "houssam",
-    last_name: "arabi",
+    price: 79,
+    discount_price: 75,
+    subcategory_id: "treatment",
+    product_name: "treat3",
+    short_description: "treat",
   },
   {
     id: "bmaecj0p",
-    email: "yassineaaerab@hotmail.com",
-    valid: true,
+    sku: "8938726",
     active: false,
-    date: "09-24-2023",
-    first_name: "yassine",
-    last_name: "aaerab",
+    price: 29,
+    discount_price: 25,
+    subcategory_id: "food",
+    product_name: "food2",
+    short_description: "food",
   },
   {
     id: "bmaemj0p",
-    email: "youssefjaouhari@hotmail.com",
-    valid: false,
+    sku: "0938736",
     active: true,
-    date: "09-24-2023",
-    first_name: "youssef",
-    last_name: "jaouhari",
+    price: 99,
+    discount_price: 79,
+    subcategory_id: "food",
+    product_name: "food3",
+    short_description: "food",
   },
   {
     id: "bmaemj0p",
-    email: "karimhassan@hotmail.com",
-    valid: false,
+    sku: "128736",
     active: false,
-    date: "09-24-2023",
-    first_name: "hassan",
-    last_name: "karim",
+    price: 89,
+    discount_price: 79,
+    subcategory_id: "treatment",
+    product_name: "treat4",
+    short_description: "treat",
   },
 ];
 
 export type Payment = {
   id: string;
-  email: string;
-  valid: boolean;
+  sku: string;
+  price: number;
+  discount_price: number;
   active: boolean;
-  date: string;
-  first_name: string;
-  last_name: string;
+  subcategory_id: string;
+  product_name: string;
+  short_description: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -184,53 +198,70 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "last_name",
+    accessorKey: "sku",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          last Name
+          sku
+          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("sku")}</div>,
+  },
+  {
+    accessorKey: "product_name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("last_name")}</div>
+      <div className="lowercase">{row.getValue("product_name")}</div>
     ),
   },
   {
-    accessorKey: "first_name",
+    accessorKey: "subcategory_id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          first Name
+          subcategory
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("first_name")}</div>
+      <div className="lowercase">{row.getValue("subcategory_id")}</div>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "short_description",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          description
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("short_description")}</div>
+    ),
   },
   {
     accessorKey: "active",
@@ -248,50 +279,36 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => (
       <div className="ml-5 lowercase">
         {row.getValue("active") ? (
-          <Wifi className="text-green-700 w-6" />
+          <Package className="text-green-700 w-6" />
         ) : (
-          <WifiOff className="text-red-700 w-6" />
+          <PackageOpen className="text-red-700 w-6" />
         )}
       </div>
     ),
   },
   {
-    accessorKey: "valid",
+    accessorKey: "discount_price",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          valid
-          <ArrowUpDown className="h-4 w-4" />
+          price B-N <ArrowUpDown className="h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="ml-5 lowercase">
-        {row.getValue("valid") ? (
-          <Check className="text-green-700 w-6" />
+      <div className="ml-3 lowercase flex">
+        {row.original.price}
+        {Number(row.original.price) > Number(row.original.discount_price) ? (
+          <ArrowDownRight className="text-green-700 w-6 mx-1" />
         ) : (
-          <X className="text-red-700 w-6" />
+          <Minus className="text-gray-500 w-6 mx-1" />
         )}
+        {row.original.discount_price}
       </div>
     ),
-  },
-  {
-    accessorKey: "date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Created At
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
   },
   {
     id: "actions",
@@ -302,8 +319,29 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
-    cell: () => {
-      return <Alert />;
+    cell: ({ row }) => {
+      const {
+        sku,
+        price,
+        discount_price,
+        active,
+        subcategory_id,
+        product_name,
+        short_description,
+      } = row.original;
+      return (
+        <UpdateProduct
+          Payment={{
+            sku,
+            price,
+            discount_price,
+            active,
+            subcategory_id,
+            product_name,
+            short_description,
+          }}
+        />
+      );
     },
   },
 ];
@@ -344,15 +382,15 @@ export default function ProductsPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by email..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by sku..."
+          value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
-            table.getColumn("email")?.setFilterValue(event.target.value);
+            table.getColumn("sku")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
         <div className="ml-auto">
-          <AddUser />
+          <AddProduct />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -382,7 +420,7 @@ export default function ProductsPage() {
         </DropdownMenu>
       </div>
       <div className="py-4 ml-4">
-        {table.getFilteredSelectedRowModel().rows.length >= 2 ? (
+        {table.getFilteredSelectedRowModel().rows.length ? (
           <Alert rows={table.getFilteredSelectedRowModel().rows.length} />
         ) : (
           ""
@@ -427,7 +465,7 @@ export default function ProductsPage() {
           </DropdownMenu>
         </div>
         <div className="mx-auto">
-          <AddUser />
+          <AddProduct />
         </div>
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
@@ -486,7 +524,7 @@ export default function ProductsPage() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end space-x-2 py-4 mr-6">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.

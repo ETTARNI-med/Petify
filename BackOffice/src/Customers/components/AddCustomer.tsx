@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
 
-export default function AddUser() {
+export default function AddCustomer() {
   return (
     <Dialog>
       <DialogTrigger asChild>
