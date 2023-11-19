@@ -39,7 +39,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
-import AddUser from "./components/AddUser";
+import AddUser from "./components/AddCustomer";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const data: Payment[] = [
@@ -87,6 +87,69 @@ const data: Payment[] = [
     date: "09-11-2023",
     first_name: "carmella",
     last_name: "mella",
+  },
+  {
+    id: "bhfecj4p",
+    email: "ahmedmohammadi@hotmail.com",
+    valid: true,
+    active: true,
+    date: "09-23-2023",
+    first_name: "Ahamed",
+    last_name: "mohammadi",
+  },
+  {
+    id: "bhfexj4p",
+    email: "younnesjbari@hotmail.com",
+    valid: true,
+    active: false,
+    date: "09-22-2023",
+    first_name: "younnes",
+    last_name: "jbari",
+  },
+  {
+    id: "bhfecj0p",
+    email: "younnestayeb@hotmail.com",
+    valid: true,
+    active: false,
+    date: "09-24-2023",
+    first_name: "younnes",
+    last_name: "tayeb",
+  },
+  {
+    id: "bxxecj0p",
+    email: "houssamarabi@hotmail.com",
+    valid: false,
+    active: false,
+    date: "09-24-2023",
+    first_name: "houssam",
+    last_name: "arabi",
+  },
+  {
+    id: "bmaecj0p",
+    email: "yassineaaerab@hotmail.com",
+    valid: true,
+    active: false,
+    date: "09-24-2023",
+    first_name: "yassine",
+    last_name: "aaerab",
+  },
+  {
+    id: "bmaemj0p",
+    email: "youssefjaouhari@hotmail.com",
+    valid: false,
+    active: true,
+    date: "09-24-2023",
+    first_name: "youssef",
+    last_name: "jaouhari",
+  },
+  {
+    id: "bmaemj0p",
+    email: "karimhassan@hotmail.com",
+    valid: false,
+    active: false,
+    date: "09-24-2023",
+    first_name: "hassan",
+    last_name: "karim",
   },
 ];
 
@@ -281,10 +344,10 @@ export default function UsersPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by valid..."
-          value={(table.getColumn("valid")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by email..."
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
-            table.getColumn("valid")?.setFilterValue(event.target.value);
+            table.getColumn("email")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
@@ -317,6 +380,13 @@ export default function UsersPage() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
+      <div className="py-4 ml-4">
+        {table.getFilteredSelectedRowModel().rows.length >= 2 ? (
+          <Alert rows={table.getFilteredSelectedRowModel().rows.length} />
+        ) : (
+          ""
+        )}
       </div>
       {/* Table controllers for smaller scr */}
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
@@ -415,6 +485,30 @@ export default function UsersPage() {
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
