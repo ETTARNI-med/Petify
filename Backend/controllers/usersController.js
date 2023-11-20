@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const JWT = require ('jsonwebtoken')
 const bcrypt = require("bcrypt");
 const users = require("../routes/users");
+const { set } = require("mongoose");
 const JWT_SECRET = process.env.JWT_SECRET
 
 const saltRounds = 10;
@@ -188,7 +189,58 @@ const searchForUser = async(req, res) => {
 
 //Update User updateUser
 const updateUser = async (req, res) => {
-  
+  //const {id} = req.params.id;
+  let query = req.query
+  let queryId = query._id
+  //const {modifiedInfos} = req.body;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const  email = req.body.email;
+  const userName = req.body.user_name;
+  const password = req.body.password;
+
+   const findUser = await User.findOne({queryId})
+  // console.log(findUser)
+  try {
+    if(password){
+      const salt = await bcrypt.genSalt(saltRounds)
+    const hashedNewPassword = await bcrypt.hash(password, salt )
+
+    const isModified = await User.updateOne(
+      {_id : findUser._id}, {
+        $set: {
+          first_name : firstName,
+          last_name : lastName,
+          email : email,
+          user_name : userName,
+          password : hashedNewPassword
+        }
+      }
+      )
+    } else {
+      const isModified = await User.updateOne(
+        {_id : findUser._id}, {
+          $set: {
+            first_name : firstName,
+            last_name : lastName,
+            email : email,
+            user_name : userName,
+            
+          }
+        }
+        )
+    }
+    
+
+    
+
+      res.status(200).json({
+        msg: "updated successfully",
+       
+      })
+  } catch (error) {
+    throw new Error(error)
+  }
 };
 
 //Delete User  
