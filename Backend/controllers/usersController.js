@@ -75,7 +75,7 @@ const login = async (req, res) => {
           expiresIn: 1800 
         })
      res.status(200).json({
-      
+        findId,
         token
       })
     } else {
@@ -187,13 +187,36 @@ const searchForUser = async(req, res) => {
 };
 
 //Update User updateUser
-const updateUser = () => {
-  console.log(" hey the searchForUser is working");
+const updateUser = async (req, res) => {
+  
 };
 
 //Delete User  
-const deleteUser = () => {
-  console.log(" hey the deleteUser is working");
+const deleteUser = async(req, res) => {
+  let query = req.query;
+  
+  let queryId = query._id
+  const userWillBeDeleted = await User.findOne({queryId})
+
+  
+  if(!userWillBeDeleted){
+    return res.status(404).json({
+      
+        "status": 404,
+        "message": "invalid user id"
+      
+    })
+  }
+
+  try {
+    await User.deleteOne({_id : userWillBeDeleted._id})
+    res.status(200).json({
+        "status": 200,
+        "message": "user deleted successfully"
+    })
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 module.exports = {
