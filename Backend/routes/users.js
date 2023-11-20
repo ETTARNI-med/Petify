@@ -21,6 +21,6 @@ users.get("/allusers",checkIfUser ,getAllUsers);
 users.get("/profil/:id",checkIfUser ,getUserById);
 users.get("/search", searchForUser);
 users.put("/:id", updateUser);
-users.delete("/:id", deleteUser);
+users.delete("/delete",checkIfAdmin ,deleteUser);
 
 module.exports = users;

@@ -17,7 +17,7 @@ const checkIfUser = async (req, res, next) => {
     // req.user to check if user ADMIN && MANAGER 
     req.user = user.findRole 
     req.userId = user.findId;
-    // check the id if i
+    // check the id if the user authicated
     const userExist = await User.findOne({_id: req.userId})
     console.log(req.userId)
     
