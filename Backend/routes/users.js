@@ -20,7 +20,7 @@ users.post("/add",checkIfAdmin,addUser);
 users.get("/allusers",checkIfUser ,getAllUsers);
 users.get("/profil/:id",checkIfUser ,getUserById);
 users.get("/search", searchForUser);
-users.put("/:id", updateUser);
+users.put("/remo",checkIfAdmin ,updateUser);
 users.delete("/delete",checkIfAdmin ,deleteUser);
 
 module.exports = users;
