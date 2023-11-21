@@ -1,4 +1,4 @@
-import PetifyLogo from "@/assets/PetifyLogo.png";
+import PetifyLogo from "@/assets/petlogonew.svg";
 import { SearchInput } from "@/components/ui/searchInput";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,7 +28,7 @@ import SignIn from "../Sheets/SignIn";
 import { Separator } from "@radix-ui/react-separator";
 import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
 import LeftMenu from "@/components/Sheets/LeftMenu"
-// import Faq from "../Sheets/Faq"
+
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
@@ -137,9 +137,7 @@ const NavBar = () => {
           <Bird></Bird>
           <Fish></Fish>
           <SmallPet></SmallPet>
-          {/* <Faq></Faq> */}
-          
-          {/* <Separator className="absolute bottom-0 w-full h-px right-0 bg-slate-300" /> */}
+         
         </div>
       </div>
     </div>

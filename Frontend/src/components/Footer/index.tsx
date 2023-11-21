@@ -290,7 +290,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="hidden font-kanit text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-end ">
-            <div className="">
+            <div className="dark:text-white">
               <p className="font-semibold text-center">CONTACT US</p>
               <div className="flex items-center gap-4">
                 <Phone size={20} strokeWidth={2} />
