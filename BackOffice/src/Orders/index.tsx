@@ -13,14 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  Check,
-  ChevronDown,
-  Wifi,
-  WifiOff,
-  X,
-} from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -39,128 +32,115 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
-import AddUser from "./components/AddCustomer";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Status } from "./components/Status";
 
 const data: Payment[] = [
   {
     id: "m5gr84i9",
-    email: "ken99@yahoo.com",
-    valid: false,
-    active: true,
-    date: "23-11-2023",
-    first_name: "ken",
-    last_name: "aguero",
+    customer_id: "jdzsdazk",
+    order_items: "home",
+    status: "completed",
+    cart_total_price: 399,
+    order_date: "09-21-2023",
   },
   {
     id: "3u1reuv4",
-    email: "abe45@gmail.com",
-    valid: true,
-    active: false,
-    date: "12-11-2023",
-    first_name: "abla",
-    last_name: "beka",
+    customer_id: "jdzfaazk",
+    order_items: "home",
+    status: "cancelled",
+    cart_total_price: 199,
+    order_date: "09-21-2023",
   },
   {
     id: "derv1ws0",
-    email: "monserrat44@gmail.com",
-    valid: false,
-    active: true,
-    date: "17-11-2023",
-    first_name: "monser",
-    last_name: "rat",
+    customer_id: "jdzezazk",
+    order_items: "home",
+    status: "confirmed",
+    cart_total_price: 299,
+    order_date: "09-22-2023",
   },
   {
     id: "5kma53ae",
-    email: "silas22@gmail.com",
-    valid: true,
-    active: true,
-    date: "07-11-2023",
-    first_name: "silas",
-    last_name: "syla",
+    customer_id: "jdzezazk",
+    order_items: "treat",
+    status: "confirmed",
+    cart_total_price: 99,
+    order_date: "09-22-2023",
   },
   {
     id: "bhqecj4p",
-    email: "carmella@hotmail.com",
-    valid: true,
-    active: true,
-    date: "09-11-2023",
-    first_name: "carmella",
-    last_name: "mella",
+    customer_id: "jdzezazk",
+    order_items: "treat",
+    status: "confirmed",
+    cart_total_price: 99,
+    order_date: "09-22-2023",
   },
   {
     id: "bhfecj4p",
-    email: "ahmedmohammadi@hotmail.com",
-    valid: true,
-    active: true,
-    date: "09-23-2023",
-    first_name: "Ahamed",
-    last_name: "mohammadi",
+    customer_id: "jdzzaazk",
+    order_items: "treat",
+    status: "completed",
+    cart_total_price: 119,
+    order_date: "09-23-2023",
   },
   {
     id: "bhfexj4p",
-    email: "younnesjbari@hotmail.com",
-    valid: true,
-    active: false,
-    date: "09-22-2023",
-    first_name: "younnes",
-    last_name: "jbari",
+    customer_id: "jdzarazk",
+    order_items: "treat",
+    status: "cancelled",
+    cart_total_price: 59,
+    order_date: "09-23-2023",
   },
   {
     id: "bhfecj0p",
-    email: "younnestayeb@hotmail.com",
-    valid: true,
-    active: false,
-    date: "09-24-2023",
-    first_name: "younnes",
-    last_name: "tayeb",
+    customer_id: "jdzarazk",
+    order_items: "treat",
+    status: "confirmed",
+    cart_total_price: 59,
+    order_date: "09-23-2023",
   },
   {
     id: "bxxecj0p",
-    email: "houssamarabi@hotmail.com",
-    valid: false,
-    active: false,
-    date: "09-24-2023",
-    first_name: "houssam",
-    last_name: "arabi",
+    customer_id: "jdzddazk",
+    order_items: ["treat", "food"],
+    status: "open",
+    cart_total_price: 289,
+    order_date: "09-23-2023",
   },
   {
     id: "bmaecj0p",
-    email: "yassineaaerab@hotmail.com",
-    valid: true,
-    active: false,
-    date: "09-24-2023",
-    first_name: "yassine",
-    last_name: "aaerab",
+    customer_id: "jdzddazk",
+    order_items: "food",
+    status: "completed",
+    cart_total_price: 249,
+    order_date: "09-23-2023",
   },
   {
     id: "bmaemj0p",
-    email: "youssefjaouhari@hotmail.com",
-    valid: false,
-    active: true,
-    date: "09-24-2023",
-    first_name: "youssef",
-    last_name: "jaouhari",
+    customer_id: "jdskdjk",
+    order_items: "food",
+    status: "completed",
+    cart_total_price: 199,
+    order_date: "09-23-2023",
   },
   {
     id: "bmaemj0p",
-    email: "karimhassan@hotmail.com",
-    valid: false,
-    active: false,
-    date: "09-24-2023",
-    first_name: "hassan",
-    last_name: "karim",
+    customer_id: "jdslhsdk",
+    order_items: "food",
+    status: "confirmed",
+    cart_total_price: 189,
+    order_date: "09-24-2023",
   },
 ];
 
 export type Payment = {
   id: string;
-  email: string;
-  valid: boolean;
-  active: boolean;
-  date: string;
-  first_name: string;
-  last_name: string;
+  customer_id: string;
+  order_items: string[] | string;
+  status: "open" | "cancelled" | "confirmed" | "completed";
+  order_date: string;
+  cart_total_price: number;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -184,102 +164,77 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "last_name",
+    accessorKey: "customer_id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          last Name
+          customer id
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("last_name")}</div>
+      <div className="lowercase">{row.getValue("customer_id")}</div>
     ),
   },
   {
-    accessorKey: "first_name",
+    accessorKey: "order_items",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          first Name
+          order items
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("first_name")}</div>
+      <div className="lowercase">{row.getValue("order_items")}</div>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "cart_total_price",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          total
           <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase ml-5">{row.getValue("cart_total_price")}</div>
+    ),
   },
   {
-    accessorKey: "active",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          active
+          status
           <ArrowUpDown className="h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="ml-5 lowercase">
-        {row.getValue("active") ? (
-          <Wifi className="text-green-700 w-6" />
-        ) : (
-          <WifiOff className="text-red-700 w-6" />
-        )}
+      <div className="ml-7 lowercase">
+        <Status status={row.getValue("status")} />
       </div>
     ),
   },
   {
-    accessorKey: "valid",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          valid
-          <ArrowUpDown className="h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="ml-5 lowercase">
-        {row.getValue("valid") ? (
-          <Check className="text-green-700 w-6" />
-        ) : (
-          <X className="text-red-700 w-6" />
-        )}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "date",
+    accessorKey: "order_date",
     header: ({ column }) => {
       return (
         <Button
@@ -291,7 +246,9 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("order_date")}</div>
+    ),
   },
   {
     id: "actions",
@@ -344,16 +301,15 @@ export default function OrdersPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by email..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by customer..."
+          value={
+            (table.getColumn("customer_id")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) => {
-            table.getColumn("email")?.setFilterValue(event.target.value);
+            table.getColumn("customer_id")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
-        <div className="ml-auto">
-          <AddUser />
-        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -425,9 +381,6 @@ export default function OrdersPage() {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-        <div className="mx-auto">
-          <AddUser />
         </div>
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
