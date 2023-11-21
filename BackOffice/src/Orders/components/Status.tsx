@@ -16,13 +16,25 @@ export function Status({ status }: Props) {
       <Tooltip>
         <TooltipTrigger asChild>
           {status === "cancelled" ? (
-            <XCircle className="text-red-700 w-6" />
+            <>
+              <XCircle className="text-red-700 ml-7 w-6 hidden md:block" />
+              <p className="text-red-700 ml-3 md:hidden">{status}</p>
+            </>
           ) : status === "confirmed" ? (
-            <ThumbsUp className="text-blue-700 w-6" />
+            <>
+              <ThumbsUp className="text-blue-700 ml-7 w-6 hidden md:block" />
+              <p className="text-blue-700 ml-3 md:hidden">{status}</p>
+            </>
           ) : status === "completed" ? (
-            <CheckCircle2 className="text-green-700 w-6" />
+            <>
+              <CheckCircle2 className="text-green-700 ml-7 w-6 hidden md:block" />
+              <p className="text-green-700 ml-3 md:hidden">{status}</p>
+            </>
           ) : (
-            <PlusCircle className="text-gray-500 w-6" />
+            <>
+              <PlusCircle className="text-gray-500 ml-7 w-6 hidden md:block" />
+              <p className="text-gray-500 ml-3 md:hidden">{status}</p>
+            </>
           )}
         </TooltipTrigger>
         <TooltipContent>

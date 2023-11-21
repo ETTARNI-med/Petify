@@ -228,7 +228,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="ml-7 lowercase">
+      <div className="lowercase">
         <Status status={row.getValue("status")} />
       </div>
     ),
@@ -301,7 +301,7 @@ export default function OrdersPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by customer..."
+          placeholder="Filter by customer id..."
           value={
             (table.getColumn("customer_id")?.getFilterValue() as string) ?? ""
           }
@@ -348,10 +348,14 @@ export default function OrdersPage() {
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by valid..."
-            value={(table.getColumn("valid")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter by customer id..."
+            value={
+              (table.getColumn("customer_id")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) => {
-              table.getColumn("valid")?.setFilterValue(event.target.value);
+              table
+                .getColumn("customer_id")
+                ?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
           />
