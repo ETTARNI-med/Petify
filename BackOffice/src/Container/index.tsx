@@ -8,6 +8,8 @@ import { UserNav } from "./components/user-nav";
 import OrdersPage from "@/Orders";
 import ProductsPage from "@/Products";
 import UsersPage from "@/Users";
+import Profile from "@/profile";
+import Notifications from "@/Notifications";
 
 {
   /* Container that's provide stable navbar */
@@ -24,15 +26,12 @@ export default function Container() {
                   <Tabs defaultValue="dashboard" className="h-full space-y-6">
                     {/* Large Screens Nav */}
                     <div className="hidden lg:flex items-center w-full">
-                      <TabsList className="">
+                      <TabsList>
                         <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
                         <TabsTrigger value="users">Users</TabsTrigger>
                         <TabsTrigger value="customers">Customers</TabsTrigger>
                         <TabsTrigger value="product">Product</TabsTrigger>
                         <TabsTrigger value="orders">Orders</TabsTrigger>
-                        <TabsTrigger value="payments">
-                          Payments List
-                        </TabsTrigger>
                       </TabsList>
                       <div className="mx-auto">
                         <img src={Petify} alt="Logo" className="w-10" />
@@ -82,12 +81,6 @@ export default function Container() {
                         >
                           Orders
                         </TabsTrigger>
-                        <TabsTrigger
-                          className="text-xs sm:text-sm"
-                          value="payments"
-                        >
-                          Payments List
-                        </TabsTrigger>
                       </TabsList>
                     </div>
                     {/* Phones Screens Nav */}
@@ -99,26 +92,28 @@ export default function Container() {
                           <UserNav />
                         </div>
                       </div>
-                      <TabsList className="grid grid-cols-3 h-auto xs:h-9">
-                        <TabsTrigger className="text-xs" value="dashboard">
-                          Dashboard
-                        </TabsTrigger>
-                        <TabsTrigger className="text-xs" value="users">
-                          Users
-                        </TabsTrigger>
-                        <TabsTrigger className="text-xs" value="customers">
-                          Customers
-                        </TabsTrigger>
-                        <TabsTrigger className="text-xs" value="product">
-                          Product
-                        </TabsTrigger>
-                        <TabsTrigger className="text-xs" value="orders">
-                          Orders
-                        </TabsTrigger>
-                        <TabsTrigger className="text-xs" value="payments">
-                          Payments List
-                        </TabsTrigger>
-                      </TabsList>
+                      <div className="bg-muted w-[110vw] ml-4">
+                        <TabsList className="grid grid-cols-3 h-auto xs:h-9 rounded-none w-10/12 mx-auto">
+                          <TabsTrigger className="text-xs" value="dashboard">
+                            Dashboard
+                          </TabsTrigger>
+                          <TabsTrigger className="text-xs" value="users">
+                            Users
+                          </TabsTrigger>
+                          <TabsTrigger className="text-xs" value="customers">
+                            Customers
+                          </TabsTrigger>
+                          <TabsTrigger className="text-xs" value="product">
+                            Product
+                          </TabsTrigger>
+                          <TabsTrigger
+                            className="text-xs col-start-3"
+                            value="orders"
+                          >
+                            Orders
+                          </TabsTrigger>
+                        </TabsList>
+                      </div>
                     </div>
                     {/* Dashbord Content */}
                     <TabsContent
@@ -159,12 +154,21 @@ export default function Container() {
                       <Separator className="my-4" />
                       <OrdersPage />
                     </TabsContent>
-                    {/* Payments Content */}
+                    {/* Profile Content */}
                     <TabsContent
-                      value="payments"
+                      value="profile"
                       className="h-full flex-col border-none p-0 data-[state=active]:flex"
                     >
                       <Separator className="my-4" />
+                      <Profile />
+                    </TabsContent>
+                    {/* Settings Content */}
+                    <TabsContent
+                      value="notification"
+                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
+                    >
+                      <Separator className="my-4" />
+                      <Notifications />
                     </TabsContent>
                   </Tabs>
                 </div>

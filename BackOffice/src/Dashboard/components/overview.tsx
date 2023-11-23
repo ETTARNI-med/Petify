@@ -4,6 +4,14 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 const data = [
   {
+    name: "Jul",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Aug",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
     name: "Sep",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
@@ -17,20 +25,20 @@ const data = [
   },
   {
     name: "Dec",
-    total: 6000 + 1000,
+    total: 6000 + Math.floor(Math.random() * 1000),
   },
 ];
 
 export function Overview() {
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer width="100%" className="xs:h-[275px] sm:h-[350px]">
       <BarChart data={data}>
         <XAxis
           dataKey="name"
           stroke="#888888"
           fontSize={12}
           tickLine={false}
-          axisLine={false}
+          axisLine={true}
         />
         <YAxis
           stroke="#888888"

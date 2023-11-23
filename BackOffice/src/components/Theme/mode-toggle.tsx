@@ -9,9 +9,18 @@ export function ModeToggle() {
   };
   return (
     <>
-      <Button variant={"outline"} size="icon" onClick={clickHandler}>
-        <Sun size={20} className="sm:w-4 sm:h-auto md:w-5 hidden dark:block" />
-        <Moon size={20} className="sm:w-4 sm:h-auto md:w-5 block dark:hidden" />
+      <Button
+        variant={"ghost"}
+        className="w-full"
+        size="icon"
+        onClick={clickHandler}
+      >
+        <div className="w-full hidden dark:flex dark:justify-between text-muted-foreground">
+          Light Mode <Sun size={20} />
+        </div>
+        <div className="flex justify-between w-full dark:hidden text-muted-foreground">
+          Dark Mode <Moon size={20} />
+        </div>
       </Button>
     </>
   );
