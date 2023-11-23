@@ -24,7 +24,7 @@ const SignIn = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button
-            variant="ghost"
+            variant={"ghost"}
             className="px-2 sm:border sm:border-input sm:bg-background sm:hover:bg-accent sm:hover:text-accent-foreground sm:text-sm md:text-base uppercase"
           >
             LOG IN

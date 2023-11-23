@@ -1,6 +1,6 @@
-import React from "react";
-import PictureFood from "../assets/131581_MAIN._AC_SL1200_V1670015550_.webp";
-import PictureFood2 from "../assets/133937_MAIN._AC_SL1200_V1691676744_.avif";
+// import React from "react";
+// import PictureFood from "../assets/131581_MAIN._AC_SL1200_V1670015550_.webp";
+// import PictureFood2 from "../assets/133937_MAIN._AC_SL1200_V1691676744_.avif";
 
 const featuredSection = () => {
   return (
@@ -35,7 +35,7 @@ const featuredSection = () => {
                 <li>
                   <a href="#" className="block group">
                     <img
-                      src={PictureFood}
+                      src="https://via.placeholder.com/208x240"
                       alt=""
                       className="object-cover w-full rounded aspect-square"
                     />
@@ -54,7 +54,7 @@ const featuredSection = () => {
                 <li>
                   <a href="#" className="block group">
                     <img
-                      src={PictureFood2}
+                      src="https://via.placeholder.com/208x240"
                       alt=""
                       className="object-cover w-full rounded aspect-square"
                     />

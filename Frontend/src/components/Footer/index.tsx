@@ -22,6 +22,10 @@ import { Separator } from "../ui/separator";
 import X from "@/assets/X";
 import Faq from "../Sheets/Faq";
 
+
+
+
+
 export default function Footer() {
   return (
     // ********* Responsive footer section ***************
@@ -289,7 +293,7 @@ export default function Footer() {
               </Button>
             </div>
           </div>
-          <div className="hidden font-kanit text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-end ">
+          <div className="hidden font-kanit text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-end  flex-col	">
             <div className="dark:text-white">
               <p className="font-semibold text-center">CONTACT US</p>
               <div className="flex items-center gap-4">
@@ -305,6 +309,34 @@ export default function Footer() {
                 <span>Street Cairo, Hassan, Rabat</span>
               </div>
             </div>
+            <h1 className="font-semibold text-center my-2">FOLLOW US </h1>
+            <div className= "flex justify-between	my-3">
+              
+      <a
+        href="/instagram"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+      >
+        <Instagram className="lg:dark:text-white text-[#fc1b65] lg:text-black hover:text-[#fc1b65] dark:hover:text-[#fc1b65]" />
+      </a>
+      <a
+        href="/Facebook"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+      >
+        <Facebook className="lg:dark:text-white text-[#0866ff] lg:text-black hover:text-[#0866ff] dark:hover:text-[#0866ff]" />
+      </a>
+      <a
+        href="/X"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300 py-1"
+      >
+        <X className="text-black" />
+      </a>
+      <a
+        href="/Linkdin"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+      >
+        <Linkedin className="lg:dark:text-white text-[#0c68c4] lg:text-black hover:text-[#0c68c4] dark:hover:text-[#0c68c4]" />
+      </a>
+    </div>
             <div className="flex justify-evenly items-center lg:hidden pt-2">
               <div className="flex items-center gap-4">
                 <MapPin size={20} strokeWidth={2} />
