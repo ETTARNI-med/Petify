@@ -2,7 +2,11 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/Theme/theme-provider";
 
-export function ModeToggle() {
+interface Props {
+  className?: string;
+}
+
+export function ModeToggle({ className }: Props) {
   const { theme, setTheme } = useTheme();
   const clickHandler = () => {
     theme === "dark" ? setTheme("light") : setTheme("dark");
@@ -11,7 +15,7 @@ export function ModeToggle() {
     <>
       <Button
         variant={"ghost"}
-        className="w-full"
+        className={className}
         size="icon"
         onClick={clickHandler}
       >

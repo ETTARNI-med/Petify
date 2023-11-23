@@ -57,7 +57,7 @@ export function UserNav() {
             </TabsList>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <ModeToggle />
+            <ModeToggle className="w-full" />
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
