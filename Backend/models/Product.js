@@ -1,5 +1,10 @@
-const mongoose =require( "mongoose");
+const mongoose = require( "mongoose");
 const { Schema } = mongoose;
+
+//To Import the SubCategory ID
+const ObjectId = mongoose.Types.ObjectId;
+
+
 const ProductSchema = new Schema(
   {
     sku: {
@@ -19,8 +24,8 @@ const ProductSchema = new Schema(
       max: 20,
     },
     subcategory_id: {
-      type: String,
-      require: true,
+      type: ObjectId,
+      ref: "SubCategory",
     },
     short_description: {
       type: String,
