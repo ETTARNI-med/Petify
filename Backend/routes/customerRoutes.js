@@ -1,42 +1,40 @@
 const express = require('express')
 const customerRoutes = express.Router();
-//const { Router } = require('express')
-
-const{ registerCustomer,login,customerById,deleteCustomer,searchCustomer} = require('../controllers/customersController')
+const checkCustomer  = require('../midllewares/checkCustomer');
+const checkUserAuth = require('../midllewares/checkUserAuth')
+const checkauthCustomer = require('../midllewares/checkauthCustomer')
+const{ registerCustomer,login,customerById,deleteCustomer,searchCustomer,updateCustomersData,updateCustomer,customerProfil,customerValidation} = require('../controllers/customersController')
 
 // Customer authentication
-customerRoutes.post("/login",login)
+customerRoutes.post("/login", login)
 
 // *******Create a new customer account*******
 customerRoutes.post("/", registerCustomer)
 
-// Get all the customers list ==> ADMIN
-// customerRoutes.get("/customers",allCustomers)
-
 //Search for a customer ==> ADMIN
- customerRoutes.get("/",searchCustomer)
+ customerRoutes.get("/search",checkUserAuth,searchCustomer)
  
 // Get a customer by ID ==> ADMIN
-customerRoutes.get("/:id",customerById)
+customerRoutes.get("/all/:id",checkUserAuth ,customerById)
 
 // Validate the customer's account or email (optional)
 
-//customerRoutes.put("/v1/validate/:id",customerValidation)
+customerRoutes.put("/validate",checkauthCustomer , customerValidation)
 
 // Update the customer's data ==> ADMIN
 
-//customerRoutes.put("/v1/customer/id", updateCustomer)
+customerRoutes.put("/:id", checkUserAuth, updateCustomer)
 
 // Delete the customer's account 
 
- customerRoutes.delete("/delete", deleteCustomer)
+ customerRoutes.delete("/delete",checkCustomer , deleteCustomer)
 
 // Get the customer's profile
 
-//customerRoutes.get("/v1/customer/profile", customerProfil)
+ customerRoutes.get("/profile", checkCustomer,customerProfil)
 
 // Update the customers data
 
-//customerRoutes.patch("/v1/customer/profile/update", updateCustomersData)
+customerRoutes.patch("/profile/update", checkCustomer,updateCustomersData)
 
 module.exports = customerRoutes

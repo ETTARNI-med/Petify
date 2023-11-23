@@ -81,7 +81,7 @@ const getProductsById = asyncHandler(async (req, res) => {
 
 //products update
 
-const updateProducts = asyncHandler(async (req, res) => {
+  const updateProducts = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const productName = req.body.product_name;
   const productSku = req.body.sku;
