@@ -22,9 +22,13 @@ import { Separator } from "../ui/separator";
 import X from "@/assets/X";
 import Faq from "../Sheets/Faq";
 
+
+
+
+
 export default function Footer() {
   return (
-    // ********* Responsive footer section ***************
+    // ********* Responsive footer section ***************//
 
     <div className="mt-auto grid ">
       <Separator className="xs:hidden" />
@@ -289,8 +293,8 @@ export default function Footer() {
               </Button>
             </div>
           </div>
-          <div className="hidden font-kanit text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-end ">
-            <div className="">
+          <div className="hidden font-kanit text-xs sm:pt-1 md:text-sm md:pt-3 lg:text-base z-10 h-16  text-black p-4 rounded-t xs:flex flex-end  flex-col	">
+            <div className="dark:text-white">
               <p className="font-semibold text-center">CONTACT US</p>
               <div className="flex items-center gap-4">
                 <Phone size={20} strokeWidth={2} />
@@ -305,6 +309,34 @@ export default function Footer() {
                 <span>Street Cairo, Hassan, Rabat</span>
               </div>
             </div>
+            <h1 className="font-semibold text-center my-2">FOLLOW US </h1>
+            <div className= "flex justify-between	my-3">
+              
+      <a
+        href="/instagram"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+      >
+        <Instagram className="lg:dark:text-white text-[#fc1b65] lg:text-black hover:text-[#fc1b65] dark:hover:text-[#fc1b65]" />
+      </a>
+      <a
+        href="/Facebook"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+      >
+        <Facebook className="lg:dark:text-white text-[#0866ff] lg:text-black hover:text-[#0866ff] dark:hover:text-[#0866ff]" />
+      </a>
+      <a
+        href="/X"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300 py-1"
+      >
+        <X className="text-black" />
+      </a>
+      <a
+        href="/Linkdin"
+        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+      >
+        <Linkedin className="lg:dark:text-white text-[#0c68c4] lg:text-black hover:text-[#0c68c4] dark:hover:text-[#0c68c4]" />
+      </a>
+    </div>
             <div className="flex justify-evenly items-center lg:hidden pt-2">
               <div className="flex items-center gap-4">
                 <MapPin size={20} strokeWidth={2} />
@@ -316,11 +348,11 @@ export default function Footer() {
       </div>
       {/* The Contact us section in the footer for the normal size of the web page */}
 
-      <div className="hidden sm:flex sm:text-xs md:text-sm lg:text-base relative h-16 p-2  justify-between items-center text-slate-500 font-medium">
+      <div className="hidden sm:flex sm:text-xs md:text-sm lg:text-xs relative h-16   justify-around items-center text-slate-500 font-medium ">
         {/* The last section of the footer for both the normal size and the Responsive of the web page */}
         <Separator className="absolute top-0 w-full h-px bg-slate-50 left-0" />
         <span>Copyright &copy; 2023, Petify</span>
-        <Link className="hover:opacity-80" to="/TermsOfSale">
+        <Link className="hover:opacity-80 pl-18" to="/TermsOfSale">
           {" "}
           Terms of Sale
         </Link>

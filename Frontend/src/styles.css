@@ -7,12 +7,12 @@
 @tailwind utilities;
 
 @layer components {
-  .App {
+  /* .App {
     @apply relative;
-  }
-  #root {
+  } */
+  /* #root {
     @apply w-full sm:w-[80vw] mx-auto mt-2;
-  }
+  } */
   .searchIcon {
     @apply relative;
   }
@@ -26,8 +26,8 @@
 
 @layer base {
   :root {
-    --background: 20, 100%, 97%;
-    --foreground: 240 10% 3.9%;
+    --background: 30, 100%, 96%;
+    --foreground: 237, 78%, 18%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;

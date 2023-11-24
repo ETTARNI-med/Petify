@@ -1,47 +1,19 @@
-// import the swiperJS
 import { Swiper, SwiperSlide } from "swiper/react";
-
-//import pictures
-import Slide1 from "../assets/banner1.png";
-
-// Import Swiper styles
+// import Slide1 from "../assets/banner1.png";
+import FeaturedSection from "./featuredSection";
+import Marquee from "./marquee";
+import Announecement from "./announcement";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../styles/swiper.css";
-
-// import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-// import products
-// import React, { useState, useEffect } from 'react';
-// import ProductList from './productList';
-// import product from '../data/Product.js';
-
-
-
-// interface product {
-//   id: number;
-//   title: string;
-//   price: string;
-//   image: string;
-// }
-
-
 const Home = () => {
-
-  
-  // const [products, setProducts] = useState<Product[]>([]);
-
-  // useEffect(() => {
-  //   fetch('')
-  //     .then((response) => response.json())
-  //     .then((data: Product[]) => setProducts(data))
-  //     .catch((error) => console.error('Error fetching data:', error));
-  // }, []);
   return (
     <>
-    {/************************ * Swiper section ************** */}
+    <Announecement></Announecement>
+      {/************************ * Swiper section ************** */}
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -52,36 +24,30 @@ const Home = () => {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
+        // navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
-       
+        className="mySwiper m-0"
       >
         <SwiperSlide>
-          <img src={Slide1} alt="" />
+          <img src="https://via.placeholder.com/1640x624" alt="banner1" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={Slide1} alt="" />
+          <img src="https://via.placeholder.com/1640x624" alt="banner2" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={Slide1} alt="" />
+          <img src="https://via.placeholder.com/1640x624" alt="banner3" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={Slide1} alt="" />
+          <img src="https://via.placeholder.com/1640x624"alt="banner4" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={Slide1} alt="" />
+          <img src="https://via.placeholder.com/1640x624" alt="banner5" />
         </SwiperSlide>
       </Swiper>
 
-
-      {/* <div className="App">
-      <h1>E-commerce Collection</h1>
-      <ProductList products={product} />
-    </div> */}
-      
-</>
-     
+      <FeaturedSection></FeaturedSection>
+      <Marquee></Marquee>
+    </>
   );
 };
 

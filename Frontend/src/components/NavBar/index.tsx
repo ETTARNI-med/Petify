@@ -1,4 +1,4 @@
-import PetifyLogo from "@/assets/PetifyLogo.png";
+import PetifyLogo from "@/assets/petlogonew.svg";
 import { SearchInput } from "@/components/ui/searchInput";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,7 +28,7 @@ import SignIn from "../Sheets/SignIn";
 import { Separator } from "@radix-ui/react-separator";
 import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
 import LeftMenu from "@/components/Sheets/LeftMenu"
-// import Faq from "../Sheets/Faq"
+
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
@@ -44,7 +44,7 @@ const NavBar = () => {
           <SearchInput
             type="search"
             placeholder="Search..."
-            className={"w-[30vw] sm:h-8 md:h-[38px]"}
+            className={"w-[50vw] sm:h-8 md:h-[38px]"}
           />
         </span>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -52,12 +52,12 @@ const NavBar = () => {
         </ThemeProvider>
         <Separator className="sm:hidden absolute top-12 w-full h-px right-0 bg-slate-200" />
         <Link to="/favorites" className="hidden sm:flex">
-          <Button variant={"outline"} size="icon">
+          <Button variant={"ghost"} size="icon">
             <Heart size={20} className="sm:w-4 sm:h-auto md:w-5" />
           </Button>
         </Link>
         <Link to="/cart" className="hidden sm:flex">
-          <Button variant={"outline"} size="icon">
+          <Button variant={"ghost"} size="icon">
             <ShoppingCart size={20} className="sm:w-4 sm:h-auto md:w-5" />
           </Button>
         </Link>
@@ -113,6 +113,7 @@ const NavBar = () => {
                         size={20}
                         className="sm:w-4 sm:h-auto md:w-5"
                         strokeWidth={1.75}
+                        
                       />
                       <span>Signout</span>
                     </Link>
@@ -137,9 +138,7 @@ const NavBar = () => {
           <Bird></Bird>
           <Fish></Fish>
           <SmallPet></SmallPet>
-          {/* <Faq></Faq> */}
-          
-          {/* <Separator className="absolute bottom-0 w-full h-px right-0 bg-slate-300" /> */}
+         
         </div>
       </div>
     </div>
