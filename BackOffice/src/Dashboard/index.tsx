@@ -16,7 +16,7 @@ export default function Dashboard() {
     <>
       <div className="flex-col flex">
         <div className="border-b"></div>
-        <div className="w-[95vw] -ml-0 md:ml-auto md:flex-1 space-y-4 p-8 pt-6">
+        <div className="w-[95vw] -ml-0 md:ml-auto md:flex-1 -ml-2 xs:space-y-4 xs:p-8 pt-6">
           <div className="md:grid md:gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="my-4 md:my-auto">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -122,7 +122,7 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle>Overview</CardTitle>
               </CardHeader>
-              <CardContent className="pl-2">
+              <CardContent className="pl-2 xs:h-[275px] sm:h-[375px]">
                 <Overview />
               </CardContent>
             </Card>

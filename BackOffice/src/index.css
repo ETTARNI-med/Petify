@@ -6,6 +6,9 @@
   .App {
     @apply h-[100vh] overflow-x-hidden;
   }
+  .text-wrap {
+    text-wrap: nowrap;
+  }
 }
 
 @layer base {

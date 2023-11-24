@@ -1,6 +1,8 @@
 import { UserAuthForm } from "./components/user-auth-form";
-import PetifyBack from "@/assets/background.svg";
+import PetifyBackDark from "@/assets/background.svg";
+import PetifyBack from "@/assets/backgoundLight.svg";
 import Petify from "@/assets/PetifyLogo.png";
+import { ModeToggle } from "@/components/Theme/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -17,12 +19,17 @@ export default function Home() {
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
           />
+          <img
+            src={PetifyBackDark}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover hidden dark:block"
+          />
           <div className="relative z-20 flex items-center text-lg font-medium uppercase pt-5">
             <img src={Petify} alt="Logo" className="w-14 px-2" />
             Petify
           </div>
-          <div className="relative z-20 mt-auto mx-auto bg-white w-fit rounded opacity-50 backdrop-blur-md">
-            <blockquote className="space-y-2 text-black">
+          <div className="relative z-20 mt-auto mx-auto bg-black w-fit rounded opacity-50 backdrop-blur-md">
+            <blockquote className="space-y-2 text-white">
               <p className="text-lg py-4 px-4 sm:text-xs md:text-sm lg:text-base">
                 &ldquo;Petify, where your pet's happiness is our top
                 priority.&rdquo;
@@ -33,14 +40,17 @@ export default function Home() {
         {/* Navbar for scr that's smaller than md */}
         <div className="md:hidden">
           <div className="w-fit pl-5 relative z-20 flex items-center text-lg font-medium uppercase xsm:pt-5 pt-10">
-            <img src={Petify} alt="Logo" className="w-14 px-2" />
+            <img src={Petify} alt="Logo" className="w-14 px-2 " />
             Petify
           </div>
         </div>
         <div className="p-16 lg:p-24">
-          <a href="#" className="absolute right-4 top-12 flex items-center">
-            Store <ArrowRight size={30} className="pl-4" />
-          </a>
+          <div className="flex justify-between items-center">
+            <ModeToggle className="w-32 px-2" />
+            <span>
+              Store <ArrowRight size={30} className="pl-4" />
+            </span>
+          </div>
           <div className="mx-auto flex w-full flex-col justify-center space-y-10 sm:w-5/6 lg:4/6">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-4xl font-semibold tracking-tight uppercase">
