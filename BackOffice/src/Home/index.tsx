@@ -24,12 +24,12 @@ export default function Home() {
             alt=""
             className="absolute inset-0 w-full h-full object-cover hidden dark:block"
           />
-          <div className="relative z-20 flex items-center text-lg font-medium uppercase pt-5">
+          <div className="relative z-20 flex items-center text-lg font-medium uppercase pt-5 dark:text-white text-black">
             <img src={Petify} alt="Logo" className="w-14 px-2" />
             Petify
           </div>
-          <div className="relative z-20 mt-auto mx-auto bg-black w-fit rounded opacity-50 backdrop-blur-md">
-            <blockquote className="space-y-2 text-white">
+          <div className="relative z-20 mt-auto mx-auto bg-black dark:bg-white w-fit rounded opacity-50 backdrop-blur-md">
+            <blockquote className="space-y-2 dark:text-black text-white">
               <p className="text-lg py-4 px-4 sm:text-xs md:text-sm lg:text-base">
                 &ldquo;Petify, where your pet's happiness is our top
                 priority.&rdquo;
