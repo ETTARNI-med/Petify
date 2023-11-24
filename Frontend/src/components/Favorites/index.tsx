@@ -92,7 +92,7 @@ const Favorites = () => {
 
   return (
     <section className="flex flex-col space-y-10 pb-5">
-      <SectionHeader title="My wishlist" subtitle="Browse your favorite items" />
+      <SectionHeader title="My wishlist" subtitle="Browse Your Favorite Items" />
       <div className="w-full grid justify-center sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-8 transition-transform duration-500 transform">
         {products.slice(0, visibleProducts).map((product, index) => (
           <ProductCard
@@ -108,7 +108,7 @@ const Favorites = () => {
         className="flex items-center justify-center hover:bg-secondcolor duration-200 border-secondcolor border-2 bg-transparent bg text-center w-2/5 self-center rounded-lg hover:text-white text-lg py-1 md:py-2 transition-transform duration-300 transform"
         onClick={visibleProducts === initialVisibleProducts ? showAllProducts : showLessProducts}
       >
-        {visibleProducts === initialVisibleProducts ? 'View All' : 'Show Less'}
+        {visibleProducts === initialVisibleProducts ? 'Show More' : 'Show Less'}
       </button>
     </section>
   );
