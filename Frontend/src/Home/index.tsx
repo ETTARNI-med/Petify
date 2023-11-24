@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import Slide1 from "../assets/banner1.png";
 import FeaturedSection from "./featuredSection";
 import Marquee from "./marquee";
+import Announecement from "./announcement";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -11,6 +12,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 const Home = () => {
   return (
     <>
+    <Announecement></Announecement>
       {/************************ * Swiper section ************** */}
       <Swiper
         spaceBetween={30}
@@ -22,9 +24,9 @@ const Home = () => {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
+        // navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
+        className="mySwiper m-0"
       >
         <SwiperSlide>
           <img src="https://via.placeholder.com/1640x624" alt="banner1" />

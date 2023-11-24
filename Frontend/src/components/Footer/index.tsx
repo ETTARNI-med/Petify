@@ -28,7 +28,7 @@ import Faq from "../Sheets/Faq";
 
 export default function Footer() {
   return (
-    // ********* Responsive footer section ***************
+    // ********* Responsive footer section ***************//
 
     <div className="mt-auto grid ">
       <Separator className="xs:hidden" />
@@ -348,11 +348,11 @@ export default function Footer() {
       </div>
       {/* The Contact us section in the footer for the normal size of the web page */}
 
-      <div className="hidden sm:flex sm:text-xs md:text-sm lg:text-base relative h-16 p-2  justify-between items-center text-slate-500 font-medium">
+      <div className="hidden sm:flex sm:text-xs md:text-sm lg:text-xs relative h-16   justify-around items-center text-slate-500 font-medium ">
         {/* The last section of the footer for both the normal size and the Responsive of the web page */}
         <Separator className="absolute top-0 w-full h-px bg-slate-50 left-0" />
         <span>Copyright &copy; 2023, Petify</span>
-        <Link className="hover:opacity-80" to="/TermsOfSale">
+        <Link className="hover:opacity-80 pl-18" to="/TermsOfSale">
           {" "}
           Terms of Sale
         </Link>

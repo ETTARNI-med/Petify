@@ -26,7 +26,7 @@ const Faq = () => {
            <div className="font-Poppins">
 
       <Sheet >
-        <SheetTrigger asChild className="sm:text-sm lg:text-base w-fit items-center cursor-pointer font-Poppins">
+        <SheetTrigger asChild className="sm:text-sm lg:text-xs w-fit items-center cursor-pointer ">
           <Label onClick={( )=> Faq()} >FAQs</Label>
           {/* <Button variant='ghost'>FAQs</Button> */}
         </SheetTrigger>

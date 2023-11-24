@@ -30,7 +30,7 @@ const SignIn = () => {
             LOG IN
           </Button>
         </SheetTrigger>
-        <SheetContent className="sm:w-6/12 md:5/12">
+        <SheetContent className="sm:w-6/12 md:5/12 " >
           <SheetHeader>
             <SheetTitle className="uppercase">LOG IN</SheetTitle>
             <SheetDescription className="py-2">
