@@ -40,54 +40,61 @@ import {
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
 import AddUser from "./components/AddUser";
+import ProfileSheet from "@/Container/components/ProfileSheet";
 
 const data: Payment[] = [
   {
-    id: "m5gr84i9",
+    _id: "m5gr84i9",
     email: "ken99@yahoo.com",
     username: "en99",
-    date: "23-11-2023",
+    date: "2023-11-23T11:00:00",
     first_name: "ken",
     last_name: "aguero",
+    role: "admin",
   },
   {
-    id: "3u1reuv4",
+    _id: "3u1reuv4",
     email: "abe45@gmail.com",
     username: "ae45",
-    date: "12-11-2023",
+    date: "2023-12-11T11:00:00",
     first_name: "abla",
     last_name: "beka",
+    role: "manager",
   },
   {
-    id: "derv1ws0",
+    _id: "derv1ws0",
     email: "monserrat44@gmail.com",
     username: "onserrat44",
-    date: "17-11-2023",
+    date: "2023-11-17T11:00:00",
     first_name: "monser",
     last_name: "rat",
+    role: "manager",
   },
   {
-    id: "5kma53ae",
+    _id: "5kma53ae",
     email: "silas22@gmail.com",
     username: "ilas22",
-    date: "07-11-2023",
+    date: "2023-07-11T11:00:00",
     first_name: "silas",
     last_name: "syla",
+    role: "admin",
   },
   {
-    id: "bhqecj4p",
+    _id: "bhqecj4p",
     email: "carmella@hotmail.com",
     username: "armella",
-    date: "09-11-2023",
+    date: "2023-09-11T03:00:00",
     first_name: "carmella",
     last_name: "mella",
+    role: "admin",
   },
 ];
 
 export type Payment = {
-  id: string;
+  _id: string;
   email: string;
   username: string;
+  role: "admin" | "manager";
   date: string;
   first_name: string;
   last_name: string;
@@ -108,7 +115,18 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("username")}</div>
+      <div className="lowercase">
+        {
+          <ProfileSheet
+            email={row.original.email}
+            date={row.original.date}
+            first_name={row.original.first_name}
+            last_name={row.original.last_name}
+            role={row.original.role}
+            username={row.original.username}
+          />
+        }
+      </div>
     ),
   },
   {
@@ -131,9 +149,9 @@ export const columns: ColumnDef<Payment>[] = [
     header: () => {
       return <Button variant="ghost">Role</Button>;
     },
-    cell: () => {
+    cell: ({ row }) => {
       return (
-        <Select defaultValue="manager">
+        <Select defaultValue={row.getValue("role")}>
           <SelectTrigger className="max-w-[110px]">
             <SelectValue placeholder="Select" />
           </SelectTrigger>

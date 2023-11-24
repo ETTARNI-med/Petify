@@ -41,120 +41,121 @@ import {
 import Alert from "./components/Alert";
 import AddCustomer from "./components/AddCustomer";
 import { Checkbox } from "@/components/ui/checkbox";
+import ProfileSheet from "@/Container/components/ProfileSheet";
 
 const data: Payment[] = [
   {
-    id: "m5gr84i9",
+    _id: "m5gr84i9",
     email: "ken99@yahoo.com",
     valid: false,
     active: true,
-    date: "23-11-2023",
+    date: "2023-11-23T11:00:00",
     first_name: "ken",
     last_name: "aguero",
   },
   {
-    id: "3u1reuv4",
+    _id: "3u1reuv4",
     email: "abe45@gmail.com",
     valid: true,
     active: false,
-    date: "12-11-2023",
+    date: "2023-12-11T11:00:00",
     first_name: "abla",
     last_name: "beka",
   },
   {
-    id: "derv1ws0",
+    _id: "derv1ws0",
     email: "monserrat44@gmail.com",
     valid: false,
     active: true,
-    date: "17-11-2023",
+    date: "2023-11-17T11:00:00",
     first_name: "monser",
     last_name: "rat",
   },
   {
-    id: "5kma53ae",
+    _id: "5kma53ae",
     email: "silas22@gmail.com",
     valid: true,
     active: true,
-    date: "07-11-2023",
+    date: "2023-07-11T11:00:00",
     first_name: "silas",
     last_name: "syla",
   },
   {
-    id: "bhqecj4p",
+    _id: "bhqecj4p",
     email: "carmella@hotmail.com",
     valid: true,
     active: true,
-    date: "09-11-2023",
+    date: "2023-09-11T11:00:00",
     first_name: "carmella",
     last_name: "mella",
   },
   {
-    id: "bhfecj4p",
+    _id: "bhfecj4p",
     email: "ahmedmohammadi@hotmail.com",
     valid: true,
     active: true,
-    date: "09-23-2023",
+    date: "2023-09-23T11:00:00",
     first_name: "Ahamed",
     last_name: "mohammadi",
   },
   {
-    id: "bhfexj4p",
+    _id: "bhfexj4p",
     email: "younnesjbari@hotmail.com",
     valid: true,
     active: false,
-    date: "09-22-2023",
+    date: "2023-09-22T11:00:00",
     first_name: "younnes",
     last_name: "jbari",
   },
   {
-    id: "bhfecj0p",
+    _id: "bhfecj0p",
     email: "younnestayeb@hotmail.com",
     valid: true,
     active: false,
-    date: "09-24-2023",
+    date: "2023-09-24T11:00:00",
     first_name: "younnes",
     last_name: "tayeb",
   },
   {
-    id: "bxxecj0p",
+    _id: "bxxecj0p",
     email: "houssamarabi@hotmail.com",
     valid: false,
     active: false,
-    date: "09-24-2023",
+    date: "2023-09-24T11:00:00",
     first_name: "houssam",
     last_name: "arabi",
   },
   {
-    id: "bmaecj0p",
+    _id: "bmaecj0p",
     email: "yassineaaerab@hotmail.com",
     valid: true,
     active: false,
-    date: "09-24-2023",
+    date: "2023-09-24T11:00:00",
     first_name: "yassine",
     last_name: "aaerab",
   },
   {
-    id: "bmaemj0p",
+    _id: "bmaemj0p",
     email: "youssefjaouhari@hotmail.com",
     valid: false,
     active: true,
-    date: "09-24-2023",
+    date: "2023-09-24T11:00:00",
     first_name: "youssef",
     last_name: "jaouhari",
   },
   {
-    id: "bmaemj0p",
+    _id: "bmaemj0p",
     email: "karimhassan@hotmail.com",
     valid: false,
     active: false,
-    date: "09-24-2023",
+    date: "2023-09-24T11:00:00",
     first_name: "hassan",
     last_name: "karim",
   },
 ];
 
 export type Payment = {
-  id: string;
+  _id: string;
   email: string;
   valid: boolean;
   active: boolean;
@@ -196,7 +197,20 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">
+        {
+          <ProfileSheet
+            email={row.original.email}
+            date={row.original.date}
+            first_name={row.original.first_name}
+            last_name={row.original.last_name}
+            active={row.original.active}
+            valid={row.original.valid}
+          />
+        }
+      </div>
+    ),
   },
 
   {
