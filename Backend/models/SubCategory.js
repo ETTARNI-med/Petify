@@ -1,4 +1,7 @@
-const mongoose =require( "mongoose");
+const mongoose = require( "mongoose");
+
+//To Import the Category ID
+const ObjectId = mongoose.Types.ObjectId;
 
 const SubCategorySchema = new mongoose.Schema(
   {
@@ -10,8 +13,8 @@ const SubCategorySchema = new mongoose.Schema(
       max: 20,
     },
     category_id: {
-      type: String,
-      require: true,
+      type: ObjectId,
+      ref: "Category",
     },
     active: {
       type: Boolean,
