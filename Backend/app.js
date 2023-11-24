@@ -1,5 +1,6 @@
 const express = require('express');
-
+const multer = require('multer')
+const path = require("path");
 // Creating the appplication
 const app = express();
 const dbConnect = require('./config/dbConnect');
