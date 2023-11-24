@@ -3,7 +3,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 const Customer = require('../models/CustomerSchema')
 const checkCustomer = async (req, res, next) => {
         
-    const token = req.header('x-auth-token') || req.cookies.token;
+    const token =  req.cookies.token;
     console.log("token ",token)
     if (!token){
         return res.status(401).json({

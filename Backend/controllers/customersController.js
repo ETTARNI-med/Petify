@@ -20,16 +20,17 @@ const registerCustomer = asyncHandler(async (req, res) => {
   const findCustomer = await Customer.findOne({ email });
   if (!findCustomer) {
     const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    
     const hashedCode = await bcrypt.hash(code, salt);
-
+    const hashedPassword = await bcrypt.hash(password, salt);
     const newCustomer = await Customer.create({
       ...req.body,
       password: hashedPassword,
     });
 
-    const findCustomer = await Customer.findOne({ email });
+    const findCustomer = await Customer.findOne({ email:email });
     const findId = findCustomer.id;
+console.log("id:"+findId)
 
     const token = await JWT.sign(
       {
@@ -43,7 +44,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
     );
 
     res.cookie("token", token, { maxAge: 800000, httpOnly: true });
-    sendEmail(email, code);
+   sendEmail(email, code);
 
     res.json({ token: token });
     // res.redirect(`http://127.0.0.1:4000/v1/customers/validate`);
@@ -76,11 +77,7 @@ const login = asyncHandler(async (req, res) => {
           expiresIn: 1800,
         }
       );
-      //  session({
-      //   secret:JWT_SECRET,
-      //   resave:false,
-      //   saveUnintialized:false,
-      // })
+
       res.cookie("token", token, {
         httpOnly: true,
         maxAge: 72 * 60 * 60 * 1000,
@@ -221,7 +218,7 @@ const updateCustomersData = asyncHandler(async (req, res) => {
 // get the customer Profil
 const customerProfil = asyncHandler(async (req, res) => {
   try {
-    console.log("req.session.customer: ", req.session.customer);
+    console.log("req.session.customer: ", req.session);
 
     const findById = await Customer.findOne({ _id: req.id });
     if (findById) {
@@ -300,6 +297,19 @@ const customerValidation = asyncHandler(async (req, res) => {
     console.log(error);
   }
 });
+
+//reset password
+
+const resetPassword = asyncHandler(async(req,res)=>{
+  const code = uuid.v4().substr(0, 4);
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedCode = await bcrypt.hash(code, salt);
+  const email=req.body.email;
+  const findCustomer = await Customer.findOne({email:email})
+   if(findCustomer){
+
+   }
+})
 
 module.exports = {
   registerCustomer,
