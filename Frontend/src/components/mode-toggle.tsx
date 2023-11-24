@@ -22,7 +22,7 @@ export function ModeToggle() {
         <img
           src={BackgroundImage}
           alt="background"
-          className="w-full h-full object-cover opacity-50 blur-[3px]"
+          className="w-full h-full object-cover opacity-30 blur-[3px]"
         />
       </div>
     </>

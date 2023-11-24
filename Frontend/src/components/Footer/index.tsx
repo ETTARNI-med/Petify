@@ -314,25 +314,25 @@ export default function Footer() {
               
       <a
         href="/instagram"
-        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+        className=""
       >
         <Instagram className="lg:dark:text-white text-[#fc1b65] lg:text-black hover:text-[#fc1b65] dark:hover:text-[#fc1b65]" />
       </a>
       <a
         href="/Facebook"
-        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+        className=""
       >
         <Facebook className="lg:dark:text-white text-[#0866ff] lg:text-black hover:text-[#0866ff] dark:hover:text-[#0866ff]" />
       </a>
       <a
         href="/X"
-        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300 py-1"
+        className=" py-1"
       >
         <X className="text-black" />
       </a>
       <a
         href="/Linkdin"
-        className="sm:rotate-90 lg:rotate-0 hover:rotate-90 transition-all duration-300"
+        className=""
       >
         <Linkedin className="lg:dark:text-white text-[#0c68c4] lg:text-black hover:text-[#0c68c4] dark:hover:text-[#0c68c4]" />
       </a>
