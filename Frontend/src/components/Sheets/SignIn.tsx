@@ -14,12 +14,17 @@ import {
 } from "@/components/ui/sheet";
 import { EyeOff } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
+// import LightBackground  from "@/assets/backgound.svg";
+// import DarkBackground from '@/assets/background-dark.svg';
+
 // import { useState } from "react";
 
 const SignIn = () => {
+
   // const [getType, setType] = useState({ login: false, reset: false, register: false });
   // type === "register" ? setType({login : false, reset : false , register : true}) : type === "login" ? setType({login : true, reset : false , register : false}) :setType({login : false, reset : true , register : false});
   return (
+    
     <form action="">
       <Sheet>
         <SheetTrigger asChild>
@@ -30,7 +35,10 @@ const SignIn = () => {
             LOG IN
           </Button>
         </SheetTrigger>
+        <div >
+          {/* <img src={isDarkMode ? DarkBackground : LightBackground} alt="background" className="w-full h-full object-cover opacity-50 blur-[3px]	" /> */}
         <SheetContent className="sm:w-6/12 md:5/12 " >
+
           <SheetHeader>
             <SheetTitle className="uppercase">LOG IN</SheetTitle>
             <SheetDescription className="py-2">
@@ -78,6 +86,7 @@ const SignIn = () => {
             </SheetClose>
           </SheetFooter>
         </SheetContent>
+        </div>
       </Sheet>
     </form>
   );
