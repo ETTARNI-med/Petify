@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const uuid = require("uuid");
 const sendEmail = require("../config/sendEmail");
+const sendEmailLink = require("../config/sendEmailLink");
 
 //register a customer
 const registerCustomer = asyncHandler(async (req, res) => {
@@ -44,7 +45,7 @@ console.log("id:"+findId)
     );
 
     res.cookie("token", token, { maxAge: 800000, httpOnly: true });
-   sendEmail(email, code);
+     await  sendEmail(email, code);
 
     res.json({ token: token });
     // res.redirect(`http://127.0.0.1:4000/v1/customers/validate`);
@@ -147,6 +148,7 @@ const customerById = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 //delete a customer
 const deleteCustomer = asyncHandler(async (req, res) => {
   try {
@@ -299,17 +301,63 @@ const customerValidation = asyncHandler(async (req, res) => {
 });
 
 //reset password
+ 
+const forgotPassword = asyncHandler(async(req,res)=>{
 
-const resetPassword = asyncHandler(async(req,res)=>{
-  const code = uuid.v4().substr(0, 4);
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hashedCode = await bcrypt.hash(code, salt);
   const email=req.body.email;
-  const findCustomer = await Customer.findOne({email:email})
-   if(findCustomer){
+  const findCustomer = await Customer.findOne({email:email});
+  const findId = findCustomer.id;
+  console.log(findId)
+  try{
+  if(findCustomer){
+    const token = await JWT.sign(
+      {
+        findId,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: 800,
+      }
+    );
+    const url = `${req.protocol}://127.0.0.1:4000/v1/customers/resetPassword/${token}`;
+    await sendEmailLink(email,url);
+    res.status(201).json("a link is successfully sent to your email account");
 
+   }}catch(error){
+    throw new Error(error);
    }
 })
+//reset password
+const resetPassword = asyncHandler(async(req,res)=>{
+  const findCustomer = await Customer.findOne({_id:req.id})
+  
+  const customerPassword = findCustomer.password;
+
+  const newPassword = req.body.password;
+  console.log(newPassword)
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedEnteredPassword = await bcrypt.hash(newPassword, salt);
+  
+   try{
+    if(newPassword.length>=8){
+      const reset = await Customer.findByIdAndUpdate(
+        req.id,
+      { password: hashedEnteredPassword },
+      { new: true }
+      )
+      res.status(201).json("the password is successfully changed");
+      res.redirect('/profile')
+     }
+     
+      else {
+        res.json("the password must  be more than  8 figures");
+       }
+  
+   }catch(error){
+    throw new Error(error);
+   }
+})
+
 
 module.exports = {
   registerCustomer,
@@ -321,4 +369,6 @@ module.exports = {
   updateCustomer,
   customerProfil,
   customerValidation,
+  forgotPassword,
+  resetPassword
 };
