@@ -28,10 +28,14 @@ const addUser = asyncHandler(async (req, res) => {
         ...req.body,
         password: hashedPassword,
       })
-      
+
+      // To Return New User without Password
+      const user = newUser.toObject()
+      delete user.password 
+       
        res.status(200).json({
         msg: "Succesfully added",
-        newUser
+        user
         
       });
     }
@@ -48,12 +52,12 @@ const addUser = asyncHandler(async (req, res) => {
 const login = async (req, res) => {
 
   const email = req.body.email;
-  const user_name = req.body.user_name;
+  //const user_name = req.body.user_name;
   const password = req.body.password;
 
   try { 
 
-    const find = await User.findOne({$or : [{user_name},{email}]})
+    const find = await User.findOne({$or : [{user_name : email},{email}]})
     const findRole = find.role
     const findId = find._id
     
@@ -61,9 +65,7 @@ const login = async (req, res) => {
     if ( !find){
         return res.status(400).json({
           msg: "Invalid credentials",
-        })
-       
-      
+        })      
     }
     
     const matched = await bcrypt.compare(password, find.password);
@@ -91,18 +93,11 @@ const login = async (req, res) => {
   }
 };
 
-//Add New User controller // Check addUser above
-
-// const addNewUser = () => {
-//   console.log(" hey the addNewUser is working");
-// };
-
 //Get All Users 
 
 const getAllUsers = async (req,res) => {
 
   try {
-
 
     const all = await User.find()
 
@@ -133,6 +128,7 @@ const getUserById = async(req,res) => {
     email : hisID.email,
     role : hisID.role,
     user_name : hisID.user_name,
+    //create_date : hisID.creation_date,
   }
 
   try {
@@ -146,46 +142,111 @@ const getUserById = async(req,res) => {
 };
 
 //Search For User  
-const searchForUser = async(req, res) => {
-  let {query} = req.query;
+// const searchForUser = async(req, res) => {
+//   let {query} = req.query;
 
-  if (typeof query === "undefined"){
-    try {
+//   if (typeof query === "undefined"){
+//     try {
+//       const getUsers = await User.find();
+
+//       res.json(getUsers);
+//     } catch (error) {
+//       throw new Error(error);
+//     }
+//   } else {
+//     try {
+//       query = query.toLocaleLowerCase();
+
+//       const regex = new RegExp(query,"i");
+//       // Find the user based on the search query /
+
+//       let userInfo = await User.find({
+//        $or : [
+//           {first_name : {$regex : regex}},
+//           {last_name : {$regex : regex}},
+//           {email : {$regex : regex}},
+//           {role : {$regex : regex}},
+//        ],
+//       });
+//       const infos = {
+//         fist_name : userInfo.first_name,
+//         last_name : userInfo.last_name,
+//         email : userInfo.email,
+//         role : userInfo.role,
+//         user_name : userInfo.user_name,
+//         //create_date : hisID.creation_date,
+//       }
+//       if (!userInfo) {
+//         return res.status(404).json({ message: "Customer not found" });
+//       }
+//        // To Return New User without Password
+//       //  const user = {...userInfo}
+//        //delete userInfo.password 
+       
+      
+//       res.json({
+//         infos,
+//       });
+//     } catch (error) {
+//       throw new Error(error);
+//     }
+//   }
+
+// };
+
+
+const searchForUser = async (req, res) => {
+  try {
+    let { query } = req.query;
+
+    if (typeof query === "undefined") {
       const getUsers = await User.find();
 
-      res.json(getUsers);
-    } catch (error) {
-      throw new Error(error);
-    }
-  } else {
-    try {
-      query = query.toLocaleLowerCase();
+      res.json(getUsers.map((user) => formatUser(user)));
+    } else {
+      query = query.toLowerCase();
+      const regex = new RegExp(query, "i");
 
-      const regex = new RegExp(query,"i");
-      // Find the user based on the search query /
-
-      const userInfo = await User.find({
-       $or : [
-          {first_name : {$regex : regex}},
-          {last_name : {$regex : regex}},
-          {email : {$regex : regex}},
-          {role : {$regex : regex}},
-       ],
+      // Find the user based on the search query
+      let userInfo = await User.find({
+        $or: [
+          { first_name: { $regex: regex } },
+          { last_name: { $regex: regex } },
+          { email: { $regex: regex } },
+          { role: { $regex: regex } },
+        ],
       });
 
-      if (!userInfo) {
+      if (!userInfo || userInfo.length === 0) {
         return res.status(404).json({ message: "Customer not found" });
       }
 
+      const formattedUserInfo = userInfo.map((user) => formatUser(user));
+
       res.json({
-        userInfo,
+        userInfo: formattedUserInfo,
       });
-    } catch (error) {
-      throw new Error(error);
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
+};
+// Helper function to format user information without the password
+const formatUser = (user) => {
+  const { first_name, last_name, email, role, user_name, creation_date } = user;
+
+  return {
+    first_name,
+    last_name,
+    email,
+    role,
+    user_name,
+    creation_date,
+  };
 
 };
+
 
 //Update User updateUser
 const updateUser = async (req, res) => {
@@ -224,15 +285,11 @@ const updateUser = async (req, res) => {
             first_name : firstName,
             last_name : lastName,
             email : email,
-            user_name : userName,
-            
+            user_name : userName,            
           }
         }
         )
-    }
-    
-
-    
+    }    
 
       res.status(200).json({
         msg: "updated successfully",

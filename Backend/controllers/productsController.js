@@ -3,23 +3,71 @@ const Product = require("../models/Product");
 const asyncHandler = require("express-async-handler");
 const subcategories = require("../routes/subcategories");
 const SubCategory = require("../models/SubCategory");
-
+const upload = require("../midllewares/multerMiddleware");
+//const multer = require('multer')
+const path = require ('path')
 //create a new product
-const createNewProduct = asyncHandler(async (req, res) => {
-  const { body } = req;
-  const productName = req.body.product_name;
-  const productSku = req.body.sku;
+// const createNewProduct = asyncHandler(async (req, res) => {
+//   const { body } = req;
+//   const productName = req.body.product_name;
+//   const productSku = req.body.sku;
+//   const findProduct = await Product.findOne({ product_name: productName });
+//   const findSku = await Product.findOne({ sku: productSku });
+//   try {
+//     if (!findProduct && !findSku) {
+//       const newProduct = await Product.create(body);
+//       res.status(200).json(newProduct);
+//     } else if (findProduct) {
+//       res.status(401).json("this Product name already existed");
+//     } else {
+//       res.status(401).json("this sku is already existed");
+//     }
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// });
+
+//************TEST*************** */
+const createNewProduct = asyncHandler(async(req, res) => {
+  // const { body } = req;
+  // const productName = req.body.product_name;
+  // const productSku = req.body.sku;
+  
+  //---------------------------------
+  //console.log(upload.getDestination)
+  const productSku = req.body.productSku;
+  const productImage = req.file.path;
+  const productName = req.body.productName;
+  //const subCateg = req.body.subcategory
+  const shortDescrip = req.body.shortDescrip;
+  const longDescrip = req.body.longDescrip;
+  const price = req.body.price;
+  const discountPr = req.body.discountPr;
+  console.log(productSku);
+  console.log(productImage);
+  console.log(productName);
+
+
   const findProduct = await Product.findOne({ product_name: productName });
   const findSku = await Product.findOne({ sku: productSku });
   try {
     if (!findProduct && !findSku) {
-      const newProduct = await Product.create(body);
-      res.status(200).json(newProduct);
-    } else if (findProduct) {
-      res.status(401).json("this Product name already existed");
-    } else {
-      res.status(401).json("this sku is already existed");
-    }
+            const newProduct = await Product.create({
+              sku: productSku,
+              product_image: productImage,
+              product_name: productName,
+              short_description: shortDescrip,
+              long_description: longDescrip,
+              price: price,
+              discount_price: discountPr,
+            });
+            res.status(200).json(newProduct);
+            console.log(newProduct)
+          } else if (findProduct) {
+            res.status(401).json("this Product name already existed");
+          } else {
+            res.status(401).json("this sku is already existed");
+          }
   } catch (error) {
     throw new Error(error);
   }
