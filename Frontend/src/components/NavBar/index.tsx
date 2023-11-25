@@ -36,7 +36,8 @@ const NavBar = () => {
     <div className="w-full grid grid-rows-2 gap-5 font-Poppins rounded-lg">
       <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center ">
         <LeftMenu />
-        <Link to="/">
+        <Link to="/" unstable_viewTransition
+>
           <img src={PetifyLogo} alt="logo" className="w-9 md:w-12 lg:w-14" />
         </Link>
         <span className="searchIcon hidden sm:flex">
@@ -51,12 +52,14 @@ const NavBar = () => {
           <ModeToggle></ModeToggle>
         </ThemeProvider>
         <Separator className="sm:hidden absolute top-12 w-full h-px right-0 bg-slate-200" />
-        <Link to="/favorites" className="hidden sm:flex">
+        <Link to="/favorites" unstable_viewTransition
+ className="hidden sm:flex">
           <Button variant={"ghost"} size="icon">
             <Heart size={20} className="sm:w-4 sm:h-auto md:w-5" />
           </Button>
         </Link>
-        <Link to="/cart" className="hidden sm:flex">
+        <Link to="/cart"unstable_viewTransition
+  className="hidden sm:flex">
           <Button variant={"ghost"} size="icon">
             <ShoppingCart size={20} className="sm:w-4 sm:h-auto md:w-5" />
           </Button>
