@@ -18,10 +18,9 @@ const checkIfAdmin = require('../midllewares/checkAdmin')
 users.post("/login" ,login);
 users.post("/add",checkIfAdmin,addUser);
 users.get("/allusers",checkIfUser ,getAllUsers);
-// 
 users.get("/profil/:id",checkIfUser ,getUserById);
-users.get("/search",searchForUser);
-users.put("/update",checkIfAdmin ,updateUser);
-users.delete("/delete",checkIfAdmin ,deleteUser);
+users.get("/search", searchForUser);
+users.put("/:id", updateUser);
+users.delete("/:id", deleteUser);
 
 module.exports = users;

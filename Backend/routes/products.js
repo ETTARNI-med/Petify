@@ -8,14 +8,11 @@ const {
   updateProducts,
   deleteProduct,
 } = require("../controllers/productsController");
-
-const upload = require('../midllewares/multerMiddleware');
-
 //products routes
 
-products.post("/addproduct",upload.single('image'),createNewProduct);
+products.post("/", createNewProduct);
 
-products.get("/",searchForProducts);
+products.get("/", searchForProducts);
 products.get("/:id", getProductsById);
 products.patch("/:id", updateProducts);
 products.delete("/:id", deleteProduct);
