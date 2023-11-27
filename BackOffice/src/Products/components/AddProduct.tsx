@@ -11,8 +11,64 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
+import axios from "axios";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
 
 export default function AddProduct() {
+
+  const [product,setProduct]= useState({
+    product_name: '',
+    discount_price: '',
+    category_id: '',
+    subcategory_id: '',
+    short_description: '',
+    long_description: '',
+    product_image: '',
+    active: true,
+    price: '',
+    sku: '',
+    options: []
+  })
+  // const handleSubmit=async(e)=>{
+  //   e.preventDefault()
+  //   try{
+  //     // const response = await axios.post(),{
+  //       // product_name:e.target.product_name.value
+  //     }
+  //   }
+  // }
+  const handleProductChange =(target:string , value:string)=>{
+    setProduct((prevValue)=>{
+      return{
+        ...prevValue,
+        target : value
+      }
+    })
+  }
+  console.log(product);
+
+  const handleProductOptionsChange =(target:string , value:string)=>{
+    setProduct((prevValue)=>{
+      return{
+        ...prevValue,
+        options : [
+          ...prevValue.options,
+          target+` : `+value
+        ]
+      }
+    })
+  }
+  console.log(product);
+  
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -21,69 +77,198 @@ export default function AddProduct() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add New Product</DialogTitle>
-          <DialogDescription>
-            Add Product in a easy way. Click save when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="product_name" className="xsm:text-right pl-2">
-              Product Name
-            </Label>
-            <Input
-              id="product_name"
-              placeholder="crock"
-              className="col-span-3"
-            />
+        <form>
+          <DialogHeader>
+            <DialogTitle>Add New Product</DialogTitle>
+            <DialogDescription>
+              Add Product in a easy way. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="product_name" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Product Name
+              </Label>
+              <Input
+              value={product.product_name}
+              onChange={(e)=>handleProductChange('product_name', e.target.value)}
+                required
+                id="product_name"
+                name="product_name"
+                placeholder="crock"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="sku" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                SKU
+              </Label>
+              <Input
+              value={product.sku}
+              onChange={(e)=>handleProductChange('sku', e.target.value)}
+                required
+                id="sku"
+                name="sku"
+                placeholder="102903"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="price" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Price
+              </Label>
+              <Input
+              value={product.price}
+              onChange={(e)=>handleProductChange('price', e.target.value)}
+                type="number"
+                required
+                id="price"
+                name="price"
+                placeholder="27.99"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="discount_price" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Discount Price
+              </Label>
+              <Input
+              value={product.discount_price}
+              onChange={(e)=>handleProductChange('discount_price', e.target.value)}
+                type="number"
+                required
+                name="discount_price"
+                id="discount_price"
+                placeholder="26.99"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="subcategory_id" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Subcategory
+              </Label>
+              <Input
+              value={product.subcategory_id}
+              onChange={(e)=>handleProductChange('subcategory_id', e.target.value)}
+                required
+                name="subcategory_id"
+                id="subcategory_id"
+                placeholder="food"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label
+                htmlFor="short_description"
+                className="xsm:text-right pl-2"
+              >
+                <span className="text-red-700">*</span>
+                Short Description
+              </Label>
+              <Input
+              value={product.short_description}
+              onChange={(e)=>handleProductChange('short_description', e.target.value)}
+                required
+                name="short_description"
+                id="short_description"
+                placeholder="instruction, information..."
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="long_description" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Long Description
+              </Label>
+              <Input
+              value={product.long_description}
+              onChange={(e)=>handleProductChange('long_description', e.target.value)}
+                name="long_description"
+                id="long_description"
+                placeholder="instruction, information..."
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="product_image" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Image
+              </Label>
+              <Input
+              value={product.product_image}
+              onChange={(e)=>handleProductChange('product_image', e.target.value)}
+                required
+                name="product_image"
+                id="product_image"
+                type="file"
+                accept="image/*"
+                className="col-span-3 justify-self-start"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="color" className="xsm:text-right pl-2">
+                Color
+              </Label>
+              <Input
+              value={product.options.slice(8)}
+              onChange={(e)=>handleProductOptionsChange('color', e.target.value)}
+                name="color"
+                id="color"
+                type="color"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="size" className="xsm:text-right pl-2">
+                Size
+              </Label>
+              <Select>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select Size" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="tiny">Tiny (&lt; 0.5Kg)</SelectItem>
+                    <SelectItem value="small">Small (&lt; 1Kg)</SelectItem>
+                    <SelectItem value="medium">Medium (&lt; 2Kg)</SelectItem>
+                    <SelectItem value="large">Large (&gt; 2Kg)</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+              <Label htmlFor="age" className="xsm:text-right pl-2">
+                Age
+              </Label>
+              <Select>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select Age" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="puppy">Puppy (&lt; 7 Months)</SelectItem>
+                    <SelectItem value="junior">
+                      Junior (&lt; 2 Years)
+                    </SelectItem>
+                    <SelectItem value="adult">Adult (&lt; 3 Years)</SelectItem>
+                    <SelectItem value="mature">
+                      Mature (&gt; 3 Years)
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="sku" className="xsm:text-right pl-2">
-              SKU
-            </Label>
-            <Input id="sku" placeholder="102903" className="col-span-3" />
-          </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="price" className="xsm:text-right pl-2">
-              Price
-            </Label>
-            <Input id="price" placeholder="27.99" className="col-span-3" />
-          </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="discount_price" className="xsm:text-right pl-2">
-              Discount Price
-            </Label>
-            <Input
-              id="discount_price"
-              placeholder="26.99"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="subcategory_id" className="xsm:text-right pl-2">
-              Subcategory
-            </Label>
-            <Input
-              id="subcategory_id"
-              placeholder="food"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
-            <Label htmlFor="short_description" className="xsm:text-right pl-2">
-              Short Description
-            </Label>
-            <Input
-              id="short_description"
-              placeholder="instruction, information..."
-              className="col-span-3"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Add Product</Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="submit">Add Product</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
