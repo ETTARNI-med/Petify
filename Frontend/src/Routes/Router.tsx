@@ -14,6 +14,7 @@ import PrivacyPolicy from "../components/Pages/PrivacyPolicy";
 import Blog from "../components/Pages/Blog";
 import AboutUs from "../components/Pages/AboutUs";
 import Layout from "./Layout";
+import SubCategory from "@/components/SubCategory";
 
 const Router = createBrowserRouter([
   {
@@ -55,21 +56,30 @@ const Router = createBrowserRouter([
       {
         path: "/TermsOfSale",
         element: <TermsOfSale />,
-      },  {
+      },
+      {
         path: "/ShippingPolicy",
         element: <ShippingPolicy />,
-      },  {
+      },
+      {
         path: "/PrivacyPolicy",
         element: <PrivacyPolicy />,
-      },  {
+      },
+      {
         path: "/RefundPolicy",
         element: <RefundPolicy />,
-      },{
+      },
+      {
         path: "/AboutUs",
         element: <AboutUs />,
-      },{
+      },
+      {
         path: "/Blog",
         element: <Blog />,
+      },
+      {
+        path: "/subcategory",
+        element: <SubCategory />,
       },
     ],
   },
