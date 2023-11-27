@@ -21,7 +21,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
   const findCustomer = await Customer.findOne({ email });
   if (!findCustomer) {
     const salt = await bcrypt.genSalt(saltRounds);
-    
+
     const hashedCode = await bcrypt.hash(code, salt);
     const hashedPassword = await bcrypt.hash(password, salt);
     const newCustomer = await Customer.create({
@@ -29,9 +29,9 @@ const registerCustomer = asyncHandler(async (req, res) => {
       password: hashedPassword,
     });
 
-    const findCustomer = await Customer.findOne({ email:email });
+    const findCustomer = await Customer.findOne({ email: email });
     const findId = findCustomer.id;
-console.log("id:"+findId)
+    console.log("id:" + findId);
 
     const token = await JWT.sign(
       {
@@ -45,7 +45,7 @@ console.log("id:"+findId)
     );
 
     res.cookie("token", token, { maxAge: 800000, httpOnly: true });
-     await  sendEmail(email, code);
+    await sendEmail(email, code);
 
     res.json({ token: token });
     // res.redirect(`http://127.0.0.1:4000/v1/customers/validate`);
@@ -60,14 +60,11 @@ const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   //check if user exist
   const findCustomer = await Customer.findOne({ email });
-
   const findId = findCustomer._id;
 
   try {
     const matched = await bcrypt.compare(password, findCustomer.password);
 
-    req.session.customer = findCustomer;
-    await req.session.save;
     if (matched) {
       const token = await JWT.sign(
         {
@@ -78,7 +75,8 @@ const login = asyncHandler(async (req, res) => {
           expiresIn: 1800,
         }
       );
-
+      req.session.customer = findCustomer;
+      await req.session.save;
       res.cookie("token", token, {
         httpOnly: true,
         maxAge: 72 * 60 * 60 * 1000,
@@ -194,23 +192,32 @@ const updateCustomer = asyncHandler(async (req, res) => {
 
 const updateCustomersData = asyncHandler(async (req, res) => {
   try {
-    const email = req.body.email;
+    const password = req.body.password;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const emailORUsername = req.body.email || req.body.username;
     const findCustomer = await Customer.findOne({ _id: req.id });
-    const findByEmail = await Customer.findOne({ email: email });
+    const findByEmailORUsername = await Customer.findOne({
+      $or: [{ username: emailORUsername }, { email: emailORUsername }],
+    });
+    console.log(emailORUsername);
     if (
-      findCustomer.email === email ||
-      (findCustomer.email !== email && !findByEmail)
+      findCustomer.email === emailORUsername ||
+      findCustomer.username === emailORUsername ||
+      ((findCustomer.email !== emailORUsername ||
+        findCustomer.username !== emailORUsername) &&
+        !findByEmailORUsername)
     ) {
       const updateCustomer = await Customer.findByIdAndUpdate(
         { _id: req.id },
-        req.body,
+        { ...req.body, password: hashedPassword },
         { new: true }
       );
       res.status(200).json("customer updated successfully");
     } else if (!findCustomer) {
       res.status(404).json("invalid customer id");
-    } else if (findByEmail) {
-      res.json("Email is already existed ");
+    } else if (findByEmailORUsername) {
+      res.json("Email or username is already existed ");
     }
   } catch (error) {
     res.json("error or token is not valid");
@@ -301,63 +308,65 @@ const customerValidation = asyncHandler(async (req, res) => {
 });
 
 //reset password
- 
-const forgotPassword = asyncHandler(async(req,res)=>{
 
-  const email=req.body.email;
-  const findCustomer = await Customer.findOne({email:email});
+const forgotPassword = asyncHandler(async (req, res) => {
+  const email = req.body.email;
+  const findCustomer = await Customer.findOne({ email: email });
   const findId = findCustomer.id;
-  console.log(findId)
-  try{
-  if(findCustomer){
-    const token = await JWT.sign(
-      {
-        findId,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: 800,
-      }
-    );
-    const url = `${req.protocol}://127.0.0.1:4000/v1/customers/resetPassword/${token}`;
-    await sendEmailLink(email,url);
-    res.status(201).json("a link is successfully sent to your email account");
-
-   }}catch(error){
+  console.log(findId);
+  try {
+    if (findCustomer) {
+      const token = await JWT.sign(
+        {
+          findId,
+        },
+        JWT_SECRET,
+        {
+          expiresIn: 800,
+        }
+      );
+      const url = `${req.protocol}://127.0.0.1:4000/v1/customers/resetPassword/${token}`;
+      await sendEmailLink(email, url);
+      res.status(201).json("a link is successfully sent to your email account");
+    }
+  } catch (error) {
     throw new Error(error);
-   }
-})
+  }
+});
 //reset password
-const resetPassword = asyncHandler(async(req,res)=>{
-  const findCustomer = await Customer.findOne({_id:req.id})
-  
+const resetPassword = asyncHandler(async (req, res) => {
+  const findCustomer = await Customer.findOne({ _id: req.id });
+
   const customerPassword = findCustomer.password;
 
   const newPassword = req.body.password;
-  console.log(newPassword)
+  console.log(newPassword);
   const salt = await bcrypt.genSalt(saltRounds);
   const hashedEnteredPassword = await bcrypt.hash(newPassword, salt);
-  
-   try{
-    if(newPassword.length>=8){
+
+  try {
+    if (newPassword.length >= 8) {
       const reset = await Customer.findByIdAndUpdate(
         req.id,
-      { password: hashedEnteredPassword },
-      { new: true }
-      )
+        { password: hashedEnteredPassword },
+        { new: true }
+      );
       res.status(201).json("the password is successfully changed");
-      res.redirect('/profile')
-     }
-     
-      else {
-        res.json("the password must  be more than  8 figures");
-       }
-  
-   }catch(error){
+      res.redirect("/profile");
+    } else {
+      res.json("the password must  be more than  8 figures");
+    }
+  } catch (error) {
     throw new Error(error);
-   }
-})
+  }
+});
 
+//logout function
+const logout = asyncHandler(async (req, res) => {
+  req.session.destroy();
+  res.clearCookie("token", { httpOnly: true, secure: true });
+  res.json("successfully loged out");
+});
 
 module.exports = {
   registerCustomer,
@@ -370,5 +379,6 @@ module.exports = {
   customerProfil,
   customerValidation,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  logout,
 };

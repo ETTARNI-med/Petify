@@ -13,8 +13,6 @@ const checkToken = async (req, res, next) => {
                     "message": "invalid link" }]
        })
     }
-
-    console.log(token)
     let customer = await JWT.verify(token, JWT_SECRET)
     // req.user to check if user ADMIN && MANAGER 
 

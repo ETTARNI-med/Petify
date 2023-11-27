@@ -15,7 +15,8 @@ const {
   customerProfil,
   customerValidation,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  logout
 } = require("../controllers/customersController");
 
 // Customer authentication
@@ -51,8 +52,11 @@ customerRoutes.get("/profile", checkCustomer, customerProfil);
 customerRoutes.patch("/profile/update", checkCustomer, updateCustomersData);
 //forget password
 customerRoutes.post("/forgotPassword", forgotPassword);
-//reset password
 
+//reset password
 customerRoutes.patch("/resetPassword/:token", checkToken,resetPassword);
+
+//logout
+customerRoutes.get("/logout", checkauthCustomer,logout);
 
 module.exports = customerRoutes;
