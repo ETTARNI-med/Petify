@@ -101,14 +101,18 @@ export default function Cards({ ProductList, Filter }: Props) {
 
         return (
           <Card
-            className="w-[20vw] m-2 bg-secondcolor grid place-content-between"
+            className="w-5/6 m-2 bg-secondcolor grid place-content-center"
             key={product.sku}
           >
-            <CardHeader className="">
-              <CardTitle>{product.product_name}</CardTitle>
-              <CardDescription>{product.short_description}</CardDescription>
+            <CardHeader className="w-full">
+              <CardTitle className="text-sm md:text-base lg:text-lg xl:text-xl text-wrap-none">
+                {product.product_name}
+              </CardTitle>
+              <CardDescription className="line-clamp-1">
+                {product.short_description}
+              </CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-4">
+            <CardContent className="grid gap-2">
               <span className="hidden text-gray-600">
                 {" "}
                 <span className="text-blue-600"></span>
@@ -117,34 +121,43 @@ export default function Cards({ ProductList, Filter }: Props) {
                 <span className="text-pink-600"></span>
               </span>
               <img src={product.product_image} alt={product.product_name} />
-              <span className="flex justify-between items-center h-8">
+              <span className="flex justify-between items-center">
                 {colorOption && (
                   <>
                     <p>Color : </p>
-                    <HoverCard>
-                      <HoverCardTrigger asChild>
-                        <Dot
-                          size={40}
-                          className={`text-${colorOption
-                            .split("Color: ")[1]
-                            .toLocaleLowerCase()}-600`}
-                        />
-                      </HoverCardTrigger>
-                      <HoverCardContent
-                        className={cn(
-                          "w-fit bg-transparent border-none shadow-none absolute -left-14 -top-[2.1rem]",
-                          `text-${colorOption
-                            .split("Color: ")[1]
-                            .toLocaleLowerCase()}-600`
-                        )}
-                      >
-                        {colorOption.split("Color: ")[1].toLocaleUpperCase()}
-                      </HoverCardContent>
-                    </HoverCard>
+                    <span className="hidden lg:block">
+                      <HoverCard>
+                        <HoverCardTrigger asChild>
+                          <Dot
+                            size={30}
+                            className={`text-${colorOption
+                              .split("Color: ")[1]
+                              .toLocaleLowerCase()}-600`}
+                          />
+                        </HoverCardTrigger>
+                        <HoverCardContent
+                          className={cn(
+                            "w-fit bg-transparent border-none shadow-none absolute -left-14 -top-[2.1rem]",
+                            `text-${colorOption
+                              .split("Color: ")[1]
+                              .toLocaleLowerCase()}-600`
+                          )}
+                        >
+                          {colorOption.split("Color: ")[1].toLocaleUpperCase()}
+                        </HoverCardContent>
+                      </HoverCard>
+                    </span>
+                    <span
+                      className={`lg:hidden text-${colorOption
+                        .split("Color: ")[1]
+                        .toLocaleLowerCase()}-600`}
+                    >
+                      {colorOption.split("Color: ")[1].toLocaleUpperCase()}
+                    </span>
                   </>
                 )}
               </span>
-              <span className="flex justify-between items-center h-8">
+              <span className="flex justify-between items-center">
                 {ageOption && (
                   <>
                     <p>Age : </p>

@@ -3,6 +3,12 @@ import FilterSlider from "./FilterSlider";
 import Products from "./Products";
 import Defaultproduct from "@/assets/Defaultproduct.png";
 import Check from "./Check";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 // List of products
 const fullProductList = [
@@ -284,51 +290,68 @@ const SubCategory = () => {
   };
 
   return (
-    <div className="ml-4 flex gap-4">
-      {/* Filter */}
-      {/* Age */}
-      <div className="flex flex-col w-[10vw] gap-4 sticky top-4 h-[80vh]">
-        <div className="space-y-4">
-          <span className="uppercase">Age</span>
-          {Object.entries(ageCount).map(([age, count]) => (
-            <div className="flex items-center space-x-2" key={age}>
-              <Check
-                id={age}
-                defaultChecked={filter.ages.includes(age)}
-                onChange={(checked) => handleAgeChange(age, checked)}
-              />
-              <label
-                htmlFor={age}
-                className="flex items-center justify-between w-full text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                <span>{age}</span> <span>{count}</span>
-              </label>
-            </div>
-          ))}
+    <>
+      {/* BreadCrumb and title for less than sm scrs */}
+      <div className="ml-4">
+        <div className="w-3/4 sm:hidden flex justify-between">
+          <span>breadcrumb</span>&gt;<span>goes</span>&gt;<span>here</span>&gt;
+          <span>a</span>&gt;<span>ba</span>&gt;<span>mohammed</span>
         </div>
-        {/* Color */}
-        <div className="flex flex-col w-[10vw] gap-4">
-          <div className="space-y-4">
-            <span className="uppercase">Color</span>
-            {Object.entries(colorsCount).map(([color, count]) => (
-              <div className="flex items-center space-x-2" key={color}>
-                <Check
-                  id={color}
-                  defaultChecked={filter.colors.includes(color)}
-                  onChange={(checked) => handleColorChange(color, checked)}
-                />
-                <label
-                  htmlFor={color}
-                  className="flex items-center justify-between w-full text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  <span>{color}</span> <span>{count}</span>
-                </label>
-              </div>
-            ))}
-          </div>
+        <div className="w-full flex sm:hidden justify-center text-3xl my-4 uppercase">
+          <span>chi title hna!</span>
+        </div>
+      </div>
+      <div className="ml-4 flex flex-col sm:flex-row gap-4">
+        {/* Filter */}
+        {/* Age */}
+        <Accordion
+          type="multiple"
+          className="flex justify-evenly w-full sm:justify-start sm:flex-col sm:w-[10vw] gap-4 sm:sticky sm:top-4 sm:h-[80vh]"
+        >
+          <AccordionItem value="age" className="space-y-4 w-1/5 xs:w-full">
+            <AccordionTrigger className="uppercase">Age</AccordionTrigger>
+            <AccordionContent>
+              {Object.entries(ageCount).map(([age, count]) => (
+                <div className="flex py-2 items-center space-x-2" key={age}>
+                  <Check
+                    id={age}
+                    defaultChecked={filter.ages.includes(age)}
+                    onChange={(checked) => handleAgeChange(age, checked)}
+                  />
+                  <label
+                    htmlFor={age}
+                    className="flex items-center justify-between w-full text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    <span>{age}</span> <span>{count}</span>
+                  </label>
+                </div>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+          {/* Color */}
+          <AccordionItem value="color" className="space-y-4 w-1/5 xs:w-full">
+            <AccordionTrigger className="uppercase">Color</AccordionTrigger>
+            <AccordionContent>
+              {Object.entries(colorsCount).map(([color, count]) => (
+                <div className="flex py-2 items-center space-x-2" key={color}>
+                  <Check
+                    id={color}
+                    defaultChecked={filter.colors.includes(color)}
+                    onChange={(checked) => handleColorChange(color, checked)}
+                  />
+                  <label
+                    htmlFor={color}
+                    className="flex items-center justify-between w-full text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    <span>{color}</span> <span>{count}</span>
+                  </label>
+                </div>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
           {/* Price */}
-          <div className="space-y-4">
-            <span className="uppercase">
+          <div className="space-y-4 w-1/5 xs:w-full">
+            <span className="uppercase text-wrap-none text-sm lg:text-base">
               Price <span className="muted">(MAD)</span>
             </span>
             <FilterSlider
@@ -342,11 +365,11 @@ const SubCategory = () => {
               <span>{values[0]}</span> - <span>{values[1]}</span>
             </span>
           </div>
-        </div>
+        </Accordion>
+        {/* Products */}
+        <Products ProductList={ProductList} Filter={filter} />
       </div>
-      {/* Products */}
-      <Products ProductList={ProductList} Filter={filter} />
-    </div>
+    </>
   );
 };
 

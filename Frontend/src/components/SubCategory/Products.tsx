@@ -24,14 +24,15 @@ export default function Products({ ProductList, Filter }: Props) {
   console.log(Filter);
   return (
     <div className="flex flex-col w-full">
-      <div className="w-1/4 flex justify-between">
+      {/* BreadCrumb and title for sm and bigger scrs */}
+      <div className="w-1/4 hidden sm:flex justify-between">
         <span>breadcrumb</span>&gt;<span>goes</span>&gt;<span>here</span>&gt;
         <span>a</span>&gt;<span>ba</span>&gt;<span>mohammed</span>
       </div>
-      <div className="w-full flex justify-center text-3xl uppercase">
+      <div className="w-full hidden sm:flex justify-center text-3xl uppercase">
         <span>chi title hna!</span>
       </div>
-      <div className="flex flex-wrap">
+      <div className="grid justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <Cards ProductList={ProductList} Filter={Filter} />
       </div>
     </div>
