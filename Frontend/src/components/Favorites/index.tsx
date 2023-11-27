@@ -93,7 +93,7 @@ const Favorites = () => {
   return (
     <section className="flex flex-col space-y-10 pb-5">
       <SectionHeader title="My wishlist" subtitle="Browse Your Favorite Items" />
-      <div className="w-full grid justify-center sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-8 transition-transform duration-500 transform">
+      <div className="w-full grid md:px-4 2xl:px-0 justify-items-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8">
         {products.slice(0, visibleProducts).map((product, index) => (
           <ProductCard
             key={index}
