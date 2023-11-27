@@ -3,7 +3,7 @@ require("dotenv").config();
 const sendEmail = async(email,code)=>{
     try{
 
-        const transporter = createTransport({
+            const transporter = createTransport({
             host: "smtp-relay.sendinblue.com",
             port: 587,
             auth: {
