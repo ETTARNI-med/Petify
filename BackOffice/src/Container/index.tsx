@@ -10,7 +10,6 @@ import ProductsPage from "@/Products";
 import UsersPage from "@/Users";
 import Profile from "@/profile";
 import Notifications from "@/Notifications";
-import Noise from "@/assets/noise";
 
 {
   /* Container that's provide stable navbar */

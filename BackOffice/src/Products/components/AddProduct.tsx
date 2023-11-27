@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import axios from "axios";
+// import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -23,52 +23,59 @@ import {
 import { useState } from "react";
 
 export default function AddProduct() {
-
-  const [product,setProduct]= useState({
-    product_name: '',
-    discount_price: '',
-    category_id: '',
-    subcategory_id: '',
-    short_description: '',
-    long_description: '',
-    product_image: '',
+  const [product, setProduct] = useState({
+    product_name: "",
+    discount_price: "",
+    category_id: "",
+    subcategory_id: "",
+    short_description: "",
+    long_description: "",
+    product_image: "",
     active: true,
-    price: '',
-    sku: '',
-    options: []
-  })
-  // const handleSubmit=async(e)=>{
-  //   e.preventDefault()
-  //   try{
-  //     // const response = await axios.post(),{
-  //       // product_name:e.target.product_name.value
-  //     }
-  //   }
-  // }
-  const handleProductChange =(target:string , value:string)=>{
-    setProduct((prevValue)=>{
-      return{
+    price: "",
+    sku: "",
+    options: ["color : ", "size : ", "age : "],
+  });
+  const handleProductChange = (target: string, value: string) => {
+    setProduct((prevValue) => {
+      return {
         ...prevValue,
-        target : value
-      }
-    })
-  }
-  console.log(product);
+        [target]: value,
+      };
+    });
+  };
 
-  const handleProductOptionsChange =(target:string , value:string)=>{
-    setProduct((prevValue)=>{
-      return{
+  const handleProductOptionsChange = (target: string, value: string) => {
+    setProduct((prevValue) => {
+      const updatedOptions = prevValue.options.map((option) => {
+        if (option.startsWith(`${target} :`)) {
+          return `${target} : ${value}`;
+        }
+        return option;
+      });
+      return {
         ...prevValue,
-        options : [
-          ...prevValue.options,
-          target+` : `+value
-        ]
-      }
-    })
-  }
-  console.log(product);
-  
+        options: updatedOptions,
+      };
+    });
+  };
+  // tracking color value
+  const colorOption = product.options.find((option) =>
+    option.startsWith("color : ")
+  );
+  const colorValue = colorOption && colorOption.split("color : ")[1];
+  // tracking size value
+  const sizeOption = product.options.find((option) =>
+    option.startsWith("size : ")
+  );
+  const sizeValue = sizeOption && sizeOption.split("size : ")[1];
+  // tracking age value
+  const ageOption = product.options.find((option) =>
+    option.startsWith("age : ")
+  );
+  const ageValue = ageOption && ageOption.split("age : ")[1];
 
+  console.log(product);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -91,8 +98,10 @@ export default function AddProduct() {
                 Product Name
               </Label>
               <Input
-              value={product.product_name}
-              onChange={(e)=>handleProductChange('product_name', e.target.value)}
+                value={product.product_name}
+                onChange={(e) =>
+                  handleProductChange("product_name", e.target.value)
+                }
                 required
                 id="product_name"
                 name="product_name"
@@ -106,8 +115,8 @@ export default function AddProduct() {
                 SKU
               </Label>
               <Input
-              value={product.sku}
-              onChange={(e)=>handleProductChange('sku', e.target.value)}
+                value={product.sku}
+                onChange={(e) => handleProductChange("sku", e.target.value)}
                 required
                 id="sku"
                 name="sku"
@@ -121,8 +130,8 @@ export default function AddProduct() {
                 Price
               </Label>
               <Input
-              value={product.price}
-              onChange={(e)=>handleProductChange('price', e.target.value)}
+                value={product.price}
+                onChange={(e) => handleProductChange("price", e.target.value)}
                 type="number"
                 required
                 id="price"
@@ -137,8 +146,10 @@ export default function AddProduct() {
                 Discount Price
               </Label>
               <Input
-              value={product.discount_price}
-              onChange={(e)=>handleProductChange('discount_price', e.target.value)}
+                value={product.discount_price}
+                onChange={(e) =>
+                  handleProductChange("discount_price", e.target.value)
+                }
                 type="number"
                 required
                 name="discount_price"
@@ -153,8 +164,10 @@ export default function AddProduct() {
                 Subcategory
               </Label>
               <Input
-              value={product.subcategory_id}
-              onChange={(e)=>handleProductChange('subcategory_id', e.target.value)}
+                value={product.subcategory_id}
+                onChange={(e) =>
+                  handleProductChange("subcategory_id", e.target.value)
+                }
                 required
                 name="subcategory_id"
                 id="subcategory_id"
@@ -171,8 +184,10 @@ export default function AddProduct() {
                 Short Description
               </Label>
               <Input
-              value={product.short_description}
-              onChange={(e)=>handleProductChange('short_description', e.target.value)}
+                value={product.short_description}
+                onChange={(e) =>
+                  handleProductChange("short_description", e.target.value)
+                }
                 required
                 name="short_description"
                 id="short_description"
@@ -186,8 +201,10 @@ export default function AddProduct() {
                 Long Description
               </Label>
               <Input
-              value={product.long_description}
-              onChange={(e)=>handleProductChange('long_description', e.target.value)}
+                value={product.long_description}
+                onChange={(e) =>
+                  handleProductChange("long_description", e.target.value)
+                }
                 name="long_description"
                 id="long_description"
                 placeholder="instruction, information..."
@@ -201,8 +218,10 @@ export default function AddProduct() {
                 Image
               </Label>
               <Input
-              value={product.product_image}
-              onChange={(e)=>handleProductChange('product_image', e.target.value)}
+                value={product.product_image}
+                onChange={(e) =>
+                  handleProductChange("product_image", e.target.value)
+                }
                 required
                 name="product_image"
                 id="product_image"
@@ -216,8 +235,10 @@ export default function AddProduct() {
                 Color
               </Label>
               <Input
-              value={product.options.slice(8)}
-              onChange={(e)=>handleProductOptionsChange('color', e.target.value)}
+                value={colorValue}
+                onChange={(e) =>
+                  handleProductOptionsChange("color", e.target.value)
+                }
                 name="color"
                 id="color"
                 type="color"
@@ -228,7 +249,12 @@ export default function AddProduct() {
               <Label htmlFor="size" className="xsm:text-right pl-2">
                 Size
               </Label>
-              <Select>
+              <Select
+                value={sizeValue}
+                onValueChange={(value) =>
+                  handleProductOptionsChange("size", value)
+                }
+              >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Select Size" />
                 </SelectTrigger>
@@ -246,7 +272,12 @@ export default function AddProduct() {
               <Label htmlFor="age" className="xsm:text-right pl-2">
                 Age
               </Label>
-              <Select>
+              <Select
+                value={ageValue}
+                onValueChange={(value) =>
+                  handleProductOptionsChange("age", value)
+                }
+              >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Select Age" />
                 </SelectTrigger>
