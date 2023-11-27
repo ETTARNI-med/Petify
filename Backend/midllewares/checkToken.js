@@ -1,3 +1,5 @@
+// RESET PASSWORD 
+
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET
 const Customer = require('../models/CustomerSchema')

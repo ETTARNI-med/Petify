@@ -14,6 +14,8 @@ const sendEmailLink = require("../config/sendEmailLink");
 const registerCustomer = asyncHandler(async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+
+  // TO generate code for vallidation email 
   const code = uuid.v4().substr(0, 4);
   console.log("generated code:" + code);
   const username = req.body.username;
