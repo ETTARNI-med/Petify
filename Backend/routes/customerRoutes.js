@@ -57,6 +57,6 @@ customerRoutes.post("/forgotPassword", forgotPassword);
 customerRoutes.patch("/resetPassword/:token", checkToken,resetPassword);
 
 //logout
-customerRoutes.get("/logout", checkauthCustomer,logout);
+customerRoutes.get("/logout", checkCustomer,logout);
 
 module.exports = customerRoutes;

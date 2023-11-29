@@ -8,6 +8,8 @@ const {
   getUserById,
   getAllUsers,
   addUser,
+  logout,
+  profile
 } = require("../controllers/usersController");
 
 const checkIfUser = require('../midllewares/checkUserAuth')
@@ -22,5 +24,7 @@ users.get("/profil/:id",checkIfUser ,getUserById);
 users.get("/search", searchForUser);
 users.put("/:id", updateUser);
 users.delete("/:id", deleteUser);
+users.get("/logout",checkIfUser,logout);
+users.get("/profile",checkIfUser,profile);
 
 module.exports = users;
