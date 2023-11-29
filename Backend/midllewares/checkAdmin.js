@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const checkIfAdmin = async(req, res,next) => {
 
-    const token = req.header('x-auth-token')
+    const token =  req.cookies.token ;
     
     if ( !token) {
         return res.status(403).json({
