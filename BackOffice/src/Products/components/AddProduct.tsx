@@ -102,7 +102,6 @@ export default function AddProduct() {
             setPath(
               `https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/${r.data.public_id}`
             );
-            console.log(path);
           })
           .catch((e) => {
             console.log(e);
@@ -128,7 +127,7 @@ export default function AddProduct() {
     axios
       .post("http://localhost:4000/v1/products/", product)
       .then((r) => {
-        console.log("done with : " + r);
+        console.log(r);
       })
       .catch((e) => {
         console.log(e);

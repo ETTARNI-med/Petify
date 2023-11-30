@@ -6,14 +6,13 @@ const SubCategory = require("../models/SubCategory");
 
 //create a new product
 const createNewProduct = asyncHandler(async (req, res) => {
-  
   const productName = req.body.product_name;
   const productSku = req.body.sku;
   const findProduct = await Product.findOne({ product_name: productName });
   const findSku = await Product.findOne({ sku: productSku });
   try {
     if (!findProduct && !findSku) {
-      const newProduct = await Product.create(body);
+      const newProduct = await Product.create(req.body);
       res.status(200).json(newProduct);
     } else if (findProduct) {
       res.status(401).json("this Product name already existed");
@@ -81,7 +80,7 @@ const getProductsById = asyncHandler(async (req, res) => {
 
 //products update
 
-  const updateProducts = asyncHandler(async (req, res) => {
+const updateProducts = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const productName = req.body.product_name;
   const productSku = req.body.sku;
@@ -126,13 +125,10 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
-
-
 module.exports = {
   createNewProduct,
   updateProducts,
   getProductsById,
   searchForProducts,
   deleteProduct,
-  
 };

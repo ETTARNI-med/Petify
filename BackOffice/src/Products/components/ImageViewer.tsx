@@ -12,7 +12,7 @@ export default function ImageViewer({ path }: Props) {
         {path === "" ? (
           <Eye size={24} className="text-red-700" />
         ) : (
-          <Eye size={24} className="text-green-700" />
+          <Eye size={24} className="text-green-700 cursor-pointer" />
         )}
       </DialogTrigger>
       {path !== "" ? (
