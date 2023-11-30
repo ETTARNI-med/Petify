@@ -6,7 +6,7 @@ const SubCategory = require("../models/SubCategory");
 
 //create a new product
 const createNewProduct = asyncHandler(async (req, res) => {
-  const { body } = req;
+  
   const productName = req.body.product_name;
   const productSku = req.body.sku;
   const findProduct = await Product.findOne({ product_name: productName });
