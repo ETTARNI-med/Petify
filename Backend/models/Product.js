@@ -33,11 +33,11 @@ const ProductSchema = new Schema(
       min: 25,
     },
     price: {
-      type: Schema.Types.Decimal128,
+      type: Number,
       require: true,
     },
     discount_price: {
-      type: Schema.Types.Decimal128,
+      type: Number,
       require: true,
     },
     options: {
@@ -46,7 +46,7 @@ const ProductSchema = new Schema(
     },
     active: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   }
 );
