@@ -7,8 +7,8 @@ const ProductSchema = new Schema({
     unique: true,
   },
   product_image: {
-    type: String,
-    default: "",
+    type: [String],
+    
   },
   product_name: {
     type: String,
