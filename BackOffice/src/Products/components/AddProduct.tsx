@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -25,23 +25,20 @@ import ImageViewer from "./ImageViewer";
 // import { Cloudinary } from "@cloudinary/url-gen";
 
 export default function AddProduct() {
-  const [path, setPath] = useState("");
+  const [paths, setPaths] = useState([]);
   const [product, setProduct] = useState({
     product_name: "",
     discount_price: "",
-    category_id: "",
     subcategory_id: "",
     short_description: "",
     long_description: "",
-    product_image: "",
+    product_image: [],
     active: true,
     price: "",
     sku: "",
     options: ["color : #ffffff", "size : ", "age : "],
   });
   const handleProductChange = (target: string, value: string) => {
-    console.log(product);
-    console.log(path);
     setProduct((prevValue) => {
       return {
         ...prevValue,
@@ -81,12 +78,13 @@ export default function AddProduct() {
   const ageValue = ageOption && ageOption.split("age : ")[1];
 
   //image upload
-  const getImage = (e) => {
-    uploadImage(e.target.files[0]);
-  };
-  const uploadImage = (file) => {
-    const reader = new FileReader();
+  const handleImageUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const file = e.target.files?.[0];
     if (file) {
+      const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         const formData = new FormData();
@@ -99,9 +97,12 @@ export default function AddProduct() {
           )
           .then((r) => {
             console.log(r);
-            setPath(
-              `https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/${r.data.public_id}`
-            );
+            const uploadedPath = `https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/${r.data.public_id}`;
+            setPaths((prevPaths) => {
+              const updatedPaths = [...prevPaths];
+              updatedPaths[index] = uploadedPath;
+              return updatedPaths;
+            });
           })
           .catch((e) => {
             console.log(e);
@@ -110,20 +111,20 @@ export default function AddProduct() {
     }
   };
 
+  // Handle paths updates
   useEffect(() => {
-    if (typeof path != "undefined" && path != "") {
-      setProduct((prevValue) => {
-        return {
-          ...prevValue,
-          product_image: path,
-        };
-      });
-    }
-  }, [path]);
+    setProduct((prevValue) => {
+      return {
+        ...prevValue,
+        product_image: paths,
+      };
+    });
+  }, [paths]);
 
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(product);
     axios
       .post("http://localhost:4000/v1/products/", product)
       .then((r) => {
@@ -148,7 +149,7 @@ export default function AddProduct() {
               Add Product in a easy way. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-3 py-4">
             <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="product_name" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
@@ -275,15 +276,42 @@ export default function AddProduct() {
                 Image
               </Label>
               <div className="flex justify-between items-center col-span-3">
-                <Input
-                  onChange={(e) => getImage(e)}
+                <input
+                  onChange={(e) => handleImageUpload(e, 0)}
                   name="product_image"
                   id="product_image"
                   type="file"
                   accept="image/*"
                   className="w-11/12"
+                  required
                 />
-                <ImageViewer path={path} />
+                <ImageViewer path={paths[0]} />
+              </div>
+            </div>
+            <div className="grid xsm:grid-cols-4 items-start gap-4">
+              <div className="flex justify-between items-center col-start-2 col-span-3">
+                <input
+                  onChange={(e) => handleImageUpload(e, 1)}
+                  name="product_image_1"
+                  id="product_image_1"
+                  type="file"
+                  accept="image/*"
+                  className="w-11/12"
+                />
+                <ImageViewer path={paths[1]} />
+              </div>
+            </div>
+            <div className="grid xsm:grid-cols-4 items-start gap-4">
+              <div className="flex justify-between items-center col-start-2 col-span-3">
+                <input
+                  onChange={(e) => handleImageUpload(e, 2)}
+                  name="product_image_2"
+                  id="product_image_2"
+                  type="file"
+                  accept="image/*"
+                  className="w-11/12"
+                />
+                <ImageViewer path={paths[2]} />
               </div>
             </div>
             <div className="grid xsm:grid-cols-4 items-start gap-4">
@@ -352,9 +380,9 @@ export default function AddProduct() {
               </Select>
             </div>
           </div>
-          <DialogFooter>
+          <DialogClose className="w-full flex justify-end">
             <Button type="submit">Add Product</Button>
-          </DialogFooter>
+          </DialogClose>
         </form>
       </DialogContent>
     </Dialog>

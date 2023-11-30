@@ -9,13 +9,13 @@ export default function ImageViewer({ path }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {path === "" ? (
+        {path === "" || typeof path === "undefined" ? (
           <Eye size={24} className="text-red-700" />
         ) : (
           <Eye size={24} className="text-green-700 cursor-pointer" />
         )}
       </DialogTrigger>
-      {path !== "" ? (
+      {path !== "" && typeof path !== "undefined" ? (
         <DialogContent className="w-auto flex justify-center items-center">
           <img
             src={path}
