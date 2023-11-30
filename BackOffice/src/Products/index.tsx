@@ -464,9 +464,7 @@ export default function ProductsPage() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="mx-auto">
-          <AddProduct />
-        </div>
+        <AddProduct />
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
         <Table className="">

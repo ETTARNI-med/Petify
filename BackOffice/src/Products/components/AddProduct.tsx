@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-// import axios from "axios";
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -20,9 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ImageViewer from "./ImageViewer";
+// import { Cloudinary } from "@cloudinary/url-gen";
 
 export default function AddProduct() {
+  const [path, setPath] = useState("");
   const [product, setProduct] = useState({
     product_name: "",
     discount_price: "",
@@ -34,9 +37,11 @@ export default function AddProduct() {
     active: true,
     price: "",
     sku: "",
-    options: ["color : ", "size : ", "age : "],
+    options: ["color : #ffffff", "size : ", "age : "],
   });
   const handleProductChange = (target: string, value: string) => {
+    console.log(product);
+    console.log(path);
     setProduct((prevValue) => {
       return {
         ...prevValue,
@@ -75,7 +80,60 @@ export default function AddProduct() {
   );
   const ageValue = ageOption && ageOption.split("age : ")[1];
 
-  console.log(product);
+  //image upload
+  const getImage = (e) => {
+    uploadImage(e.target.files[0]);
+  };
+  const uploadImage = (file) => {
+    const reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "y6yqsq0d");
+        axios
+          .post(
+            "https://api.cloudinary.com/v1_1/defnf0hzt/image/upload",
+            formData
+          )
+          .then((r) => {
+            console.log(r);
+            setPath(
+              `https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/${r.data.public_id}`
+            );
+            console.log(path);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      };
+    }
+  };
+
+  useEffect(() => {
+    if (typeof path != "undefined" && path != "") {
+      setProduct((prevValue) => {
+        return {
+          ...prevValue,
+          product_image: path,
+        };
+      });
+    }
+  }, [path]);
+
+  //handle Submit event
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4000/v1/products/", product)
+      .then((r) => {
+        console.log("done with : " + r);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -83,8 +141,8 @@ export default function AddProduct() {
           Product <Plus className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form>
+      <DialogContent className="sm:w-[80vw] lg:w-[50vw]">
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Add New Product</DialogTitle>
             <DialogDescription>
@@ -92,7 +150,7 @@ export default function AddProduct() {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="product_name" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 Product Name
@@ -102,14 +160,14 @@ export default function AddProduct() {
                 onChange={(e) =>
                   handleProductChange("product_name", e.target.value)
                 }
-                required
                 id="product_name"
                 name="product_name"
                 placeholder="crock"
                 className="col-span-3"
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="sku" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 SKU
@@ -117,14 +175,14 @@ export default function AddProduct() {
               <Input
                 value={product.sku}
                 onChange={(e) => handleProductChange("sku", e.target.value)}
-                required
                 id="sku"
                 name="sku"
                 placeholder="102903"
                 className="col-span-3"
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="price" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 Price
@@ -133,14 +191,14 @@ export default function AddProduct() {
                 value={product.price}
                 onChange={(e) => handleProductChange("price", e.target.value)}
                 type="number"
-                required
                 id="price"
                 name="price"
                 placeholder="27.99"
                 className="col-span-3"
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="discount_price" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 Discount Price
@@ -151,14 +209,14 @@ export default function AddProduct() {
                   handleProductChange("discount_price", e.target.value)
                 }
                 type="number"
-                required
                 name="discount_price"
                 id="discount_price"
                 placeholder="26.99"
                 className="col-span-3"
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="subcategory_id" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 Subcategory
@@ -168,14 +226,14 @@ export default function AddProduct() {
                 onChange={(e) =>
                   handleProductChange("subcategory_id", e.target.value)
                 }
-                required
                 name="subcategory_id"
                 id="subcategory_id"
                 placeholder="food"
                 className="col-span-3"
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label
                 htmlFor="short_description"
                 className="xsm:text-right pl-2"
@@ -188,14 +246,14 @@ export default function AddProduct() {
                 onChange={(e) =>
                   handleProductChange("short_description", e.target.value)
                 }
-                required
                 name="short_description"
                 id="short_description"
                 placeholder="instruction, information..."
                 className="col-span-3"
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="long_description" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 Long Description
@@ -209,28 +267,27 @@ export default function AddProduct() {
                 id="long_description"
                 placeholder="instruction, information..."
                 className="col-span-3"
-                required
+                autoComplete="off"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4 items-start gap-4">
               <Label htmlFor="product_image" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
                 Image
               </Label>
-              <Input
-                value={product.product_image}
-                onChange={(e) =>
-                  handleProductChange("product_image", e.target.value)
-                }
-                required
-                name="product_image"
-                id="product_image"
-                type="file"
-                accept="image/*"
-                className="col-span-3 justify-self-start"
-              />
+              <div className="flex justify-between items-center col-span-3">
+                <Input
+                  onChange={(e) => getImage(e)}
+                  name="product_image"
+                  id="product_image"
+                  type="file"
+                  accept="image/*"
+                  className="w-11/12"
+                />
+                <ImageViewer path={path} />
+              </div>
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4 items-start gap-4">
               <Label htmlFor="color" className="xsm:text-right pl-2">
                 Color
               </Label>
@@ -245,7 +302,7 @@ export default function AddProduct() {
                 className="col-span-3"
               />
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="size" className="xsm:text-right pl-2">
                 Size
               </Label>
@@ -268,7 +325,7 @@ export default function AddProduct() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-row-2 xsm:grid-cols-4    items-center gap-4">
+            <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label htmlFor="age" className="xsm:text-right pl-2">
                 Age
               </Label>
