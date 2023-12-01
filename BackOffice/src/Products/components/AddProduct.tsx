@@ -121,6 +121,23 @@ export default function AddProduct() {
     });
   }, [paths]);
 
+  //reset product into initial status
+  const resetProduct = () => {
+    setPaths([]);
+    setProduct({
+      product_name: "",
+      discount_price: "",
+      subcategory_id: "",
+      short_description: "",
+      long_description: "",
+      product_image: [],
+      active: true,
+      price: "",
+      sku: "",
+      options: ["color : #ffffff", "size : ", "age : "],
+    });
+  };
+
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -129,6 +146,7 @@ export default function AddProduct() {
       .post("http://localhost:4000/v1/products/", product)
       .then((r) => {
         console.log(r);
+        resetProduct();
       })
       .catch((e) => {
         console.log(e);
@@ -367,7 +385,7 @@ export default function AddProduct() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="puppy">Puppy (&lt; 7 Months)</SelectItem>
+                    <SelectItem value="young">Young (&lt; 1 Years)</SelectItem>
                     <SelectItem value="junior">
                       Junior (&lt; 2 Years)
                     </SelectItem>
@@ -375,6 +393,7 @@ export default function AddProduct() {
                     <SelectItem value="mature">
                       Mature (&gt; 3 Years)
                     </SelectItem>
+                    <SelectItem value="all">All Ages</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
