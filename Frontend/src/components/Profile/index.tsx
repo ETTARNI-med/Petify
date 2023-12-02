@@ -1,60 +1,33 @@
-import { Input } from "../ui/input";
+import { ShoppingCart, User2Icon } from "lucide-react";
+import TabsComponent from "./components/TabsComponent";
+import UserInfo from "./components/UserInfo";
 
-const Profile = () => {
-  const User = {
-    first_name: "charaf",
-    last_name: "charouit",
-    email: "charaf@charouit",
-    phone: "charaf@charouit",
-    address: "charaf@charouit",
-    city: "charaf@charouit",
-    country: "charaf@charouit",
-    postal_code: "charaf@charouit",
-    image: "charaf@charouit",
-    role: "charaf@charouit",
-    id: "charaf@charouit",
-    created_at: "charaf@charouit",
-    last_updated_at: "charaf@charouit",
-    status: "charaf@charouit",
-    verified: "charaf@charouit",
-    birthdate: "2002-12-08",
-    description: "charaf@charouit",
-    age: "charaf@charouit",
-  }
-  return <div className="px-2">
-    <div >
-
-    <label className="text-xl font-semibold">My Account</label>
-    <p className="mt-1 text-sm leading-5 text-gray-600">Manage your account settings and access.</p>
-
-    </div>
-    <form action="" method="POST" className="grid grid-cols-3 gap-4 px-2 mt-8">
-      <div>
-        <label className="block text-sm font-medium leading-5 text-gray-700">
-          First name
-        </label>       
-        <Input 
-        type="text"
-        id="text"
-        placeholder="First Name"
-        className="p-2  w-full  rounded-sm shadow-md "
-        value={User.first_name}
-        /> 
+export default function Profile() {
+  const items = [
+    {
+      label: "Profile",
+      content: (
+        <div className="mt-3 md:mt-5 xl:mt-6 w-full px-4 md:px-6 xl:px-9 2xl:px-14 ">
+          <UserInfo />
+        </div>
+      ),
+      icon: <User2Icon size={40} />,
+    },
+    { label: "Orders", content: <div className="w-full mt-3 md:mt-5 xl:mt-6 px-4 md:px-6 xl:px-9 2xl:px-14 ">orders</div>, icon: <ShoppingCart size={40} /> },
+  ];
+  return (
+    <section className="px-2 space-y-4 md:space-y-6 xl:space-y-9 mb-4 md:mb-5 xl:mb-7 ">
+      <div className="md:px-2 xl:px-5 flex w-full mb-4 ">
+        <label className="">
+          <span className="text-xl sm:text-2xl md:text-2xl lg:text-3xl  2xl:text-4xl font-Poppins font-semibold">My Account </span>
+          <p className="text-xs md:text-sm 2xl:text-base font-Raleway leading-5 text-gray-600">
+            Manage your account settings and access.
+          </p>
+        </label>
       </div>
-      <div>
-        <label className="block text-sm font-medium leading-5 text-gray-700">
-          Last name
-        </label>       
-        <Input 
-        type="text"
-        id="text"
-        placeholder="Last name"
-        className="p-2  w-full  rounded-sm shadow-md "
-        value={User.last_name}
-        /> 
+      <div className="w-full ">
+        <TabsComponent items={items} />
       </div>
-    </form>
-  </div>;
-};
-
-export default Profile;
+    </section>
+  );
+}
