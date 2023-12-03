@@ -1,6 +1,7 @@
 import { ShoppingCart, User2Icon } from "lucide-react";
 import TabsComponent from "./components/TabsComponent";
 import UserInfo from "./components/UserInfo";
+import OrdersInfo from "./components/OrdersInfo";
 
 export default function Profile() {
   const items = [
@@ -13,7 +14,7 @@ export default function Profile() {
       ),
       icon: <User2Icon size={40} />,
     },
-    { label: "Orders", content: <div className="w-full mt-3 md:mt-5 xl:mt-6 px-4 md:px-6 xl:px-9 2xl:px-14 ">orders</div>, icon: <ShoppingCart size={40} /> },
+    { label: "Orders", content: <div className="w-screen mt-3 md:mt-5 xl:mt-6 px-4 md:px-6 xl:px-9 2xl:px-14 "><OrdersInfo/></div>, icon: <ShoppingCart size={40} /> },
   ];
   return (
     <section className="px-2 space-y-4 md:space-y-6 xl:space-y-9 mb-4 md:mb-5 xl:mb-7 ">

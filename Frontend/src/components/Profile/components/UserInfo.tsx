@@ -40,7 +40,7 @@ export default function UserInfo() {
       <div
         className={
           isEditing
-            ? "w-40 md:w-64 xl:w-80  flex justify-between self-end px-2 xl:px-7 md:px-5 "
+            ? "xs:w-48  sm:w-52 md:w-72 xl:w-96  flex justify-between self-end px-2 xl:px-7 md:px-5 "
             : "w-full px-2 md:px-5 xl:px-7 flex justify-end"
         }
       >
@@ -55,7 +55,7 @@ export default function UserInfo() {
               : "font-Poppins text-base md:text-lg xl:text-xl  w-36 md:w-44 lg:w-52 xl:w-56 2xl:w-60 dark:hover:text-primarycolor dark:text-secondcolor p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 "
           }
         >
-          {isEditing ? <label className="flex w-full items-center justify-evenly"><SaveIcon size={24}/><span>Save</span></label> : <label className="flex w-full items-center justify-evenly"><PenBoxIcon size={24}/><span>Edit Profile</span></label>}
+          {isEditing ? <label className="flex w-full items-center justify-evenly"><SaveIcon className="h-full w-auto"/><span>Save</span></label> : <label className="flex w-full items-center justify-evenly"><PenBoxIcon size={24}/><span>Edit Profile</span></label>}
         </Button>
         {isEditing && (
           <Button
