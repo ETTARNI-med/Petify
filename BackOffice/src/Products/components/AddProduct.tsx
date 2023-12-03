@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -119,7 +119,7 @@ export default function AddProduct() {
         product_image: paths,
       };
     });
-  }, [paths]);
+  }, []);
 
   //reset product into initial status
   const resetProduct = () => {
@@ -141,7 +141,6 @@ export default function AddProduct() {
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(product);
     axios
       .post("http://localhost:4000/v1/products/", product)
       .then((r) => {
@@ -399,9 +398,9 @@ export default function AddProduct() {
               </Select>
             </div>
           </div>
-          <DialogClose className="w-full flex justify-end">
+          <DialogFooter className="w-full flex justify-end">
             <Button type="submit">Add Product</Button>
-          </DialogClose>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
