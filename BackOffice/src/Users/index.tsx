@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -16,13 +16,6 @@ import {
 import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -41,203 +34,206 @@ import {
 import Alert from "./components/Alert";
 import AddUser from "./components/AddUser";
 import ProfileSheet from "@/Container/components/ProfileSheet";
+import axios from "axios";
+import UpdateUser from "./components/UpdateUser";
 
-const data: Payment[] = [
-  {
-    _id: "m5gr84i9",
-    email: "ken99@yahoo.com",
-    username: "en99",
-    date: "2023-11-23T11:00:00",
-    first_name: "ken",
-    last_name: "aguero",
-    role: "admin",
-  },
-  {
-    _id: "3u1reuv4",
-    email: "abe45@gmail.com",
-    username: "ae45",
-    date: "2023-12-11T11:00:00",
-    first_name: "abla",
-    last_name: "beka",
-    role: "manager",
-  },
-  {
-    _id: "derv1ws0",
-    email: "monserrat44@gmail.com",
-    username: "onserrat44",
-    date: "2023-11-17T11:00:00",
-    first_name: "monser",
-    last_name: "rat",
-    role: "manager",
-  },
-  {
-    _id: "5kma53ae",
-    email: "silas22@gmail.com",
-    username: "ilas22",
-    date: "2023-07-11T11:00:00",
-    first_name: "silas",
-    last_name: "syla",
-    role: "admin",
-  },
-  {
-    _id: "bhqecj4p",
-    email: "carmella@hotmail.com",
-    username: "armella",
-    date: "2023-09-11T03:00:00",
-    first_name: "carmella",
-    last_name: "mella",
-    role: "admin",
-  },
-];
-
-export type Payment = {
+export type User = {
   _id: string;
   email: string;
-  username: string;
-  role: "admin" | "manager";
-  date: string;
+  user_name: string;
   first_name: string;
   last_name: string;
+  user_image: string;
+  role: string;
+  creation_date: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "username",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Username
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">
-        {
-          <ProfileSheet
-            email={row.original.email}
-            date={row.original.date}
-            first_name={row.original.first_name}
-            last_name={row.original.last_name}
-            role={row.original.role}
-            username={row.original.username}
-          />
-        }
-      </div>
-    ),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "role",
-    header: () => {
-      return <Button variant="ghost">Role</Button>;
-    },
-    cell: ({ row }) => {
-      return (
-        <Select defaultValue={row.getValue("role")}>
-          <SelectTrigger className="max-w-[110px]">
-            <SelectValue placeholder="Select" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="admin">Admin</SelectItem>
-            <SelectItem value="manager">Manager</SelectItem>
-          </SelectContent>
-        </Select>
-      );
-    },
-  },
-  {
-    accessorKey: "first_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          first Name
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("first_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "last_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          last Name
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("last_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Created At
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
-  },
-  {
-    id: "actions",
-    header: () => {
-      return (
-        <Button variant="ghost" className="w-20 py-px lg:py-2">
-          Action
-        </Button>
-      );
-    },
-    cell: () => {
-      return <Alert />;
-    },
-  },
-];
-
-{
-  /* Page for managing users */
-}
 export default function UsersPage() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [data, setData] = useState<User[]>([]);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/v1/users/allusers"
+      );
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const handleReload = (reloadValue: boolean) => {
+    if (reloadValue === true) {
+      getData();
+    }
+  };
+  const columns: ColumnDef<User>[] = [
+    {
+      accessorKey: "picture",
+      header: () => {
+        return <Button variant={"ghost"}>Profile</Button>;
+      },
+      cell: ({ row }) => (
+        <div>
+          {
+            <ProfileSheet
+              email={row.original.email}
+              creation_date={row.original.creation_date}
+              first_name={row.original.first_name}
+              last_name={row.original.last_name}
+              role={row.original.role === "1" ? "admin" : "manager"}
+              user_name={row.original.user_name}
+              user_image={row.original.user_image}
+            />
+          }
+        </div>
+      ),
+    },
+    {
+      accessorKey: "username",
+      header: () => {
+        return <Button variant="ghost">Username</Button>;
+      },
+      cell: ({ row }) => <div>{row.original.user_name}</div>,
+    },
+    {
+      accessorKey: "email",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Email
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("email")}</div>
+      ),
+    },
+    {
+      accessorKey: "role",
+      header: () => {
+        return <Button variant="ghost">Role</Button>;
+      },
+      cell: ({ row }) => {
+        return (
+          <div className="lowercase">
+            {row.original.role === "1" ? "admin" : "manager"}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "first_name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            first Name
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("first_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "last_name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            last Name
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="uppercase">{row.getValue("last_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "creation_date",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Created At
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">
+          {new Date(row.getValue("creation_date")).toLocaleString()}
+        </div>
+      ),
+    },
+    {
+      id: "update",
+      header: () => {
+        return (
+          <Button variant="ghost" className="w-20 py-px lg:py-2">
+            Update
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <>
+            <UpdateUser
+              onUpdate={handleReload}
+              User={{
+                role: row.original.role,
+                email: row.original.email,
+                user_name: row.original.user_name,
+                first_name: row.original.first_name,
+                last_name: row.original.last_name,
+                user_image: row.original.user_image,
+                id: row.original._id,
+              }}
+            />
+          </>
+        );
+      },
+    },
+    {
+      id: "delete",
+      header: () => {
+        return (
+          <Button variant="ghost" className="w-20 py-px lg:py-2">
+            Delete
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <>
+            <Alert onUpdate={handleReload} id={row.original._id} />
+          </>
+        );
+      },
+    },
+  ];
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -273,7 +269,7 @@ export default function UsersPage() {
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
         <div className="ml-auto">
-          <AddUser />
+          <AddUser onUpdate={handleReload} />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -343,7 +339,7 @@ export default function UsersPage() {
           </DropdownMenu>
         </div>
         <div className="mx-auto">
-          <AddUser />
+          <AddUser onUpdate={handleReload} />
         </div>
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">

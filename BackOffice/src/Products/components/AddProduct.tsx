@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -22,9 +21,10 @@ import {
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import ImageViewer from "./ImageViewer";
-// import { Cloudinary } from "@cloudinary/url-gen";
-
-export default function AddProduct() {
+interface Props {
+  onUpdate: (variable: boolean) => void;
+}
+export default function AddProduct({ onUpdate }: Props) {
   const [paths, setPaths] = useState([]);
   const [product, setProduct] = useState({
     product_name: "",
@@ -119,7 +119,7 @@ export default function AddProduct() {
         product_image: paths,
       };
     });
-  }, [paths]);
+  }, []);
 
   //reset product into initial status
   const resetProduct = () => {
@@ -141,11 +141,11 @@ export default function AddProduct() {
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(product);
     axios
       .post("http://localhost:4000/v1/products/", product)
       .then((r) => {
         console.log(r);
+        onUpdate(true);
         resetProduct();
       })
       .catch((e) => {
@@ -163,9 +163,6 @@ export default function AddProduct() {
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Add New Product</DialogTitle>
-            <DialogDescription>
-              Add Product in a easy way. Click save when you're done.
-            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-3 py-4">
             <div className="grid xsm:grid-cols-4 items-center gap-4">
@@ -399,9 +396,9 @@ export default function AddProduct() {
               </Select>
             </div>
           </div>
-          <DialogClose className="w-full flex justify-end">
+          <DialogFooter>
             <Button type="submit">Add Product</Button>
-          </DialogClose>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

@@ -27,11 +27,48 @@ export default function Container() {
                     {/* Large Screens Nav */}
                     <div className="hidden lg:flex items-center w-full">
                       <TabsList>
-                        <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-                        <TabsTrigger value="users">Users</TabsTrigger>
-                        <TabsTrigger value="customers">Customers</TabsTrigger>
-                        <TabsTrigger value="product">Product</TabsTrigger>
-                        <TabsTrigger value="orders">Orders</TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="dashboard"
+                        >
+                          Dashboard
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="users"
+                        >
+                          Users
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="customers"
+                        >
+                          Customers
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="product"
+                        >
+                          Product
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="orders"
+                        >
+                          Orders
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="categories"
+                        >
+                          Categories
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs xl:text-sm"
+                          value="subCategories"
+                        >
+                          Sub Categories
+                        </TabsTrigger>
                       </TabsList>
                       <div className="mx-auto">
                         <img src={Petify} alt="Logo" className="w-10" />
@@ -41,8 +78,8 @@ export default function Container() {
                         <UserNav />
                       </div>
                     </div>
-                    {/* XS, SM and MD Screens Nav */}
-                    <div className="hidden lg:hidden xs:flex xs:flex-col items-center mx-auto w-[90vw]">
+                    {/* SM and MD Screens Nav */}
+                    <div className="hidden lg:hidden sm:flex xs:flex-col items-center mx-auto w-[90vw]">
                       <div className=" lg:hidden flex justify-between items-center w-full  mb-2">
                         <img src={Petify} alt="Logo" className="w-10" />
                         <div className="flex items-center space-x-4">
@@ -81,10 +118,22 @@ export default function Container() {
                         >
                           Orders
                         </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs sm:text-sm"
+                          value="categories"
+                        >
+                          Categories
+                        </TabsTrigger>
+                        <TabsTrigger
+                          className="text-xs sm:text-sm"
+                          value="subCategories"
+                        >
+                          Sub Categories
+                        </TabsTrigger>
                       </TabsList>
                     </div>
-                    {/* Phones Screens Nav */}
-                    <div className="flex flex-col xs:hidden items-center -ml-2 mr-6 w-[90vw]">
+                    {/* Phones Screens Nav and XS scr */}
+                    <div className="flex flex-col sm:hidden items-center -ml-2 mr-6 w-[90vw]">
                       <div className="flex justify-between items-center w-full mb-2">
                         <img src={Petify} alt="Logo" className="w-10" />
                         <div className="flex items-center space-x-4">
@@ -93,7 +142,7 @@ export default function Container() {
                         </div>
                       </div>
                       <div className="bg-muted w-[110vw] ml-4">
-                        <TabsList className="grid grid-cols-3 h-auto xs:h-9 rounded-none w-10/12 mx-auto">
+                        <TabsList className="grid grid-cols-2 xs:grid-cols-4 h-auto rounded-none w-10/12 mx-auto">
                           <TabsTrigger className="text-xs" value="dashboard">
                             Dashboard
                           </TabsTrigger>
@@ -106,11 +155,17 @@ export default function Container() {
                           <TabsTrigger className="text-xs" value="product">
                             Product
                           </TabsTrigger>
-                          <TabsTrigger
-                            className="text-xs col-start-3"
-                            value="orders"
-                          >
+                          <TabsTrigger className="text-xs" value="orders">
                             Orders
+                          </TabsTrigger>
+                          <TabsTrigger className="text-xs" value="categories">
+                            Categories
+                          </TabsTrigger>
+                          <TabsTrigger
+                            className="text-xs"
+                            value="subCategories"
+                          >
+                            Sub Categories
                           </TabsTrigger>
                         </TabsList>
                       </div>
