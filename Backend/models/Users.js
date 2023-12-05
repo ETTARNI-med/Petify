@@ -51,6 +51,9 @@ const UserSchema = new Schema(
       
       description: "User's creation date",
     },
+    user_image: {
+      type: String,
+    },
     last_login: {
       type: Date,
       description: "User's last login date",

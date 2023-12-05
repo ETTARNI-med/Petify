@@ -17,15 +17,21 @@ import { Row } from "@tanstack/react-table";
 interface Props {
   selected: Row<Payment>[];
   rows: number;
+  onUpdate: (variable: boolean) => void;
 }
 
-export default function Alert({ rows, selected }: Props) {
+export default function Alert({ rows, selected, onUpdate }: Props) {
   const handleDelete = () => {
     if (selected.length === 1) {
       const id = selected[0].original._id;
-      axios.delete(`http://localhost:4000/v1/products/${id}`).catch((error) => {
-        console.error("Error deleting record:", error);
-      });
+      axios
+        .delete(`http://localhost:4000/v1/products/${id}`)
+        .then(() => {
+          onUpdate(true);
+        })
+        .catch((error) => {
+          console.error("Error deleting record:", error);
+        });
     } else {
       selected.forEach((item) => {
         const id = item.original._id;
@@ -35,6 +41,7 @@ export default function Alert({ rows, selected }: Props) {
             console.error(`Error deleting record with ID ${id}:`, error);
           });
       });
+      onUpdate(true);
     }
   };
   return (

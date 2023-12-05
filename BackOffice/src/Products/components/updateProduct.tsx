@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
+import { PenSquare } from "lucide-react";
 import axios from "axios";
 import {
   Select,
@@ -38,8 +38,9 @@ interface Props {
     short_description: string;
     long_description: string;
   };
+  onVariable: (variable: boolean) => void;
 }
-export default function UpdateProduct({ Payment }: Props) {
+export default function UpdateProduct({ Payment, onVariable }: Props) {
   const [checkedValue, setCheckedValue] = useState(Payment.active);
   const [paths, setPaths] = useState(Payment.product_image);
   const [product, setProduct] = useState({
@@ -140,41 +141,25 @@ export default function UpdateProduct({ Payment }: Props) {
   // Handle Active status
   const handleActiveChange = () => {
     setCheckedValue(!checkedValue);
+  };
+
+  useEffect(() => {
     setProduct((prevValue) => {
       return {
         ...prevValue,
         active: checkedValue,
       };
     });
-    console.log(checkedValue);
-    console.log(product.active);
-  };
+  }, [product.active, checkedValue]);
 
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(product);
-
     axios
-      .patch("http://localhost:4000/v1/products/" + Payment.id, {
-        product_name: "Natures Menu Especially For Cats",
-        discount_price: "819.99",
-        subcategory_id: "Wet Food",
-        short_description:
-          "Our 48 can multipack cat food means you can mix things up a bit. The pack includes chicken with turkey, beef and chicken and chicken with salmon and tuna.",
-        long_description:
-          "Does your cat love Natures Menu Especially for Cats? Well, they’ll love our meaty multipack canned cat food includes all three natural meal varieties from our complete and balanced range for adult cats. Cats need a high meat quality diet to help them thrive - and that's exactly what is in each of our recipes.  Our multipack includes chicken with turkey, beef and chicken and chicken with salmon and tuna. Each can gives your cat everything they need to thrive and each recipe is gently cooked to ensure all the Natures Menu goodness is locked in. Using simple, no fuss, natural ingredients give your cat everything they need, plus peace of mind that you’re doing the right thing for them.",
-        product_image: [
-          "https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/yemvp6t3wk56swjdz8lh",
-          "https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/xqqp6lu84pu54ovn9rpa",
-        ],
-        active: true,
-        price: "829.99",
-        sku: "1029029",
-        options: ["color : #046402", "size : large", "age : adult"],
-      })
+      .patch("http://localhost:4000/v1/products/" + Payment.id, product)
       .then((r) => {
         console.log(r);
+        onVariable(true);
       })
       .catch((e) => {
         console.log(e);
@@ -184,7 +169,7 @@ export default function UpdateProduct({ Payment }: Props) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          Product <Plus className="ml-2 h-4 w-4" />
+          Update <PenSquare className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:w-[80vw] lg:w-[50vw]">
@@ -435,7 +420,7 @@ export default function UpdateProduct({ Payment }: Props) {
               />
               <Label htmlFor="active">Active</Label>
             </div>
-            <Button type="submit">Add Product</Button>
+            <Button type="submit">Update Product</Button>
           </DialogFooter>
         </form>
       </DialogContent>

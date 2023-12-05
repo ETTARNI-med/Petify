@@ -7,6 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { PenSquare } from "lucide-react";
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -14,34 +18,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import ImageViewer from "@/Products/components/ImageViewer";
-import { cn } from "@/lib/utils";
+
 interface Props {
+  User: {
+    id: string;
+    email: string;
+    user_name: string;
+    first_name: string;
+    last_name: string;
+    user_image: string;
+    role: string;
+  };
   onUpdate: (variable: boolean) => void;
 }
-export default function AddUser({ onUpdate }: Props) {
-  const [path, setPath] = useState("");
+export default function UpdateUser({ User, onUpdate }: Props) {
+  const [path, setPath] = useState(User.user_image);
   const [user, setUser] = useState({
-    email: "",
-    user_name: "",
-    role: "",
-    first_name: "",
-    last_name: "",
-    user_image: "",
+    email: User.email,
+    user_name: User.user_name,
+    first_name: User.first_name,
+    last_name: User.last_name,
+    user_image: User.user_image,
+    role: User.role,
     password: "",
-  });
-
-  const [userErrors, setUserErrors] = useState({
-    email: false,
-    user_name: false,
-    first_name: false,
-    last_name: false,
-    password: false,
   });
 
   //handle User Change
@@ -100,30 +101,6 @@ export default function AddUser({ onUpdate }: Props) {
     });
   }, [path]);
 
-  //reset user into initial status
-  const resetUser = () => {
-    setPath("");
-    setUser({
-      email: "",
-      user_name: "",
-      role: "",
-      first_name: "",
-      last_name: "",
-      user_image: "",
-      password: "",
-    });
-  };
-
-  //handle User Change
-  const handleUserErrors = (target: string, value: boolean) => {
-    setUserErrors((prevValue) => {
-      return {
-        ...prevValue,
-        [target]: value,
-      };
-    });
-  };
-
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -131,55 +108,24 @@ export default function AddUser({ onUpdate }: Props) {
     user.last_name.trim();
     user.user_name.trim();
     user.email.trim();
-
     axios
-      .post("http://localhost:4000/v1/users/add", user)
+      .put("http://localhost:4000/v1/users/" + User.id, user)
       .then((r) => {
         console.log(r);
         onUpdate(true);
-        resetUser();
       })
       .catch((e) => {
         console.log(e);
       });
   };
-
-  useEffect(() => {
-    const { first_name, last_name, email, user_name, password } = user;
-
-    first_name.length > 1 && (first_name.length < 3 || first_name.length > 27)
-      ? handleUserErrors("first_name", true)
-      : handleUserErrors("first_name", false);
-
-    // Check last name length
-    last_name.length > 1 && (last_name.length < 2 || last_name.length > 27)
-      ? handleUserErrors("last_name", true)
-      : handleUserErrors("last_name", false);
-
-    // Check email length
-    email.length > 1 && (email.length < 11 || email.length > 60)
-      ? handleUserErrors("email", true)
-      : handleUserErrors("email", false);
-
-    // Check user name length
-    user_name.length > 1 && (user_name.length < 5 || user_name.length > 27)
-      ? handleUserErrors("user_name", true)
-      : handleUserErrors("user_name", false);
-
-    // Check password length
-    password.length > 1 && password.length < 8
-      ? handleUserErrors("password", true)
-      : handleUserErrors("password", false);
-  }, [user]);
-
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          User <Plus className="ml-2 h-4 w-4" />
+          Update <PenSquare className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:w-[50vw]">
+      <DialogContent className="sm:w-[80vw] lg:w-[50vw]">
         <form onSubmit={handleSubmit}>
           <DialogHeader className="pb-8">
             <DialogTitle>Add New User</DialogTitle>
@@ -193,9 +139,7 @@ export default function AddUser({ onUpdate }: Props) {
               <Input
                 id="first_name"
                 placeholder="John"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.first_name,
-                })}
+                className="col-span-3"
                 required
                 value={user.first_name}
                 onChange={(e) => handleUserChange("first_name", e.target.value)}
@@ -209,9 +153,7 @@ export default function AddUser({ onUpdate }: Props) {
               <Input
                 id="last_name"
                 placeholder="Doe"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.last_name,
-                })}
+                className="col-span-3"
                 required
                 value={user.last_name}
                 onChange={(e) => handleUserChange("last_name", e.target.value)}
@@ -225,9 +167,7 @@ export default function AddUser({ onUpdate }: Props) {
               <Input
                 id="username"
                 placeholder="Dohn23"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.user_name,
-                })}
+                className="col-span-3"
                 required
                 value={user.user_name}
                 onChange={(e) => handleUserChange("user_name", e.target.value)}
@@ -242,9 +182,7 @@ export default function AddUser({ onUpdate }: Props) {
                 id="email"
                 type="email"
                 placeholder="johndoe@gmail.com"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.email,
-                })}
+                className="col-span-3"
                 required
                 value={user.email}
                 onChange={(e) => handleUserChange("email", e.target.value)}
@@ -297,11 +235,8 @@ export default function AddUser({ onUpdate }: Props) {
               </Label>
               <Input
                 id="password"
-                type="password"
                 placeholder="@P3t1f7@"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.password,
-                })}
+                className="col-span-3"
                 required
                 value={user.password}
                 onChange={(e) => handleUserChange("password", e.target.value)}
@@ -309,7 +244,7 @@ export default function AddUser({ onUpdate }: Props) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Add User</Button>
+            <Button type="submit">Update User</Button>
           </DialogFooter>
         </form>
       </DialogContent>
