@@ -8,6 +8,8 @@ const {
   getUserById,
   getAllUsers,
   addUser,
+  logout,
+  profile
 } = require("../controllers/usersController");
 
 const checkIfUser = require('../midllewares/checkUserAuth')
@@ -16,11 +18,13 @@ const checkIfAdmin = require('../midllewares/checkAdmin')
 
 // LOGIN DONE
 users.post("/login" ,login);
-users.post("/add",checkIfAdmin,addUser);
-users.get("/allusers",checkIfUser ,getAllUsers);
-users.get("/profil/:id",checkIfUser ,getUserById);
+users.post("/add",addUser);
+users.get("/allusers" ,getAllUsers);
+users.get("/profil/:id" ,getUserById);
 users.get("/search", searchForUser);
 users.put("/:id", updateUser);
 users.delete("/:id", deleteUser);
+users.get("/logout",logout);
+users.get("/profile",profile);
 
 module.exports = users;

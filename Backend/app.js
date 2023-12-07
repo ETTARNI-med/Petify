@@ -11,11 +11,13 @@ const bodyPaser = require('body-parser');
 const session = require('express-session');
 const { errorHandler ,notFound} = require('./midllewares/errorHandler');
 dbConnect();
+const cors= require('cors')
 
 app.use(bodyPaser.json())
 app.use(bodyPaser.urlencoded({extended: false}))
 
 // Midllewares s
+app.use(cors());
 app.use(cookieParser());
 app.use(session({
     secret:"dedwdw",
