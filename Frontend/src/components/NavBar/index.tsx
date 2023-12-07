@@ -33,7 +33,7 @@ import LeftMenu from "@/components/Sheets/LeftMenu"
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
   return (
-    <div className="w-full grid grid-rows-2 gap-5 font-Poppins rounded-lg">
+    <div className="w-full grid grid-rows-2 gap-5 font-Poppins rounded-lg bg-primarycolor dark:bg-darkcolor">
       <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center ">
         <LeftMenu />
         <Link to="/" unstable_viewTransition

@@ -219,7 +219,7 @@ export default function Footer() {
         </div>
         {/* <!--============================== Footer normal size ==============================--> */}
 
-        <div className="hidden sm:grid gap-5 md:gap-10 lg:gap-8  grid-cols-2  justify-items-center pt-4 ">
+        <div className="bg-primarycolor dark:bg-darkcolor hidden sm:grid gap-5 md:gap-10 lg:gap-8  grid-cols-2  justify-items-center pt-4 ">
           {/*<!---==The news subscribtion for the normal size page ==----> */}
           <div className="w-full sm:w-11/12 lg:w-10/12 flex flex-col font-kanit text-sm ">
             <span className="font-semibold uppercase w-full text-center text-base">
@@ -312,7 +312,7 @@ export default function Footer() {
                 <span>Street Cairo, Hassan, Rabat</span>
               </div>
             </div>
-            <h1 className="font-semibold text-center my-2">FOLLOW US </h1>
+            <h1 className="font-semibold text-center my-2 dark:text-primarycolor">FOLLOW US </h1>
             <div className= "flex justify-between	my-3">
               
       <a
