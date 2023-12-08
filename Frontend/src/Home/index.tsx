@@ -3,6 +3,13 @@ import FeaturedSection from "./featuredSection";
 // import Marquee from "./marquee";
 import Announecement from "./announcement";
 import Caroussel from "./caroussel";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "../styles/swiper.css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import CategoriesSwiper from "./CategoriesSwiper";
+
 const Home = () => {
   return (
     <>
@@ -11,6 +18,10 @@ const Home = () => {
       <FeaturedSection></FeaturedSection>
       <Caroussel></Caroussel>
       {/* <Marquee></Marquee> */}
+      <div className=" mb-10">
+      <CategoriesSwiper/>
+      </div>
+      <Marquee></Marquee>
     </>
   );
 };
