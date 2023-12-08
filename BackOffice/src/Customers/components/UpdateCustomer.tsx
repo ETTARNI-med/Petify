@@ -7,54 +7,50 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { PenSquare } from "lucide-react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import ImageViewer from "@/Products/components/ImageViewer";
-import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
+
 interface Props {
+  Customer: {
+    id: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    customer_image: string;
+    email: string;
+    valid_account: boolean;
+  };
   onUpdate: (variable: boolean) => void;
 }
-export default function AddUser({ onUpdate }: Props) {
-  const [path, setPath] = useState("");
-  const [user, setUser] = useState({
-    email: "",
-    user_name: "",
-    role: "",
-    first_name: "",
-    last_name: "",
-    user_image: "",
+export default function UpdateCustomer({ Customer, onUpdate }: Props) {
+  const [valid_account, setValid_account] = useState(Customer.valid_account);
+  const [path, setPath] = useState(Customer.customer_image);
+  const [customer, setCustomer] = useState({
+    email: Customer.email,
+    username: Customer.username,
+    first_name: Customer.first_name,
+    last_name: Customer.last_name,
+    customer_image: Customer.customer_image,
+    valid_account: Customer.valid_account,
     password: "",
-  });
-
-  const [userErrors, setUserErrors] = useState({
-    email: false,
-    user_name: false,
-    first_name: false,
-    last_name: false,
-    password: false,
   });
 
   //handle User Change
   const handleUserChange = (target: string, value: string) => {
     if (target === "password") {
-      setUser((prevValue) => {
+      setCustomer((prevValue) => {
         return {
           ...prevValue,
           [target]: value.trim(),
         };
       });
     } else {
-      setUser((prevValue) => {
+      setCustomer((prevValue) => {
         return {
           ...prevValue,
           [target]: value,
@@ -62,6 +58,20 @@ export default function AddUser({ onUpdate }: Props) {
       });
     }
   };
+
+  // Handle Active status
+  const handleActiveChange = () => {
+    setValid_account(!valid_account);
+  };
+
+  useEffect(() => {
+    setCustomer((prevValue) => {
+      return {
+        ...prevValue,
+        valid_account,
+      };
+    });
+  }, [customer.valid_account, valid_account]);
 
   //image upload
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,94 +102,39 @@ export default function AddUser({ onUpdate }: Props) {
 
   // Handle paths updates
   useEffect(() => {
-    setUser((prevValue) => {
+    setCustomer((prevValue) => {
       return {
         ...prevValue,
-        user_image: path,
+        customer_image: path,
       };
     });
   }, [path]);
 
-  //reset user into initial status
-  const resetUser = () => {
-    setPath("");
-    setUser({
-      email: "",
-      user_name: "",
-      role: "",
-      first_name: "",
-      last_name: "",
-      user_image: "",
-      password: "",
-    });
-  };
-
-  //handle User Change
-  const handleUserErrors = (target: string, value: boolean) => {
-    setUserErrors((prevValue) => {
-      return {
-        ...prevValue,
-        [target]: value,
-      };
-    });
-  };
-
   //handle Submit event
   const handleSubmit = (e) => {
     e.preventDefault();
-    user.first_name.trim();
-    user.last_name.trim();
-    user.user_name.trim();
-    user.email.trim();
-
+    customer.first_name.trim();
+    customer.last_name.trim();
+    customer.username.trim();
+    customer.email.trim();
     axios
-      .post("http://localhost:4000/v1/users/add", user)
+      .put("http://localhost:4000/v1/customers/" + Customer.id, customer)
       .then((r) => {
         console.log(r);
         onUpdate(true);
-        resetUser();
       })
       .catch((e) => {
         console.log(e);
       });
   };
-
-  useEffect(() => {
-    const { first_name, last_name, email, user_name, password } = user;
-
-    first_name.length > 1 && (first_name.length < 3 || first_name.length > 27)
-      ? handleUserErrors("first_name", true)
-      : handleUserErrors("first_name", false);
-
-    // Check last name length
-    last_name.length > 1 && (last_name.length < 2 || last_name.length > 27)
-      ? handleUserErrors("last_name", true)
-      : handleUserErrors("last_name", false);
-
-    // Check email length
-    email.length > 1 && (email.length < 11 || email.length > 60)
-      ? handleUserErrors("email", true)
-      : handleUserErrors("email", false);
-
-    // Check user name length
-    user_name.length > 1 && (user_name.length < 5 || user_name.length > 27)
-      ? handleUserErrors("user_name", true)
-      : handleUserErrors("user_name", false);
-
-    // Check password length
-    password.length > 1 && password.length < 8
-      ? handleUserErrors("password", true)
-      : handleUserErrors("password", false);
-  }, [user]);
-
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          User <Plus className="ml-2 h-4 w-4" />
+          Update <PenSquare className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:w-[50vw]">
+      <DialogContent className="sm:w-[80vw] lg:w-[50vw]">
         <form onSubmit={handleSubmit}>
           <DialogHeader className="pb-8">
             <DialogTitle>Add New User</DialogTitle>
@@ -193,11 +148,9 @@ export default function AddUser({ onUpdate }: Props) {
               <Input
                 id="first_name"
                 placeholder="John"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.first_name,
-                })}
+                className="col-span-3"
                 required
-                value={user.first_name}
+                value={customer.first_name}
                 onChange={(e) => handleUserChange("first_name", e.target.value)}
               />
             </div>
@@ -209,11 +162,9 @@ export default function AddUser({ onUpdate }: Props) {
               <Input
                 id="last_name"
                 placeholder="Doe"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.last_name,
-                })}
+                className="col-span-3"
                 required
-                value={user.last_name}
+                value={customer.last_name}
                 onChange={(e) => handleUserChange("last_name", e.target.value)}
               />
             </div>
@@ -225,11 +176,9 @@ export default function AddUser({ onUpdate }: Props) {
               <Input
                 id="username"
                 placeholder="Dohn23"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.user_name,
-                })}
+                className="col-span-3"
                 required
-                value={user.user_name}
+                value={customer.username}
                 onChange={(e) => handleUserChange("user_name", e.target.value)}
               />
             </div>
@@ -242,11 +191,9 @@ export default function AddUser({ onUpdate }: Props) {
                 id="email"
                 type="email"
                 placeholder="johndoe@gmail.com"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.email,
-                })}
+                className="col-span-3"
                 required
-                value={user.email}
+                value={customer.email}
                 onChange={(e) => handleUserChange("email", e.target.value)}
               />
             </div>
@@ -268,26 +215,15 @@ export default function AddUser({ onUpdate }: Props) {
               </div>
             </div>
             <div className="grid grid-row-2 xsm:grid-cols-4   items-center gap-4">
-              <Label htmlFor="role" className="xsm:text-right pl-2">
+              <Label htmlFor="valid_account" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
-                Role
+                Valid
               </Label>
-              <Select
-                required
-                value={user.role}
-                onValueChange={(value) => handleUserChange("role", value)}
-              >
-                <SelectTrigger
-                  id="role"
-                  className="ml-auto min-w-fit col-span-3"
-                >
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">Admin</SelectItem>
-                  <SelectItem value="2">Manager</SelectItem>
-                </SelectContent>
-              </Select>
+              <Switch
+                id="valid_account"
+                checked={valid_account}
+                onClick={handleActiveChange}
+              />
             </div>
             <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="password" className="xsm:text-right pl-2">
@@ -296,19 +232,16 @@ export default function AddUser({ onUpdate }: Props) {
               </Label>
               <Input
                 id="password"
-                type="password"
                 placeholder="@P3t1f7@"
-                className={cn("col-span-3", {
-                  "border-red-700": userErrors.password,
-                })}
+                className="col-span-3"
                 required
-                value={user.password}
+                value={customer.password}
                 onChange={(e) => handleUserChange("password", e.target.value)}
               />
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Add User</Button>
+            <Button type="submit">Update User</Button>
           </DialogFooter>
         </form>
       </DialogContent>

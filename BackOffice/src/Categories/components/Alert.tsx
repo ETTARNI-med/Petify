@@ -11,39 +11,39 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { Payment } from "..";
+import { Row } from "@tanstack/react-table";
 
 interface Props {
-  id: string | string[];
-  rows?: number;
+  selected: Row<Payment>[];
+  rows: number;
   onUpdate: (variable: boolean) => void;
 }
 
-export default function Alert({ rows, id, onUpdate }: Props) {
+export default function Alert({ rows, selected, onUpdate }: Props) {
   const handleDelete = () => {
-    if (typeof id === "string") {
+    if (selected.length === 1) {
+      const id = selected[0].original._id;
       axios
-        .delete(`http://localhost:4000/v1/customers/${id}`)
+        .delete(`http://localhost:4000/v1/products/${id}`)
         .then(() => {
-          console.error("done");
           onUpdate(true);
         })
         .catch((error) => {
           console.error("Error deleting record:", error);
         });
     } else {
-      id.forEach((item) => {
+      selected.forEach((item) => {
+        const id = item.original._id;
         axios
-          .delete(`http://localhost:4000/v1/customers/${item}`)
+          .delete(`http://localhost:4000/v1/products/${id}`)
           .catch((error) => {
-            console.error(`Error deleting record with ID ${item}:`, error);
-          })
-          .finally(() => {
-            onUpdate(true);
+            console.error(`Error deleting record with ID ${id}:`, error);
           });
       });
+      onUpdate(true);
     }
   };
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -52,7 +52,7 @@ export default function Alert({ rows, id, onUpdate }: Props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          {typeof id !== "string" ? (
+          {rows > 1 ? (
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete all the{" "}
               {rows} Products and remove there data from our servers.
@@ -60,7 +60,7 @@ export default function Alert({ rows, id, onUpdate }: Props) {
           ) : (
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
-              Customer and remove his data from our servers.
+              Product and remove his data from our servers.
             </AlertDialogDescription>
           )}
         </AlertDialogHeader>

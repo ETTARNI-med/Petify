@@ -87,7 +87,7 @@ export default function UsersPage() {
               last_name={row.original.last_name}
               role={row.original.role === "1" ? "admin" : "manager"}
               user_name={row.original.user_name}
-              user_image={row.original.user_image}
+              image={row.original.user_image}
             />
           }
         </div>
