@@ -43,7 +43,6 @@ const searchForCategories = asyncHandler(async (req, res) => {
       if (!categories) {
         return res.status(404).json({ message: "Categorie not found" });
       }
-
       res.json({
         categories,
       });
@@ -91,7 +90,7 @@ const updateCategorie = asyncHandler(async(req,res)=>{
 
 //delete categorie
 
-const deleteCategorie =asyncHandler(async(req,res)=>{
+    const deleteCategorie =asyncHandler(async(req,res)=>{
     const {id} = req.params;
     const findCategorie = await Category.findById({_id:id});
     try{

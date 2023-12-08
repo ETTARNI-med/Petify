@@ -3,8 +3,6 @@ const User = require("../models/Users");
 const asyncHandler = require("express-async-handler");
 const JWT = require ('jsonwebtoken')
 const bcrypt = require("bcrypt");
-const users = require("../routes/users");
-const { set } = require("mongoose");
 const JWT_SECRET = process.env.JWT_SECRET
 
 const saltRounds = 10;
@@ -28,10 +26,14 @@ const addUser = asyncHandler(async (req, res) => {
         ...req.body,
         password: hashedPassword,
       })
-      
+
+      // To Return New User without Password
+      const user = newUser.toObject()
+      delete user.password 
+       
        res.status(200).json({
         msg: "Succesfully added",
-        newUser
+        user
         
       });
     }
@@ -48,12 +50,12 @@ const addUser = asyncHandler(async (req, res) => {
 const login = async (req, res) => {
 
   const email = req.body.email;
-  const user_name = req.body.user_name;
+  //const user_name = req.body.user_name;
   const password = req.body.password;
 
   try { 
 
-    const find = await User.findOne({$or : [{user_name},{email}]})
+    const find = await User.findOne({$or : [{user_name : email},{email}]})
     const findRole = find.role
     const findId = find._id
     
@@ -61,9 +63,7 @@ const login = async (req, res) => {
     if ( !find){
         return res.status(400).json({
           msg: "Invalid credentials",
-        })
-       
-      
+        })      
     }
     
     const matched = await bcrypt.compare(password, find.password);
@@ -75,6 +75,10 @@ const login = async (req, res) => {
         },JWT_SECRET, {
           expiresIn: 1800 
         })
+    res.cookie("token", token, {
+          httpOnly: true,
+          maxAge: 72 * 60 * 60 * 1000,
+        });
      res.status(200).json({
         findId,
         token
@@ -91,18 +95,11 @@ const login = async (req, res) => {
   }
 };
 
-//Add New User controller // Check addUser above
-
-// const addNewUser = () => {
-//   console.log(" hey the addNewUser is working");
-// };
-
 //Get All Users 
 
 const getAllUsers = async (req,res) => {
 
   try {
-
 
     const all = await User.find()
 
@@ -118,23 +115,18 @@ const getAllUsers = async (req,res) => {
 //Get User By ID 
 
 const getUserById = async(req,res) => {
- //console.log(req.params)
- //console.log(req.user)
- //const {token} = req.params;
- //const {id} = token.findId;
- //console.log(token)
- //console.log(id)
 
+const {id}=req.params;
 // ***** Get the User Id from the token (Check CheckIf) *******
- const hisID = await User.findById(req.userId)
+ const hisID = await User.findById({_id:id})
  const infos = {
     fist_name : hisID.first_name,
     last_name : hisID.last_name,
     email : hisID.email,
     role : hisID.role,
     user_name : hisID.user_name,
+    //create_date : hisID.creation_date,
   }
-
   try {
     res.status(200).json({infos})
   } catch (error) {
@@ -142,134 +134,158 @@ const getUserById = async(req,res) => {
       "status": 403,
       "message": "you don't have enough privilege"}) 
   }
- 
 };
 
-//Search For User  
-const searchForUser = async(req, res) => {
-  let {query} = req.query;
+const searchForUser = async (req, res) => {
+  try {
+    let { query } = req.query;
 
-  if (typeof query === "undefined"){
-    try {
+    if (typeof query === "undefined") {
       const getUsers = await User.find();
 
-      res.json(getUsers);
-    } catch (error) {
-      throw new Error(error);
-    }
-  } else {
-    try {
-      query = query.toLocaleLowerCase();
+      res.json(getUsers.map((user) => formatUser(user)));
+    } else {
+      query = query.toLowerCase();
+      const regex = new RegExp(query, "i");
 
-      const regex = new RegExp(query,"i");
-      // Find the user based on the search query /
-
-      const userInfo = await User.find({
-       $or : [
-          {first_name : {$regex : regex}},
-          {last_name : {$regex : regex}},
-          {email : {$regex : regex}},
-          {role : {$regex : regex}},
-       ],
+      // Find the user based on the search query
+      let userInfo = await User.find({
+        $or: [
+          { first_name: { $regex: regex } },
+          { last_name: { $regex: regex } },
+          { email: { $regex: regex } },
+          { role: { $regex: regex } },
+        ],
       });
 
-      if (!userInfo) {
+      if (!userInfo || userInfo.length === 0) {
         return res.status(404).json({ message: "Customer not found" });
       }
 
+      const formattedUserInfo = userInfo.map((user) => formatUser(user));
+
       res.json({
-        userInfo,
+        userInfo: formattedUserInfo,
       });
-    } catch (error) {
-      throw new Error(error);
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
+};
+// Helper function to format user information without the password
+const formatUser = (user) => {
+  const { first_name, last_name, email, role, user_name, creation_date } = user;
+
+  return {
+    first_name,
+    last_name,
+    email,
+    role,
+    user_name,
+    creation_date,
+  };
 
 };
+
 
 //Update User updateUser
 const updateUser = async (req, res) => {
   //const {id} = req.params.id;
-  let query = req.query
-  let queryId = query._id
-  //const {modifiedInfos} = req.body;
-  const firstName = req.body.first_name;
-  const lastName = req.body.last_name;
+  
+  const {id} = req.params;
   const  email = req.body.email;
-  const userName = req.body.user_name;
-  const password = req.body.password;
+  const username = req.body.user_name;
+  const password =req.body.password;
+  
+   const findUserById = await User.findOne({_id:id})
+   const findUserByEmail = await User.findOne({email:email});
+   const findUserByUsername= await User.findOne({user_name:username})
 
-   const findUser = await User.findOne({queryId})
-  // console.log(findUser)
-  try {
-    if(password){
-      const salt = await bcrypt.genSalt(saltRounds)
-    const hashedNewPassword = await bcrypt.hash(password, salt )
+ try { 
 
-    const isModified = await User.updateOne(
-      {_id : findUser._id}, {
-        $set: {
-          first_name : firstName,
-          last_name : lastName,
-          email : email,
-          user_name : userName,
-          password : hashedNewPassword
-        }
-      }
-      )
-    } else {
-      const isModified = await User.updateOne(
-        {_id : findUser._id}, {
-          $set: {
-            first_name : firstName,
-            last_name : lastName,
-            email : email,
-            user_name : userName,
-            
-          }
-        }
-        )
-    }
-    
+if(findUserById.user_name !== username && findUserByUsername){
+  res.json('username already exist');
+} else if(findUserById.email !== email && findUserByEmail){
+  res.json('email already existed');
+}
+else{
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  await User.findByIdAndUpdate(
+    { _id: id },
+        { ...req.body, password: hashedPassword },
+        { new: true }
+  )
+res.json('successfully updated');
+}
 
-    
-
-      res.status(200).json({
-        msg: "updated successfully",
-       
-      })
-  } catch (error) {
-    throw new Error(error)
+} catch (error) {
+  console.log(error)
   }
 };
 
 //Delete User  
 const deleteUser = async(req, res) => {
-  let query = req.query;
-  
-  let queryId = query._id
-  const userWillBeDeleted = await User.findOne({queryId})
 
-  
-  if(!userWillBeDeleted){
-    return res.status(404).json({
-      
-        "status": 404,
-        "message": "invalid user id"
-      
-    })
-  }
+ const {id}=req.params; 
+ 
+  const userWillBeDeleted = await User.findOne({_id:id})
 
   try {
-    await User.deleteOne({_id : userWillBeDeleted._id})
+    if(!userWillBeDeleted){
+      return res.status(404).json({
+        
+          "status": 404,
+          "message": "invalid user id"
+        
+      })
+    }
+    else{
+    await User.deleteOne({_id :id})
     res.status(200).json({
         "status": 200,
         "message": "user deleted successfully"
-    })
+    })}
+
   } catch (error) {
     throw new Error(error);
   }
 };
+
+//logout function
+const logout= asyncHandler(async(req,res)=>{
+  res.clearCookie("token", { httpOnly: true, secure: true });
+  await User.findByIdAndUpdate(
+    { _id:req.userId },
+    {active:false},
+    { new: true }
+  );
+  res.json("successfully loged out")
+})
+
+//get the user profile 
+const profile = async(req,res)=>{
+  const hisID = await User.findById(req.userId)
+  const infos = {
+     fist_name : hisID.first_name,
+     last_name : hisID.last_name,
+     email : hisID.email,
+     role : hisID.role,
+     user_name : hisID.user_name,
+     //create_date : hisID.creation_date,
+   }
+  
+   try {
+     res.status(200).json({infos})
+   } catch (error) {
+     return  res.status(400).json({
+       "status": 403,
+       "message": "you don't have enough privilege"}) 
+   }
+}
+ 
+
 
 module.exports = {
   login,
@@ -279,4 +295,7 @@ module.exports = {
   getUserById,
   getAllUsers,
   addUser,
+  logout,
+  profile
+
 };

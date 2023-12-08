@@ -1,8 +1,8 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-// import Slide1 from "../assets/banner1.png";
+import Swiper from "./swiper";
 import FeaturedSection from "./featuredSection";
-import Marquee from "./marquee";
+// import Marquee from "./marquee";
 import Announecement from "./announcement";
+import Caroussel from "./caroussel";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -13,40 +13,11 @@ import CategoriesSwiper from "./CategoriesSwiper";
 const Home = () => {
   return (
     <>
-    <Announecement></Announecement>
-      {/************************ * Swiper section ************** */}
-      <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        // navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper m-0"
-      >
-        <SwiperSlide>
-          <img src="https://via.placeholder.com/1640x624" alt="banner1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://via.placeholder.com/1640x624" alt="banner2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://via.placeholder.com/1640x624" alt="banner3" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://via.placeholder.com/1640x624"alt="banner4" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://via.placeholder.com/1640x624" alt="banner5" />
-        </SwiperSlide>
-      </Swiper>
-
+      <Announecement></Announecement>
+      <Swiper></Swiper>
       <FeaturedSection></FeaturedSection>
+      <Caroussel></Caroussel>
+      {/* <Marquee></Marquee> */}
       <div className=" mb-10">
       <CategoriesSwiper/>
       </div>

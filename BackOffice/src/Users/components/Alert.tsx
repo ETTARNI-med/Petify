@@ -10,8 +10,24 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 
-export default function Alert() {
+interface Props {
+  id: string;
+  onUpdate: (variable: boolean) => void;
+}
+
+export default function Alert({ id, onUpdate }: Props) {
+  const handleDelete = () => {
+    axios
+      .delete(`http://localhost:4000/v1/users/${id}`)
+      .then(() => {
+        onUpdate(true);
+      })
+      .catch((error) => {
+        console.error("Error deleting record:", error);
+      });
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -27,7 +43,7 @@ export default function Alert() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

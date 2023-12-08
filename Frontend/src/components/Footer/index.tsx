@@ -193,11 +193,13 @@ export default function Footer() {
               <div className="flex flex-col items-center py-2 w-10/12 mx-auto">
                 <div className="w-full flex justify-start items-center gap-2 py-2">
                   <Mail size={20} strokeWidth={3} />
-                  <Link to="/Contact">email us</Link>
+                  <Link to="/Contact" unstable_viewTransition
+>email us</Link>
                 </div>
                 <div className="w-full flex justify-start items-center gap-2 py-2">
                   <Phone size={20} strokeWidth={3} />
-                  <Link to="/">+2126-6424-6323</Link>
+                  <Link to="/" unstable_viewTransition
+>+2126-6424-6323</Link>
                 </div>
                 <div className="w-full flex justify-start items-center gap-2 py-2">
                   <MapPin size={20} strokeWidth={3} />
@@ -217,7 +219,7 @@ export default function Footer() {
         </div>
         {/* <!--============================== Footer normal size ==============================--> */}
 
-        <div className="hidden sm:grid gap-5 md:gap-10 lg:gap-8  grid-cols-2  justify-items-center pt-4 ">
+        <div className="bg-primarycolor dark:bg-darkcolor hidden sm:grid gap-5 md:gap-10 lg:gap-8  grid-cols-2  justify-items-center pt-4 ">
           {/*<!---==The news subscribtion for the normal size page ==----> */}
           <div className="w-full sm:w-11/12 lg:w-10/12 flex flex-col font-kanit text-sm ">
             <span className="font-semibold uppercase w-full text-center text-base">
@@ -298,18 +300,19 @@ export default function Footer() {
               <p className="font-semibold text-center">CONTACT US</p>
               <div className="flex items-center gap-4">
                 <Phone size={20} strokeWidth={2} />
-                <Link to="/">+2126-6424-6323</Link>
+                <Link to="/" unstable_viewTransition
+>+2126-6424-6323</Link>
               </div>
               <div className="flex items-center gap-4">
                 <Mail size={20} strokeWidth={2} />
-                <Link to="/Contact">Email us</Link>
+                <Link to="/Contact" unstable_viewTransition >Email us</Link>
               </div>
               <div className="hidden lg:flex items-center gap-4">
                 <MapPin size={20} strokeWidth={2} />
                 <span>Street Cairo, Hassan, Rabat</span>
               </div>
             </div>
-            <h1 className="font-semibold text-center my-2">FOLLOW US </h1>
+            <h1 className="font-semibold text-center my-2 dark:text-primarycolor">FOLLOW US </h1>
             <div className= "flex justify-between	my-3">
               
       <a
@@ -352,19 +355,26 @@ export default function Footer() {
         {/* The last section of the footer for both the normal size and the Responsive of the web page */}
         <Separator className="absolute top-0 w-full h-px bg-slate-50 left-0" />
         <span>Copyright &copy; 2023, Petify</span>
-        <Link className="hover:opacity-80 pl-18" to="/TermsOfSale">
+        <Link className="hover:opacity-80 pl-18" to="/TermsOfSale" unstable_viewTransition
+>
           {" "}
           Terms of Sale
         </Link>
-        <Link className="hover:opacity-80" to="/ShippingPolicy">
+        <Link className="hover:opacity-80" to="/ShippingPolicy" unstable_viewTransition
+>
           {" "}
           Shipping Policy
         </Link>
-        <Link className="hover:opacity-80" to="/PrivacyPolicy">
+        <Link className="hover:opacity-80" to="/PrivacyPolicy" unstable_viewTransition
+>
           {" "}
           Privacy Policy
         </Link>
-        <Link className="hover:opacity-80" to="/RefundPolicy">
+        <Link
+          className="hover:opacity-80"
+          to="/RefundPolicy"
+          unstable_viewTransition
+        >
           {" "}
           Refund Policy
         </Link>

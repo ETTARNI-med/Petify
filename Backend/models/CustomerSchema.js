@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 // Declare the schema of the customer
 const CustomerSchema = new mongoose.Schema(
   {
-    username:{
-      type:String,
-      min:3
+    username: {
+      type: String,
+      min: 3,
     },
     first_name: {
       type: String,
@@ -19,7 +19,9 @@ const CustomerSchema = new mongoose.Schema(
       min: 2,
       max: 27,
     },
-
+    customer_image: {
+      type: String,
+    },
     email: {
       type: String,
       require: true,
@@ -56,14 +58,6 @@ const CustomerSchema = new mongoose.Schema(
     },
   }
 );
-
-// CustomerSchema.pre("save", async function (next) {
-//   const salt = await bcrypt.genSaltSync(10);
-//   this.password = await bcrypt.hash(this.password, salt);
-// });
-CustomerSchema.methods.isPasswordMatched = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
 
 const Customer = mongoose.model("Customers", CustomerSchema, "Customer");
 

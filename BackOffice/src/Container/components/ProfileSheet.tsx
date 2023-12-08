@@ -1,4 +1,5 @@
 "use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -15,30 +16,31 @@ import { Dot } from "lucide-react";
 
 interface Props {
   _id?: string;
-  username?: string;
+  user_name?: string;
   email: string;
   valid?: boolean;
   active?: boolean;
   role?: "admin" | "manager";
-  date: string;
+  creation_date: string;
   first_name: string;
   last_name: string;
+  image: string;
 }
 
 export default function ProfileSheet({
   email,
   valid,
   active,
-  date,
+  creation_date,
   first_name,
   last_name,
   role,
-  username,
+  user_name,
+  image,
 }: Props) {
-  const user = typeof username === "undefined" ? false : true;
-  console.log(date);
+  const user = typeof role === "undefined" ? false : true;
 
-  const newDate = new Date(date).toLocaleString("en-us", {
+  const newDate = new Date(creation_date).toLocaleString("en-us", {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -50,7 +52,13 @@ export default function ProfileSheet({
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="px-2 hover:bg-transparent">
-          {user ? username : email}
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={image} alt={user_name} />
+            <AvatarFallback>
+              {first_name.charAt(0).toUpperCase() +
+                last_name.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
         </Button>
       </SheetTrigger>
       <SheetContent className="w-full xsm:w-10/12 sm:w-6/12">

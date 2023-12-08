@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Tourney:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Raleway:wght@900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Tourney:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Raleway:wght@900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,7 +20,16 @@
     @apply absolute top-2 left-3 cursor-pointer;
   }
   html {
-    @apply scroll-smooth
+    @apply scroll-smooth;
+  }
+  .text-wrap-none {
+    text-wrap: nowrap;
+  }
+  .text-beige-600 {
+    color: #f5f5dc;
+  }
+  .text-white-600 {
+    color: #ffffff;
   }
 }
 
@@ -81,6 +90,6 @@
 }
 
 @font-face {
-  font-family: 'AvenirLTStd', sans-serif;
-  src: url('./assets/fonts/AvenirLTStd-Book.otf');
+  font-family: "AvenirLTStd", sans-serif;
+  src: url("./assets/fonts/AvenirLTStd-Book.otf");
 }
