@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, Package, PackageOpen } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MonitorCheck, MonitorX } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,25 +32,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Alert from "./components/Alert";
-import AddProduct from "./components/AddProduct";
 import { Checkbox } from "@/components/ui/checkbox";
-import UpdateProduct from "./components/updateProduct";
 import axios from "axios";
 import ImageViewer from "./components/ImageViewer";
 import { Skeleton } from "@/components/ui/skeleton";
+import UpdateCategories from "./components/UpdateCategories";
+import AddCategories from "./components/AddCategories";
 
 export type Categories = {
   _id: string;
-  sku: string;
-  price: string;
-  discount_price: string;
+  category_name: string;
+  category_image: string;
   active: boolean;
-  subcategory_id: string;
-  product_name: string;
-  product_image: string[];
-  options: string[];
-  short_description: string;
-  long_description: string;
 };
 
 export default function CategoriesPage() {
@@ -61,7 +54,7 @@ export default function CategoriesPage() {
   const getData = async () => {
     try {
       // await new Promise((resolve) => setTimeout(resolve, 5000));
-      const response = await axios.get("http://localhost:4000/v1/products/");
+      const response = await axios.get("http://localhost:4000/v1/categories/");
       setData(response.data);
       setIsLoading(false); // Set loading state to false after data is fetched
       console.log(response.data);
@@ -101,73 +94,20 @@ export default function CategoriesPage() {
       enableHiding: false,
     },
     {
-      accessorKey: "sku",
+      accessorKey: "category_name",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            sku
-            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("sku")}</div>,
-    },
-    {
-      accessorKey: "product_name",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Name
+            category
             <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase line-clamp-1">
-          {row.getValue("product_name")}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "subcategory_id",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            subcategory
-            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("subcategory_id")}</div>
-      ),
-    },
-    {
-      accessorKey: "short_description",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            description
-            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="lowercase line-clamp-1">
-          {row.getValue("short_description")}
-        </div>
+        <div className="lowercase">{row.getValue("category_name")}</div>
       ),
     },
     {
@@ -186,144 +126,59 @@ export default function CategoriesPage() {
       cell: ({ row }) => (
         <div className="ml-5 lowercase">
           {row.getValue("active") === true ? (
-            <Package className="text-green-700 w-6" />
+            <MonitorCheck className="text-green-700 w-6" />
           ) : (
-            <PackageOpen className="text-red-700 w-6" />
+            <MonitorX className="text-red-700 w-6" />
           )}
         </div>
       ),
     },
     {
-      accessorKey: "product_image",
+      accessorKey: "category_image",
       header: () => {
-        return <Button variant="ghost">product images</Button>;
+        return <Button variant="ghost">category image</Button>;
       },
       cell: ({ row }) => (
         <div className="ml-5 lowercase flex gap-2">
-          {row.original.product_image.map((image, index) => (
-            <ImageViewer path={image} key={index} />
-          ))}
+          <ImageViewer path={row.original.category_image} />
         </div>
       ),
     },
     {
-      accessorKey: "discount_price",
-      header: () => {
-        return <Button variant="ghost">Price</Button>;
-      },
-      cell: ({ row }) => (
-        <div className="ml-3 lowercase flex">{row.original.discount_price}</div>
-      ),
-    },
-    {
-      accessorKey: "color",
-      header: () => {
-        return <Button variant="ghost">Color</Button>;
-      },
-      cell: ({ row }) => (
-        <div className="ml-3 flex">
-          <input
-            type="color"
-            value={
-              row.original.options
-                .map((option) => {
-                  const [key, value] = option
-                    .split(":")
-                    .map((item) => item.trim());
-                  if (key === "color") {
-                    return value;
-                  }
-                  return null;
-                })
-                .find((value) => value !== null) || ""
-            }
-            readOnly
-            disabled
-          />
-        </div>
-      ),
-    },
-    {
-      accessorKey: "size",
-      header: () => {
-        return <Button variant="ghost">Size</Button>;
-      },
-      cell: ({ row }) => (
-        <div className="ml-3 flex">
-          {row.original.options
-            .map((option) => {
-              const [key, value] = option.split(":").map((item) => item.trim());
-              if (key === "size") {
-                return value;
-              }
-              return null;
-            })
-            .find((value) => value !== null)
-            ?.toLocaleLowerCase()}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "age",
-      header: () => {
-        return <Button variant="ghost">Age</Button>;
-      },
-      cell: ({ row }) => (
-        <div className="ml-3 flex">
-          {row.original.options
-            .map((option) => {
-              const [key, value] = option.split(":").map((item) => item.trim());
-              if (key === "age") {
-                return value;
-              }
-              return null;
-            })
-            .find((value) => value !== null)
-            ?.toLocaleLowerCase()}
-        </div>
-      ),
-    },
-    {
-      id: "actions",
+      id: "Update",
       header: () => {
         return (
           <Button variant="ghost" className="w-20 py-px lg:py-2">
-            Action
+            Update
           </Button>
         );
       },
       cell: ({ row }) => {
-        const {
-          _id,
-          sku,
-          price,
-          discount_price,
-          active,
-          subcategory_id,
-          product_name,
-          short_description,
-          long_description,
-          product_image,
-          options,
-        } = row.original;
+        const { _id, category_name, category_image, active } = row.original;
         return (
-          <UpdateProduct
-            onVariable={handleReload}
+          <UpdateCategories
+            onUpdate={handleReload}
             Categories={{
-              id: _id,
-              sku,
-              price,
-              discount_price,
+              _id,
+              category_name,
+              category_image,
               active,
-              subcategory_id,
-              product_name,
-              product_image,
-              long_description,
-              options,
-              short_description,
             }}
           />
         );
+      },
+    },
+    {
+      id: "Delete",
+      header: () => {
+        return (
+          <Button variant="ghost" className="w-20 py-px lg:py-2">
+            Delete
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return <Alert onUpdate={handleReload} selected={row.original._id} />;
       },
     },
   ];
@@ -366,15 +221,19 @@ export default function CategoriesPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by sku..."
-          value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by category name..."
+          value={
+            (table.getColumn("category_name")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) => {
-            table.getColumn("sku")?.setFilterValue(event.target.value);
+            table
+              .getColumn("category_name")
+              ?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
         <div className="ml-auto">
-          <AddProduct onUpdate={handleReload} />
+          <AddCategories onUpdate={handleReload} />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -408,7 +267,9 @@ export default function CategoriesPage() {
           <Alert
             onUpdate={handleReload}
             rows={table.getFilteredSelectedRowModel().rows.length}
-            selected={table.getFilteredSelectedRowModel().rows}
+            selected={Object.values(
+              table.getFilteredSelectedRowModel().rows
+            ).map((item) => item.original._id)}
           />
         ) : (
           ""
@@ -418,10 +279,15 @@ export default function CategoriesPage() {
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by sku..."
-            value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter by category name..."
+            value={
+              (table.getColumn("category_name")?.getFilterValue() as string) ??
+              ""
+            }
             onChange={(event) => {
-              table.getColumn("sku")?.setFilterValue(event.target.value);
+              table
+                .getColumn("category_name")
+                ?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
           />
@@ -452,7 +318,7 @@ export default function CategoriesPage() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <AddProduct onUpdate={handleReload} />
+        <AddCategories onUpdate={handleReload} />
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
         <Table className="">

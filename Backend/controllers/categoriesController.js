@@ -54,62 +54,67 @@ const searchForCategories = asyncHandler(async (req, res) => {
 
 // get Categorie By Id function
 
-const getCategorieById = asyncHandler(async(req,res)=>{
-    const {id}=req.params;
-    const getcategorie = await Category.findById(id);
-try{
-    if(getcategorie){
-        res.status(201).json(getcategorie);
-    }else{
-        res.json("the categorie does not exist");
+const getCategorieById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const getcategorie = await Category.findById(id);
+  try {
+    if (getcategorie) {
+      res.status(201).json(getcategorie);
+    } else {
+      res.json("the categorie does not exist");
     }
-}catch(error){
+  } catch (error) {
     throw new Error(error);
-}
-})
+  }
+});
 
 //update categorie function
-const updateCategorie = asyncHandler(async(req,res)=>{
-    const {id}=req.params;
-    const categorieName=req.body.category_name;
-    console.log(categorieName)
-    const checkCategorie = await Category.findById({_id:id});
-    try{
-        if(checkCategorie && !categorieName){
-            const updateCategorie = await Category.findByIdAndUpdate({_id:id},req.body,{new:true});
-            res.status(201).json("successfully updated");
-        } else if (!checkCategorie){
-            res.json("id does not exist")
-        }else if(categorieName){
-            res.json("the categorie name already exist")
-        }
-    } catch(error){
-        throw new Error(error);
+const updateCategorie = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const categorieName = req.body.category_name;
+
+  const checkCategorie = await Category.findById({ _id: id });
+  try {
+    if (
+      (checkCategorie && checkCategorie.category_name === categorieName) ||
+      (!categorieName && checkCategorie) ) {
+      const updateCategorie = await Category.findByIdAndUpdate(
+        { _id: id },
+        req.body,
+        { new: true }
+      );
+      res.status(201).json("successfully updated");
+    } else if (!checkCategorie) {
+      res.json("id does not exist");
+    } else if (categorieName) {
+      res.json("the categorie name already exist");
     }
-})
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 //delete categorie
 
-    const deleteCategorie =asyncHandler(async(req,res)=>{
-    const {id} = req.params;
-    const findCategorie = await Category.findById({_id:id});
-    try{
-        if(findCategorie){
-            const deleteCategorie = await Category.findByIdAndDelete(id);
-        res.json("successfully deleted");
-        } else{
-            res.json("id does not exist")
-        }
-    }catch(error){
-        throw new Error(error);
+const deleteCategorie = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const findCategorie = await Category.findById({ _id: id });
+  try {
+    if (findCategorie) {
+      const deleteCategorie = await Category.findByIdAndDelete(id);
+      res.json("successfully deleted");
+    } else {
+      res.json("id does not exist");
     }
-
-}
-) 
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 module.exports = {
   createNewCategorie,
   searchForCategories,
-  getCategorieById,updateCategorie,
-  deleteCategorie
+  getCategorieById,
+  updateCategorie,
+  deleteCategorie,
 };
