@@ -39,7 +39,7 @@ import axios from "axios";
 import ImageViewer from "./components/ImageViewer";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export type Payment = {
+export type Categories = {
   _id: string;
   sku: string;
   price: string;
@@ -53,9 +53,9 @@ export type Payment = {
   long_description: string;
 };
 
-export default function ProductsPage() {
+export default function CategoriesPage() {
   //Fetching data
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Categories[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
@@ -80,7 +80,7 @@ export default function ProductsPage() {
     }
   };
 
-  const columns: ColumnDef<Payment>[] = [
+  const columns: ColumnDef<Categories>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -309,7 +309,7 @@ export default function ProductsPage() {
         return (
           <UpdateProduct
             onVariable={handleReload}
-            Payment={{
+            Categories={{
               id: _id,
               sku,
               price,

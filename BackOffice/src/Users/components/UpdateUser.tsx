@@ -201,7 +201,6 @@ export default function UpdateUser({ User, onUpdate }: Props) {
                   type="file"
                   accept="image/*"
                   className="w-11/12"
-                  required
                 />
                 <ImageViewer path={path} />
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -21,7 +21,6 @@ import {
   WifiOff,
   X,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -42,298 +41,259 @@ import Alert from "./components/Alert";
 import AddCustomer from "./components/AddCustomer";
 import { Checkbox } from "@/components/ui/checkbox";
 import ProfileSheet from "@/Container/components/ProfileSheet";
+import axios from "axios";
+import UpdateCustomer from "./components/UpdateCustomer";
 
-const data: Payment[] = [
-  {
-    _id: "m5gr84i9",
-    email: "ken99@yahoo.com",
-    valid: false,
-    active: true,
-    date: "2023-11-23T11:00:00",
-    first_name: "ken",
-    last_name: "aguero",
-  },
-  {
-    _id: "3u1reuv4",
-    email: "abe45@gmail.com",
-    valid: true,
-    active: false,
-    date: "2023-12-11T11:00:00",
-    first_name: "abla",
-    last_name: "beka",
-  },
-  {
-    _id: "derv1ws0",
-    email: "monserrat44@gmail.com",
-    valid: false,
-    active: true,
-    date: "2023-11-17T11:00:00",
-    first_name: "monser",
-    last_name: "rat",
-  },
-  {
-    _id: "5kma53ae",
-    email: "silas22@gmail.com",
-    valid: true,
-    active: true,
-    date: "2023-07-11T11:00:00",
-    first_name: "silas",
-    last_name: "syla",
-  },
-  {
-    _id: "bhqecj4p",
-    email: "carmella@hotmail.com",
-    valid: true,
-    active: true,
-    date: "2023-09-11T11:00:00",
-    first_name: "carmella",
-    last_name: "mella",
-  },
-  {
-    _id: "bhfecj4p",
-    email: "ahmedmohammadi@hotmail.com",
-    valid: true,
-    active: true,
-    date: "2023-09-23T11:00:00",
-    first_name: "Ahamed",
-    last_name: "mohammadi",
-  },
-  {
-    _id: "bhfexj4p",
-    email: "younnesjbari@hotmail.com",
-    valid: true,
-    active: false,
-    date: "2023-09-22T11:00:00",
-    first_name: "younnes",
-    last_name: "jbari",
-  },
-  {
-    _id: "bhfecj0p",
-    email: "younnestayeb@hotmail.com",
-    valid: true,
-    active: false,
-    date: "2023-09-24T11:00:00",
-    first_name: "younnes",
-    last_name: "tayeb",
-  },
-  {
-    _id: "bxxecj0p",
-    email: "houssamarabi@hotmail.com",
-    valid: false,
-    active: false,
-    date: "2023-09-24T11:00:00",
-    first_name: "houssam",
-    last_name: "arabi",
-  },
-  {
-    _id: "bmaecj0p",
-    email: "yassineaaerab@hotmail.com",
-    valid: true,
-    active: false,
-    date: "2023-09-24T11:00:00",
-    first_name: "yassine",
-    last_name: "aaerab",
-  },
-  {
-    _id: "bmaemj0p",
-    email: "youssefjaouhari@hotmail.com",
-    valid: false,
-    active: true,
-    date: "2023-09-24T11:00:00",
-    first_name: "youssef",
-    last_name: "jaouhari",
-  },
-  {
-    _id: "bmaemj0p",
-    email: "karimhassan@hotmail.com",
-    valid: false,
-    active: false,
-    date: "2023-09-24T11:00:00",
-    first_name: "hassan",
-    last_name: "karim",
-  },
-];
-
-export type Payment = {
+export type Customer = {
   _id: string;
-  email: string;
-  valid: boolean;
-  active: boolean;
-  date: string;
+  username: string;
   first_name: string;
   last_name: string;
+  customer_image: string;
+  email: string;
+  valid_account: boolean;
+  active: boolean;
+  createdAt: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
+export default function CustomersPage() {
+  const [data, setData] = useState<Customer[]>([]);
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/v1/customers/search"
       );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">
-        {
-          <ProfileSheet
-            email={row.original.email}
-            date={row.original.date}
-            first_name={row.original.first_name}
-            last_name={row.original.last_name}
-            active={row.original.active}
-            valid={row.original.valid}
-          />
-        }
-      </div>
-    ),
-  },
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-  {
-    accessorKey: "first_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          first Name
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("first_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "last_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          last Name
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("last_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "active",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          active
-          <ArrowUpDown className="h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="ml-5 lowercase">
-        {row.getValue("active") ? (
-          <Wifi className="text-green-700 w-6" />
-        ) : (
-          <WifiOff className="text-red-700 w-6" />
-        )}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "valid",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          valid
-          <ArrowUpDown className="h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="ml-5 lowercase">
-        {row.getValue("valid") ? (
-          <Check className="text-green-700 w-6" />
-        ) : (
-          <X className="text-red-700 w-6" />
-        )}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Created At
-          <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
-  },
-  {
-    id: "actions",
-    header: () => {
-      return (
-        <Button variant="ghost" className="w-20 py-px lg:py-2">
-          Action
-        </Button>
-      );
-    },
-    cell: () => {
-      return <Alert />;
-    },
-  },
-];
+  useEffect(() => {
+    getData();
+  }, []);
 
-{
-  /* Page for managing users */
-}
-export default function UsersPage() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const handleReload = (reloadValue: boolean) => {
+    if (reloadValue === true) {
+      getData();
+    }
+  };
+  const columns: ColumnDef<Customer>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected()}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "picture",
+      header: () => {
+        return <Button variant={"ghost"}>Profile</Button>;
+      },
+      cell: ({ row }) => (
+        <div>
+          {
+            <ProfileSheet
+              email={row.original.email}
+              creation_date={row.original.createdAt}
+              first_name={row.original.first_name}
+              last_name={row.original.last_name}
+              valid={row.original.valid_account}
+              user_name={row.original.username}
+              image={row.original.customer_image}
+              active={row.original.active}
+            />
+          }
+        </div>
+      ),
+    },
+    {
+      accessorKey: "username",
+      header: () => {
+        return <Button variant="ghost">Username</Button>;
+      },
+      cell: ({ row }) => <div>{row.original.username}</div>,
+    },
+    {
+      accessorKey: "email",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Email
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("email")}</div>
+      ),
+    },
+    {
+      accessorKey: "first_name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            first Name
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("first_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "last_name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            last Name
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="uppercase">{row.getValue("last_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "active",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            active
+            <ArrowUpDown className="h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="ml-5 lowercase">
+          {row.getValue("active") ? (
+            <Wifi className="text-green-700 w-6" />
+          ) : (
+            <WifiOff className="text-red-700 w-6" />
+          )}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "valid_account",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            valid
+            <ArrowUpDown className="h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="ml-5 lowercase">
+          {row.getValue("valid_account") ? (
+            <Check className="text-green-700 w-6" />
+          ) : (
+            <X className="text-red-700 w-6" />
+          )}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "createdAt",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Created At
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">
+          {new Date(row.getValue("createdAt")).toLocaleString()}
+        </div>
+      ),
+    },
+    {
+      id: "update",
+      header: () => {
+        return (
+          <Button variant="ghost" className="w-20 py-px lg:py-2">
+            Update
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <>
+            <UpdateCustomer
+              onUpdate={handleReload}
+              Customer={{
+                email: row.original.email,
+                username: row.original.username,
+                first_name: row.original.first_name,
+                last_name: row.original.last_name,
+                customer_image: row.original.customer_image,
+                valid_account: row.original.valid_account,
+                id: row.original._id,
+              }}
+            />
+          </>
+        );
+      },
+    },
+    {
+      id: "delete",
+      header: () => {
+        return (
+          <Button variant="ghost" className="w-20 py-px lg:py-2">
+            Delete
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <>
+            <Alert onUpdate={handleReload} id={row.original._id} />
+          </>
+        );
+      },
+    },
+  ];
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -367,7 +327,7 @@ export default function UsersPage() {
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
         <div className="ml-auto">
-          <AddCustomer />
+          <AddCustomer onUpdate={handleReload} />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -398,7 +358,13 @@ export default function UsersPage() {
       </div>
       <div className="py-4 ml-4">
         {table.getFilteredSelectedRowModel().rows.length >= 2 ? (
-          <Alert rows={table.getFilteredSelectedRowModel().rows.length} />
+          <Alert
+            onUpdate={handleReload}
+            rows={table.getFilteredSelectedRowModel().rows.length}
+            id={Object.values(table.getFilteredSelectedRowModel().rows).map(
+              (item) => item.original._id
+            )}
+          />
         ) : (
           ""
         )}
@@ -442,7 +408,7 @@ export default function UsersPage() {
           </DropdownMenu>
         </div>
         <div className="mx-auto">
-          <AddCustomer />
+          <AddCustomer onUpdate={handleReload} />
         </div>
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">

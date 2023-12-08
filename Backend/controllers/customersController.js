@@ -59,7 +59,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   //check if user exist
-  const findCustomer = await Customer.findOne({ email :email});
+  const findCustomer = await Customer.findOne({ email: email });
   const findId = findCustomer._id;
 
   try {
@@ -76,7 +76,7 @@ const login = asyncHandler(async (req, res) => {
       );
       await Customer.findByIdAndUpdate(
         { _id: findId },
-        { active:true},
+        { active: true },
         { new: true }
       );
       req.session.customer = findCustomer;
@@ -153,12 +153,13 @@ const customerById = asyncHandler(async (req, res) => {
 
 //delete a customer
 const deleteCustomer = asyncHandler(async (req, res) => {
+  const { id } = req.params;
   try {
-    const findById = await Customer.findOne({ _id: req.id });
-    if (findById) {
-      const deletCustomer = await Customer.findByIdAndDelete({ _id: req.id });
-      res.status(201).json("Data successfuly deleted");
-      //res.clearCookie('jwtToken');
+    const deletCustomer = await Customer.findOneAndDelete({ _id: id });
+    if (deletCustomer) {
+      res.json(`${deletCustomer.username} successfuly deleted.`);
+    } else {
+      res.status(404).json(`Product with the entered ID is not found.`);
     }
   } catch (error) {
     throw new Error(error);
@@ -195,31 +196,28 @@ const updateCustomer = asyncHandler(async (req, res) => {
 //update Customers Data by Customers by decoding the token
 
 const updateCustomersData = asyncHandler(async (req, res) => {
-  
-  const email = req.body.email ;
+  const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
   const salt = await bcrypt.genSalt(saltRounds);
   const hashedPassword = await bcrypt.hash(password, salt);
   try {
- 
     const findCustomerById = await Customer.findOne({ _id: req.id });
-    const findCustomerByEmail = await Customer.findOne({email:email});
-    const findCustomerByUsername= await Customer.findOne({username:username})
-    if(findCustomerById.username !== username && findCustomerByUsername){
-      res.json('username already exist');
-    } else if(findCustomerById.email !== email && findCustomerByEmail){
-      res.json('email already existed');
-    }
-    else{
-    
+    const findCustomerByEmail = await Customer.findOne({ email: email });
+    const findCustomerByUsername = await Customer.findOne({
+      username: username,
+    });
+    if (findCustomerById.username !== username && findCustomerByUsername) {
+      res.json("username already exist");
+    } else if (findCustomerById.email !== email && findCustomerByEmail) {
+      res.json("email already existed");
+    } else {
       await Customer.findByIdAndUpdate(
         { _id: req.id },
-            { ...req.body, password: hashedPassword },
-            { new: true }
-      )
-    res.json('successfully updated');
-    
+        { ...req.body, password: hashedPassword },
+        { new: true }
+      );
+      res.json("successfully updated");
     }
   } catch (error) {
     res.json("error or token is not valid");
@@ -265,7 +263,7 @@ const customerValidation = asyncHandler(async (req, res) => {
       //update the valid_account situation
       const setToValid = await Customer.findByIdAndUpdate(
         req.id,
-        { valid_account: true ,active:true},
+        { valid_account: true, active: true },
         { new: true }
       );
       //update the token
@@ -368,8 +366,8 @@ const logout = asyncHandler(async (req, res) => {
   req.session.destroy();
   res.clearCookie("token", { httpOnly: true, secure: true });
   await Customer.findByIdAndUpdate(
-    { _id:req.id },
-    {active:false},
+    { _id: req.id },
+    { active: false },
     { new: true }
   );
   res.json("successfully loged out");
