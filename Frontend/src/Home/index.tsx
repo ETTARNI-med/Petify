@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import "../styles/swiper.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CategoriesSwiper from "./CategoriesSwiper";
+import Marque from "./marquee";
 
 const Home = () => {
   return (
@@ -21,7 +22,7 @@ const Home = () => {
       <div className=" mb-10">
       <CategoriesSwiper/>
       </div>
-      <Marquee></Marquee>
+      <Marque></Marque>
     </>
   );
 };
