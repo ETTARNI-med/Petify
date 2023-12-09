@@ -15,6 +15,7 @@ import Blog from "../components/Pages/Blog";
 import AboutUs from "../components/Pages/AboutUs";
 import Layout from "./Layout";
 import SubCategory from "@/components/SubCategory";
+import ProductPage from "@/components/Productpage/ProductPage";
 
 const Router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const Router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/product",
+        element: <ProductPage />,
       },
       {
         path: "/Contact",
