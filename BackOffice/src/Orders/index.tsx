@@ -219,10 +219,12 @@ export default function ProductsPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by sku..."
-          value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by custome id..."
+          value={
+            (table.getColumn("customer_id")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) => {
-            table.getColumn("sku")?.setFilterValue(event.target.value);
+            table.getColumn("customer_id")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
@@ -257,10 +259,14 @@ export default function ProductsPage() {
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by sku..."
-            value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter by customer id..."
+            value={
+              (table.getColumn("customer_id")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) => {
-              table.getColumn("sku")?.setFilterValue(event.target.value);
+              table
+                .getColumn("customer_id")
+                ?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
           />
@@ -320,7 +326,7 @@ export default function ProductsPage() {
               <>
                 {Array.from({ length: 10 }).map((_, i) => (
                   <TableRow key={i} className="h-12">
-                    {Array.from({ length: 12 }).map((_, index) => (
+                    {Array.from({ length: 6 }).map((_, index) => (
                       <TableCell key={index}>
                         <Skeleton className="h-7 w-auto" />
                       </TableCell>

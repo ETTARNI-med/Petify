@@ -111,7 +111,7 @@ export default function UpdateCustomer({ Customer, onUpdate }: Props) {
   }, [path]);
 
   //handle Submit event
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     customer.first_name.trim();
     customer.last_name.trim();
