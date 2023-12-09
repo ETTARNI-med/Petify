@@ -95,7 +95,7 @@ export default function UpdateCategories({ Categories, onUpdate }: Props) {
   }, [category.active, checkedValue]);
 
   //handle Submit event
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
       .put("http://localhost:4000/v1/categories/" + Categories._id, category)
@@ -130,7 +130,7 @@ export default function UpdateCategories({ Categories, onUpdate }: Props) {
             <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="category_name" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
-                Product Name
+                Category Name
               </Label>
               <Input
                 value={category.category_name}
@@ -162,7 +162,9 @@ export default function UpdateCategories({ Categories, onUpdate }: Props) {
               </div>
             </div>
             <div className="grid xsm:grid-cols-4 items-start gap-4">
-              <Label htmlFor="active">Active</Label>
+              <Label htmlFor="active" className="xsm:text-right pl-2">
+                Active
+              </Label>
               <Switch
                 id="active"
                 checked={checkedValue}

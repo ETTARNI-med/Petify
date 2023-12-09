@@ -34,29 +34,60 @@ import {
 import Alert from "./components/Alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import axios from "axios";
-import ImageViewer from "./components/ImageViewer";
 import { Skeleton } from "@/components/ui/skeleton";
-import UpdateCategories from "./components/UpdateCategories";
-import AddCategories from "./components/AddCategories";
+import UpdateSubCategories from "./components/UpdateSubCategories";
+import AddSubCategories from "./components/AddSubCategories";
+import ImageViewer from "./components/ImageViewer";
 
-export type Category = {
+export type SubCategory = {
   _id: string;
-  category_name: string;
-  category_image: string;
+  subcategory_name: string;
+  subcategory_image: string;
+  category_id: string;
   active: boolean;
 };
 
-export default function CategoriesPage() {
+export default function SubCategoriesPage() {
   //Fetching data
-  const [data, setData] = useState<Category[]>([]);
+  const [data, setData] = useState<SubCategory[]>([]);
+  const [dataTable, setDataTable] = useState<SubCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const getCategories = async (data: SubCategory[]) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/v1/categories`);
+      const cat = response.data;
+      setIsLoading(false);
+
+      const updatedData = data.map((item) => {
+        const category = cat.find(
+          (c: SubCategory) => c._id === item.category_id
+        );
+        if (category) {
+          console.log(category.category_name);
+          return {
+            ...item,
+            category_id: category.category_name,
+          };
+        }
+        return item;
+      });
+      setData(updatedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getCategories(dataTable);
+  }, [dataTable]);
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/v1/categories/");
-      setData(response.data);
-      setIsLoading(false); // Set loading state to false after data is fetched
-      console.log(response.data);
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
+      const response = await axios.get(
+        "http://localhost:4000/v1/subcategories/"
+      );
+      setDataTable(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -72,7 +103,7 @@ export default function CategoriesPage() {
     }
   };
 
-  const columns: ColumnDef<Category>[] = [
+  const columns: ColumnDef<SubCategory>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -93,7 +124,24 @@ export default function CategoriesPage() {
       enableHiding: false,
     },
     {
-      accessorKey: "category_name",
+      accessorKey: "subcategory_name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            subcategory
+            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("subcategory_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "category_id",
       header: ({ column }) => {
         return (
           <Button
@@ -101,12 +149,23 @@ export default function CategoriesPage() {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             category
-            <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
+            <ArrowUpDown className="h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("category_name")}</div>
+        <div className="ml-5 uppercase">{row.getValue("category_id")}</div>
+      ),
+    },
+    {
+      accessorKey: "subcategory_image",
+      header: () => {
+        return <Button variant="ghost">subcategory image</Button>;
+      },
+      cell: ({ row }) => (
+        <div className="ml-5 lowercase flex gap-2">
+          <ImageViewer path={row.original.subcategory_image} />
+        </div>
       ),
     },
     {
@@ -133,17 +192,6 @@ export default function CategoriesPage() {
       ),
     },
     {
-      accessorKey: "category_image",
-      header: () => {
-        return <Button variant="ghost">category image</Button>;
-      },
-      cell: ({ row }) => (
-        <div className="ml-5 lowercase flex gap-2">
-          <ImageViewer path={row.original.category_image} />
-        </div>
-      ),
-    },
-    {
       id: "Update",
       header: () => {
         return (
@@ -153,14 +201,21 @@ export default function CategoriesPage() {
         );
       },
       cell: ({ row }) => {
-        const { _id, category_name, category_image, active } = row.original;
+        const {
+          _id,
+          subcategory_name,
+          category_id,
+          active,
+          subcategory_image,
+        } = row.original;
         return (
-          <UpdateCategories
+          <UpdateSubCategories
             onUpdate={handleReload}
-            Categories={{
+            SubCategory={{
+              subcategory_image,
               _id,
-              category_name,
-              category_image,
+              category_id,
+              subcategory_name,
               active,
             }}
           />
@@ -220,19 +275,20 @@ export default function CategoriesPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by category name..."
+          placeholder="Filter by subcategory name..."
           value={
-            (table.getColumn("category_name")?.getFilterValue() as string) ?? ""
+            (table.getColumn("subcategory_name")?.getFilterValue() as string) ??
+            ""
           }
           onChange={(event) => {
             table
-              .getColumn("category_name")
+              .getColumn("subcategory_name")
               ?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
         <div className="ml-auto">
-          <AddCategories onUpdate={handleReload} />
+          <AddSubCategories onUpdate={handleReload} />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -278,14 +334,15 @@ export default function CategoriesPage() {
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by category name..."
+            placeholder="Filter by subcategory name..."
             value={
-              (table.getColumn("category_name")?.getFilterValue() as string) ??
-              ""
+              (table
+                .getColumn("subcategory_name")
+                ?.getFilterValue() as string) ?? ""
             }
             onChange={(event) => {
               table
-                .getColumn("category_name")
+                .getColumn("subcategory_name")
                 ?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
@@ -317,7 +374,7 @@ export default function CategoriesPage() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <AddCategories onUpdate={handleReload} />
+        <AddSubCategories onUpdate={handleReload} />
       </div>
       <div className="rounded-md border ml-0 mr-6 xsm:mr-4">
         <Table className="">
@@ -347,7 +404,7 @@ export default function CategoriesPage() {
               <>
                 {Array.from({ length: 10 }).map((_, i) => (
                   <TableRow key={i} className="h-12">
-                    {Array.from({ length: 6 }).map((_, index) => (
+                    {Array.from({ length: 7 }).map((_, index) => (
                       <TableCell key={index}>
                         <Skeleton className="h-7 w-auto" />
                       </TableCell>

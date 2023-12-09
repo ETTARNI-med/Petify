@@ -1,22 +1,21 @@
 const express = require("express");
 const subcategories = express.Router();
 const {
-  createNewSubcategorie,
+  createNewSubcategory,
   allSubcategories,
   // searchForSubcategories,
   getSubcategorieById,
-  updateSubcategorie,
-  deleteSubcategorie,
+  updateSubcategory,
+  deleteSubcategory,
 } = require("../controllers/subcategoriesController");
 //subcategories routes
 
 subcategories
-  .post("/", createNewSubcategorie)
+  .post("/", createNewSubcategory)
   .get("/", allSubcategories)
   // .get("/", searchForSubcategories)
   .get("/:id", getSubcategorieById)
-  .put("/:id", updateSubcategorie)
-  .delete("/:id", deleteSubcategorie)
-  ;
+  .put("/:id", updateSubcategory)
+  .delete("/:id", deleteSubcategory);
 
 module.exports = subcategories;
