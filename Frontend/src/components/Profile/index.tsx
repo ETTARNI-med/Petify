@@ -2,8 +2,19 @@ import { ShoppingCart, User2Icon } from "lucide-react";
 import TabsComponent from "./components/TabsComponent";
 import UserInfo from "./components/UserInfo";
 import OrdersInfo from "./components/OrdersInfo";
+import Breadcrumps from "../BreadCrumps/Breadcrumps";
+import { CiHome } from "react-icons/ci";
 
 export default function Profile() {
+  const ProfilePage =[{
+    logo: <CiHome size={30}/>,
+    path: '/',
+    title: 'Home'
+  },{
+    logo: <User2Icon/>,
+    path: '/profile',
+    title: 'Profile'
+  } ]
   const items = [
     {
       label: "Profile",
@@ -17,7 +28,9 @@ export default function Profile() {
     { label: "Orders", content: <div className="w-screen mt-3 md:mt-5 xl:mt-6 px-4 md:px-6 xl:px-9 2xl:px-14 "><OrdersInfo/></div>, icon: <ShoppingCart size={40} /> },
   ];
   return (
+
     <section className="px-2 space-y-4 md:space-y-6 xl:space-y-9 mb-4 md:mb-5 xl:mb-7 ">
+      <Breadcrumps Directory={ProfilePage}/>
       <div className="md:px-2 xl:px-5 flex w-full mb-4 ">
         <label className="">
           <span className="text-xl sm:text-2xl md:text-2xl lg:text-3xl  2xl:text-4xl font-Poppins font-semibold">My Account </span>
