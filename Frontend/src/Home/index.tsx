@@ -10,6 +10,7 @@ import "../styles/swiper.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CategoriesSwiper from "./CategoriesSwiper";
 import Marque from "./marquee";
+import ProductsPreviewSection from "./components/ProductsPreviewSection";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <Swiper></Swiper>
       <FeaturedSection></FeaturedSection>
       <Caroussel></Caroussel>
+      <ProductsPreviewSection/>
       {/* <Marquee></Marquee> */}
       <div className=" mb-10">
       <CategoriesSwiper/>
