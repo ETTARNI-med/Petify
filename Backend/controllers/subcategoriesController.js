@@ -2,15 +2,12 @@ const { get } = require("mongoose");
 const SubCategory = require("../models/SubCategory");
 const asyncHandler = require("express-async-handler");
 
-//create a New Subcategory
-const createNewSubcategory = asyncHandler(async (req, res) => {
-  const { subcategory_name, category_id } = req.body;
+//create a New Subcategorie
+const createNewSubcategorie = asyncHandler(async (req, res) => {
+  const Name = req.body.subcategory_name;
+  const findName = await SubCategory.findOne({ subcategory_name: Name });
   try {
-    const findSubcategory = await SubCategory.findOne({
-      subcategory_name,
-      category_id,
-    });
-    if (!findSubcategory) {
+    if (!findName) {
       const createSubcategory = await SubCategory.create(req.body);
       res.status(201).json(createSubcategory);
     } else {
@@ -68,64 +65,51 @@ const getSubcategorieById = asyncHandler(async (req, res) => {
   }
 });
 
-//update Subcategory
-const updateSubcategory = asyncHandler(async (req, res) => {
+//update Subcategorie
+
+const updateSubcategorie = asyncHandler(async (req, res) => {
   try {
-    const { subcategory_name, category_id, active, subcategory_image } =
-      req.body;
-    const { id } = req.params;
+    const {subcategory_name} = req.body;
+    const {id} = req.params;
+    const findId = await SubCategory.findOne({_id:id});
+    const findName = await SubCategory.findOne({ subcategory_name });
 
-    const subcategory = await SubCategory.findById(id);
-
-    if (!subcategory) {
-      return res.json("Subcategory ID not found");
-    }
-
-    const existingSubcategory = await SubCategory.findOne({
-      subcategory_name,
-      category_id: subcategory.category_id,
-    });
-
-    if (existingSubcategory && existingSubcategory._id.toString() !== id) {
-      return res.json(
-        "Subcategory name is already occupied by another subcategory"
+    if (findId && !findName) {
+      const updateByid = await SubCategory.findByIdAndUpdate(
+        { _id: id },
+        req.body,
+        {
+          new: true,
+        }
       );
-    }
-
-    subcategory.subcategory_name = subcategory_name;
-    subcategory.category_id = category_id;
-    subcategory.active = active;
-    subcategory.subcategory_image = subcategory_image;
-
-    const updatedSubcategory = await subcategory.save();
-
-    res.json(updatedSubcategory);
+      res.json(updateByid);
+    } else if  (!findId){
+      res.json("subcategorie id not found");
+    }else  {
+      res.json("subcategorie name is already existed");
+    } 
   } catch (error) {
     throw new Error(error);
   }
 });
-
-//delete the Subcategory
-const deleteSubcategory = asyncHandler(async (req, res) => {
+//delete the Subcategorie
+const deleteSubcategorie = asyncHandler(async(req,res)=>{
   const id = req.params.id;
-  const findId = await SubCategory.findById({ _id: id });
-  try {
-    if (findId) {
-      const deleteSubcategorie = await SubCategory.findByIdAndDelete({
-        _id: id,
-      });
-      res.json("subcategory successfully deleted");
-    } else {
-      res.json(" subcategory id not found");
-    }
-  } catch (error) {
+  const findId = await SubCategory.findById({_id:id});
+  try{
+if(findId){
+  const deleteSubcategorie = await SubCategory.findByIdAndDelete({_id:id});
+  res.json("subcategory successfully deleted")
+}else{
+  res.json(" subcategory id not found");
+}
+  }catch(error){
     throw new Error(error);
   }
-});
+})
 module.exports = {
-  createNewSubcategory,
+  createNewSubcategorie,
   allSubcategories,
   getSubcategorieById,
-  updateSubcategory,
-  deleteSubcategory,
+  updateSubcategorie,deleteSubcategorie
 };

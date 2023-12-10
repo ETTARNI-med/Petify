@@ -16,22 +16,16 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import ImageViewer from "./ImageViewer";
-import { Category } from "@/Categories";
-import { SubCategory } from "@/SubCategories";
 interface Props {
   onUpdate: (variable: boolean) => void;
 }
 export default function AddProduct({ onUpdate }: Props) {
   const [paths, setPaths] = useState([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
-  const [chosenSubCategory, setChosenSubCategory] = useState("");
   const [product, setProduct] = useState({
     product_name: "",
     discount_price: "",
@@ -44,33 +38,6 @@ export default function AddProduct({ onUpdate }: Props) {
     sku: "",
     options: ["color : #ffffff", "size : ", "age : "],
   });
-
-  const getData = async () => {
-    const responseSubCategories = await axios.get(
-      "http://localhost:4000/v1/subcategories/"
-    );
-    setSubCategories(responseSubCategories.data);
-    const responseCategories = await axios.get(
-      "http://localhost:4000/v1/categories/"
-    );
-    setCategories(responseCategories.data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    const subcategory = subCategories.find(
-      (subcategory) => subcategory._id === product.subcategory_id
-    );
-    if (subcategory) {
-      setChosenSubCategory(subcategory.subcategory_name);
-    } else {
-      setChosenSubCategory("");
-    }
-  }, [product.subcategory_id, subCategories]);
-
   const handleProductChange = (target: string, value: string) => {
     setProduct((prevValue) => {
       return {
@@ -172,7 +139,7 @@ export default function AddProduct({ onUpdate }: Props) {
   };
 
   //handle Submit event
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:4000/v1/products/", product)
@@ -269,38 +236,17 @@ export default function AddProduct({ onUpdate }: Props) {
                 <span className="text-red-700">*</span>
                 Subcategory
               </Label>
-              <Select
-                onValueChange={(value) =>
-                  handleProductChange("subcategory_id", value)
-                }
+              <Input
                 value={product.subcategory_id}
-              >
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="product subcategory">
-                    {chosenSubCategory}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent className="col-span-3">
-                  {categories.map((category) => (
-                    <SelectGroup key={category._id}>
-                      <SelectLabel>{category.category_name}</SelectLabel>
-                      {subCategories
-                        .filter(
-                          (subcategory) =>
-                            subcategory.category_id === category._id
-                        )
-                        .map((subcategory) => (
-                          <SelectItem
-                            key={subcategory._id}
-                            value={subcategory._id}
-                          >
-                            {subcategory.subcategory_name}
-                          </SelectItem>
-                        ))}
-                    </SelectGroup>
-                  ))}
-                </SelectContent>
-              </Select>
+                onChange={(e) =>
+                  handleProductChange("subcategory_id", e.target.value)
+                }
+                name="subcategory_id"
+                id="subcategory_id"
+                placeholder="food"
+                className="col-span-3"
+                autoComplete="off"
+              />
             </div>
             <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label
@@ -352,7 +298,7 @@ export default function AddProduct({ onUpdate }: Props) {
                   type="file"
                   accept="image/*"
                   className="w-11/12"
-                  // required
+                  required
                 />
                 <ImageViewer path={paths[0]} />
               </div>

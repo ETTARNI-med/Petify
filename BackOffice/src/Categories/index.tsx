@@ -39,7 +39,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import UpdateCategories from "./components/UpdateCategories";
 import AddCategories from "./components/AddCategories";
 
-export type Category = {
+export type Categories = {
   _id: string;
   category_name: string;
   category_image: string;
@@ -48,11 +48,12 @@ export type Category = {
 
 export default function CategoriesPage() {
   //Fetching data
-  const [data, setData] = useState<Category[]>([]);
+  const [data, setData] = useState<Categories[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
     try {
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
       const response = await axios.get("http://localhost:4000/v1/categories/");
       setData(response.data);
       setIsLoading(false); // Set loading state to false after data is fetched
@@ -72,7 +73,7 @@ export default function CategoriesPage() {
     }
   };
 
-  const columns: ColumnDef<Category>[] = [
+  const columns: ColumnDef<Categories>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -347,7 +348,7 @@ export default function CategoriesPage() {
               <>
                 {Array.from({ length: 10 }).map((_, i) => (
                   <TableRow key={i} className="h-12">
-                    {Array.from({ length: 6 }).map((_, index) => (
+                    {Array.from({ length: 12 }).map((_, index) => (
                       <TableCell key={index}>
                         <Skeleton className="h-7 w-auto" />
                       </TableCell>

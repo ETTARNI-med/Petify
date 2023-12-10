@@ -125,7 +125,7 @@ export default function AddUser({ onUpdate }: Props) {
   };
 
   //handle Submit event
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     user.first_name.trim();
     user.last_name.trim();

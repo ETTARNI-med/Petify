@@ -122,7 +122,7 @@ export default function AddCustomer({ onUpdate }: Props) {
   };
 
   //handle Submit event
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     customer.first_name.trim();
     customer.last_name.trim();
@@ -187,7 +187,7 @@ export default function AddCustomer({ onUpdate }: Props) {
             <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
-                username
+                Customername
               </Label>
               <Input
                 id="username"

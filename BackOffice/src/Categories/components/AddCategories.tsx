@@ -87,7 +87,7 @@ export default function AddCategories({ onUpdate }: Props) {
   };
 
   //handle Submit event
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:4000/v1/categories/", category)
@@ -110,13 +110,13 @@ export default function AddCategories({ onUpdate }: Props) {
       <DialogContent className="sm:w-[50vw] lg:w-[40vw]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add New Category</DialogTitle>
+            <DialogTitle>Add New Product</DialogTitle>
           </DialogHeader>
           <div className="grid gap-8 py-8">
             <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="category_name" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
-                Category Name
+                Product Name
               </Label>
               <Input
                 value={category.category_name}
@@ -151,7 +151,7 @@ export default function AddCategories({ onUpdate }: Props) {
           </div>
           <DialogFooter>
             <DialogClose id="dialogClose"></DialogClose>
-            <Button type="submit">Add Category</Button>
+            <Button type="submit">Add Product</Button>
           </DialogFooter>
         </form>
       </DialogContent>

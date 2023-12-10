@@ -1,7 +1,6 @@
 import { FaShoppingCart, FaStar, FaHeart } from 'react-icons/fa';
 import React, { useState } from 'react';
 import { CiHeart, CiShoppingCart } from "react-icons/ci";
-
 interface ProductProps {
     id: number;
     name: string;
@@ -26,12 +25,10 @@ export function Products(props: ProductProps) {
             <div key={props.id} className='  m-4 flex-1 flex-shrink-0 w-6 max-w-6 max-h-6 transition duration-200 '>
                 <img src={props.image} alt='product-img' className='productImage mx-auto max-w-full h-auto justify-center'></img>
 
-                  {cartClicked ? (
-                
+                {cartClicked ? (
           <CiShoppingCart
             className={`productCard__cart absolute top-0 right-0 m-4 text-2xl cursor-pointer`}
             onClick={handleCartClick}
-            
           />
         ) : (
           <FaShoppingCart
