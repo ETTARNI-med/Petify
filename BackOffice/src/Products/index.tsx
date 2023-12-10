@@ -38,6 +38,7 @@ import UpdateProduct from "./components/updateProduct";
 import axios from "axios";
 import ImageViewer from "./components/ImageViewer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SubCategory } from "@/SubCategories";
 
 export type Payment = {
   _id: string;
@@ -56,15 +57,21 @@ export type Payment = {
 export default function ProductsPage() {
   //Fetching data
   const [data, setData] = useState<Payment[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
     try {
       // await new Promise((resolve) => setTimeout(resolve, 5000));
-      const response = await axios.get("http://localhost:4000/v1/products/");
-      setData(response.data);
-      setIsLoading(false); // Set loading state to false after data is fetched
-      console.log(response.data);
+      const responseData = await axios.get(
+        "http://localhost:4000/v1/products/"
+      );
+      setData(responseData.data);
+      const responseSubCategories = await axios.get(
+        "http://localhost:4000/v1/subcategories/"
+      );
+      setSubCategories(responseSubCategories.data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -148,7 +155,13 @@ export default function ProductsPage() {
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("subcategory_id")}</div>
+        <div className="lowercase line-clamp-1">
+          {
+            subCategories.find(
+              (subcategory) => subcategory._id === row.original.subcategory_id
+            )?.subcategory_name
+          }
+        </div>
       ),
     },
     {

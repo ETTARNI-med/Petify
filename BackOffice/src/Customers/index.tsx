@@ -43,6 +43,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import ProfileSheet from "@/Container/components/ProfileSheet";
 import axios from "axios";
 import UpdateCustomer from "./components/UpdateCustomer";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type Customer = {
   _id: string;
@@ -57,12 +58,16 @@ export type Customer = {
 };
 
 export default function CustomersPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<Customer[]>([]);
   const getData = async () => {
     try {
       const response = await axios.get(
         "http://localhost:4000/v1/customers/search"
       );
+
+      setIsLoading(false);
+
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -319,10 +324,12 @@ export default function CustomersPage() {
       {/* Table controllers for xsm and bigger scr */}
       <div className="hidden xsm:flex items-center py-4 ml-0 mr-4">
         <Input
-          placeholder="Filter by email..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by username..."
+          value={
+            (table.getColumn("username")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) => {
-            table.getColumn("email")?.setFilterValue(event.target.value);
+            table.getColumn("username")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
@@ -373,10 +380,12 @@ export default function CustomersPage() {
       <div className="xsm:hidden flex flex-col justify-center py-4 mr-6">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by email..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter by username..."
+            value={
+              (table.getColumn("username")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) => {
-              table.getColumn("email")?.setFilterValue(event.target.value);
+              table.getColumn("username")?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
           />
@@ -435,7 +444,19 @@ export default function CustomersPage() {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              <>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <TableRow key={i} className="h-12">
+                    {Array.from({ length: 11 }).map((_, index) => (
+                      <TableCell key={index}>
+                        <Skeleton className="h-7 w-auto" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
