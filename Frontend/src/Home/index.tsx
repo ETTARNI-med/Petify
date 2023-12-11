@@ -7,16 +7,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../styles/swiper.css";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+// import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CategoriesSwiper from "./CategoriesSwiper";
 import Marque from "./marquee";
 import ProductsPreviewSection from "./components/ProductsPreviewSection";
 
-import Subcategories from "@/components/Pages/Subcategories";
 
-import CategoriesSwiper from "./CategoriesSwiper";
-import Marque from "./marquee";
-import ProductsPreviewSection from "./components/ProductsPreviewSection";
 
 
 const Home = () => {
