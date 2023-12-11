@@ -1,132 +1,137 @@
-import Quantity from "./quantity";
-import { Trash2 } from "lucide-react";
-import Product from "../assets/133937_MAIN._AC_SL1200_V1691676744_.avif";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  clearCart,
+  decreaseCart,
+  getTotals,
+  removeFromCart,
+  YourProductType,
+} from "./cartSlice";
 
-const Cart = () => {
+import { Link } from "react-router-dom";
+// import { RootState } from "./yourRootReducer"; // Update with the correct path to your root reducer
+
+const Cart: React.FC = () => {
+  const cart = useSelector((state) => state?.cart);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
+
+  const handleAddToCart = (product: YourProductType) => {
+    dispatch(addToCart(product));
+  };
+  const handleDecreaseCart = (product: YourProductType) => {
+    dispatch(decreaseCart(product));
+  };
+  const handleRemoveFromCart = (product: YourProductType) => {
+    dispatch(removeFromCart(product));
+  };
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
   return (
-    <section>
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <header className="text-center">
-            <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
-              Your Cart
-            </h1>
-          </header>
-
-          <div className="mt-8">
-            <ul className="space-y-4">
-              <li className="flex items-center gap-4 m-5">
-                <div className="card card-side bg-base-100 ">
-                  <figure>
-                    <img src={Product} alt="Movie" className="w-36"/>
-                  </figure>
-                  <div className="mt-3">
-                      <h3 className="font-medium text-gray-900 group-hover:underline group-hover:underline-offset-4">
-                        American Journey Minced Poultry in Gravy Variety Pack
-                        Grain-Free Canned Cat Food
-                      </h3>
-
-                      <p className="mt-1 text-sm text-gray-700">$150</p>
+    <div className="cart-container">
+      <h2>Shopping Cart</h2>
+      {cart.cartItems.length === 0 ? (
+        <div className="cart-empty">
+          <p>Your cart is currently empty</p>
+          <div className="start-shopping">
+            <Link to="/">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="bi bi-arrow-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                />
+              </svg>
+              <span>Start Shopping</span>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div className="titles">
+            <h3 className="product-title">Product</h3>
+            <h3 className="price">Price</h3>
+            <h3 className="quantity">Quantity</h3>
+            <h3 className="total">Total</h3>
+          </div>
+          <div className="cart-items">
+            {cart.cartItems &&
+              cart.cartItems.map((cartItem) => (
+                <div className="cart-item" key={cartItem.id}>
+                  <div className="cart-product">
+                    <img src={cartItem.image} alt={cartItem.name} />
+                    <div>
+                      <h3>{cartItem.name}</h3>
+                      <p>{cartItem.desc}</p>
+                      <button onClick={() => handleRemoveFromCart(cartItem)}>
+                        Remove
+                      </button>
                     </div>
-                </div>
-
-                <div className="flex flex-1 items-center justify-end gap-2">
-                  <Quantity />
-
-                  <button className="text-gray-600 transition hover:text-red-600">
-                    <Trash2 />
-                  </button>
-                </div>
-              </li>
-
-              <li className="flex items-center gap-4">
-              <div className="card card-side bg-base-100 ">
-                  <figure>
-                    <img src={Product} alt="Movie" className="w-36"/>
-                  </figure>
-                  <div className="mt-3">
-                      <h3 className="font-medium text-gray-900 group-hover:underline group-hover:underline-offset-4">
-                        American Journey Minced Poultry in Gravy Variety Pack
-                        Grain-Free Canned Cat Food
-                      </h3>
-
-                      <p className="mt-1 text-sm text-gray-700">$150</p>
-                    </div>
-                </div>
-
-                <div className="flex flex-1 items-center justify-end gap-2">
-                  <Quantity />
-
-                  <button className="text-gray-600 transition hover:text-red-600">
-                    <Trash2 />
-                  </button>
-                </div>
-              </li>
-
-              <li className="flex items-center gap-4">
-              <div className="card card-side bg-base-100 ">
-                  <figure>
-                    <img src={Product} alt="Movie" className="w-36"/>
-                  </figure>
-                  <div className="mt-3">
-                      <h3 className="font-medium text-gray-900 group-hover:underline group-hover:underline-offset-4">
-                        American Journey Minced Poultry in Gravy Variety Pack
-                        Grain-Free Canned Cat Food
-                      </h3>
-
-                      <p className="mt-1 text-sm text-gray-700">$150</p>
-                    </div>
-                </div>
-
-                <div className="flex flex-1 items-center justify-end gap-2">
-                  <Quantity />
-
-                  <button className="text-gray-600 transition hover:text-red-600">
-                    <Trash2 />
-                  </button>
-                </div>
-              </li>
-            </ul>
-
-            <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
-              <div className="w-screen max-w-lg space-y-4">
-                <dl className="space-y-0.5 text-sm text-gray-700">
-                  <div className="flex justify-between">
-                    <dt>Subtotal</dt>
-                    <dd>£250</dd>
                   </div>
-
-                  <div className="flex justify-between">
-                    <dt>VAT</dt>
-                    <dd>£25</dd>
+                  <div className="cart-product-price">${cartItem.price}</div>
+                  <div className="cart-product-quantity">
+                    <button onClick={() => handleDecreaseCart(cartItem)}>
+                      -
+                    </button>
+                    <div className="count">{cartItem.cartQuantity}</div>
+                    <button onClick={() => handleAddToCart(cartItem)}>+</button>
                   </div>
-
-                  <div className="flex justify-between">
-                    <dt>Discount</dt>
-                    <dd>-£20</dd>
+                  <div className="cart-product-total-price">
+                    ${cartItem.price * cartItem.cartQuantity}
                   </div>
-
-                  <div className="flex justify-between !text-base font-medium">
-                    <dt>Total</dt>
-                    <dd>£200</dd>
-                  </div>
-                </dl>
-
-                <div className="flex justify-end">
-                  <a
-                    href="#"
-                    className="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+                </div>
+              ))}
+          </div>
+          <div className="cart-summary">
+            <button className="clear-btn" onClick={() => handleClearCart()}>
+              Clear Cart
+            </button>
+            <div className="cart-checkout">
+              <div className="subtotal">
+                <span>Subtotal</span>
+                <span className="amount">${cart.cartTotalAmount}</span>
+              </div>
+              <p>Taxes and shipping calculated at checkout</p>
+              <button>Check out</button>
+              <div className="continue-shopping">
+                <Link to="/">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-arrow-left"
+                    viewBox="0 0 16 16"
                   >
-                    Checkout
-                  </a>
-                </div>
+                    <path
+                      fillRule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                    />
+                  </svg>
+                  <span>Continue Shopping</span>
+                </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 };
 
 export default Cart;
+
+// Replace YourProductType with the actual type of your product items
+// Replace RootState with the actual type of your Redux store state

@@ -7,16 +7,80 @@ import {
 } from "@/components/ui/card";
 import { Overview } from "./components/overview";
 import { RecentSales } from "./components/recent-sales";
+import { useEffect, useState } from "react";
+import { Customer } from "@/Customers";
+import axios from "axios";
 
-{
-  /* Dashboard Main Page that contain charts... */
-}
 export default function Dashboard() {
+  const [activeCustomers, setActiveCustomers] = useState<number>(0);
+  const [newCustomers, setNewCustomers] = useState<number>(0);
+  const [newCustomersPercent, setNewCustomersPercent] = useState<string>("0");
+  const [previousMonthCustomers, setPreviousMonthCustomers] =
+    useState<number>(0);
+  const [customersData, setCustomersData] = useState<Customer[]>([]);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/v1/customers/search"
+      );
+
+      setCustomersData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    // counting customers that's active at this moment
+    const activeCustomersCount = customersData.filter(
+      (customer) => customer.active
+    ).length;
+    setActiveCustomers(activeCustomersCount);
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    // counting customers that's registred this month
+    const newCustomersCount = customersData.filter((customer) => {
+      const customerDate = new Date(customer.createdAt);
+      const customerMonth = customerDate.getMonth();
+      const customerYear = customerDate.getFullYear();
+      return customerMonth === currentMonth && customerYear === currentYear;
+    }).length;
+
+    setNewCustomers(newCustomersCount);
+
+    // counting customers that's registred the previous month
+    const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    const previousMonthCustomersCount = customersData.filter((customer) => {
+      const customerDate = new Date(customer.createdAt);
+      const customerMonth = customerDate.getMonth();
+      const customerYear = customerDate.getFullYear();
+      return customerMonth === previousMonth && customerYear === previousYear;
+    }).length;
+    const previousMonthCustomersCountNumber =
+      previousMonthCustomersCount === 0 ? 1 : previousMonthCustomersCount;
+    setPreviousMonthCustomers(previousMonthCustomersCountNumber);
+
+    const newCustomersPercent = (
+      (newCustomers * 100) /
+      previousMonthCustomers
+    ).toFixed(2);
+    setNewCustomersPercent(newCustomersPercent);
+  }, [customersData]);
+
   return (
     <>
       <div className="flex-col flex">
         <div className="border-b"></div>
-        <div className="w-[95vw] -ml-0 md:ml-auto md:flex-1 -ml-2 xs:space-y-4 xs:p-8 pt-6">
+        <div className="w-[95vw] md:ml-auto md:flex-1 -ml-2 xs:space-y-4 xs:p-8 pt-6">
           <div className="md:grid md:gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="my-4 md:my-auto">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -64,9 +128,9 @@ export default function Dashboard() {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+2350</div>
+                <div className="text-2xl font-bold">{newCustomers}</div>
                 <p className="text-xs text-muted-foreground">
-                  +180.1% from last month
+                  {newCustomersPercent}% from last month
                 </p>
               </CardContent>
             </Card>
@@ -113,7 +177,7 @@ export default function Dashboard() {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+573</div>
+                <div className="text-2xl font-bold">{activeCustomers}</div>
               </CardContent>
             </Card>
           </div>

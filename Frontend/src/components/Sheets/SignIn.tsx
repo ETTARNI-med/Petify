@@ -16,6 +16,7 @@ import { EyeOff } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 
 
+
  import { useState } from "react";
 
 const SignIn = () => {
@@ -27,6 +28,9 @@ const SignIn = () => {
 
 
 
+
+const SignIn = () => {
+ 
   // const [getType, setType] = useState({ login: false, reset: false, register: false });
   // type === "register" ? setType({login : false, reset : false , register : true}) : type === "login" ? setType({login : true, reset : false , register : false}) :setType({login : false, reset : true , register : false});
   return (

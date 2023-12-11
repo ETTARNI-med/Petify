@@ -17,12 +17,15 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import ImageViewer from "./ImageViewer";
 import { Switch } from "@/components/ui/switch";
+import { SubCategory } from "@/SubCategories";
+import { Category } from "@/Categories";
 // import { Cloudinary } from "@cloudinary/url-gen";
 interface Props {
   Payment: {
@@ -41,6 +44,9 @@ interface Props {
   onVariable: (variable: boolean) => void;
 }
 export default function UpdateProduct({ Payment, onVariable }: Props) {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+  const [chosenSubCategory, setChosenSubCategory] = useState("");
   const [checkedValue, setCheckedValue] = useState(Payment.active);
   const [paths, setPaths] = useState(Payment.product_image);
   const [product, setProduct] = useState({
@@ -63,6 +69,32 @@ export default function UpdateProduct({ Payment, onVariable }: Props) {
       };
     });
   };
+
+  const getData = async () => {
+    const responseSubCategories = await axios.get(
+      "http://localhost:4000/v1/subcategories/"
+    );
+    setSubCategories(responseSubCategories.data);
+    const responseCategories = await axios.get(
+      "http://localhost:4000/v1/categories/"
+    );
+    setCategories(responseCategories.data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    const subcategory = subCategories.find(
+      (subcategory) => subcategory._id === product.subcategory_id
+    );
+    if (subcategory) {
+      setChosenSubCategory(subcategory.subcategory_name);
+    } else {
+      setChosenSubCategory("");
+    }
+  }, [product.subcategory_id, subCategories]);
 
   const handleProductOptionsChange = (target: string, value: string) => {
     setProduct((prevValue) => {
@@ -153,7 +185,7 @@ export default function UpdateProduct({ Payment, onVariable }: Props) {
   }, [product.active, checkedValue]);
 
   //handle Submit event
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
       .patch("http://localhost:4000/v1/products/" + Payment.id, product)
@@ -252,17 +284,38 @@ export default function UpdateProduct({ Payment, onVariable }: Props) {
                 <span className="text-red-700">*</span>
                 Subcategory
               </Label>
-              <Input
-                value={product.subcategory_id}
-                onChange={(e) =>
-                  handleProductChange("subcategory_id", e.target.value)
+              <Select
+                onValueChange={(value) =>
+                  handleProductChange("subcategory_id", value)
                 }
-                name="subcategory_id"
-                id="subcategory_id"
-                placeholder="food"
-                className="col-span-3"
-                autoComplete="off"
-              />
+                value={product.subcategory_id}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="product subcategory">
+                    {chosenSubCategory}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="col-span-3">
+                  {categories.map((category) => (
+                    <SelectGroup key={category._id}>
+                      <SelectLabel>{category.category_name}</SelectLabel>
+                      {subCategories
+                        .filter(
+                          (subcategory) =>
+                            subcategory.category_id === category._id
+                        )
+                        .map((subcategory) => (
+                          <SelectItem
+                            key={subcategory._id}
+                            value={subcategory._id}
+                          >
+                            {subcategory.subcategory_name}
+                          </SelectItem>
+                        ))}
+                    </SelectGroup>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid xsm:grid-cols-4    items-center gap-4">
               <Label

@@ -10,6 +10,8 @@ import ProductsPage from "@/Products";
 import UsersPage from "@/Users";
 import Profile from "@/profile";
 import Notifications from "@/Notifications";
+import CategoriesPage from "@/Categories";
+import SubCategoriesPage from "@/SubCategories";
 
 {
   /* Container that's provide stable navbar */
@@ -208,6 +210,22 @@ export default function Container() {
                     >
                       <Separator className="my-4" />
                       <OrdersPage />
+                    </TabsContent>
+                    {/* subCategories Content */}
+                    <TabsContent
+                      value="subCategories"
+                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
+                    >
+                      <Separator className="my-4" />
+                      <SubCategoriesPage />
+                    </TabsContent>
+                    {/* categories Content */}
+                    <TabsContent
+                      value="categories"
+                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
+                    >
+                      <Separator className="my-4" />
+                      <CategoriesPage />
                     </TabsContent>
                     {/* Profile Content */}
                     <TabsContent

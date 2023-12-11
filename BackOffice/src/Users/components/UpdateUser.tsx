@@ -102,7 +102,7 @@ export default function UpdateUser({ User, onUpdate }: Props) {
   }, [path]);
 
   //handle Submit event
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     user.first_name.trim();
     user.last_name.trim();
@@ -201,7 +201,6 @@ export default function UpdateUser({ User, onUpdate }: Props) {
                   type="file"
                   accept="image/*"
                   className="w-11/12"
-                  required
                 />
                 <ImageViewer path={path} />
               </div>

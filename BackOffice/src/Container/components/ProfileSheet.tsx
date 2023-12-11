@@ -24,7 +24,7 @@ interface Props {
   creation_date: string;
   first_name: string;
   last_name: string;
-  user_image: string;
+  image: string;
 }
 
 export default function ProfileSheet({
@@ -36,9 +36,9 @@ export default function ProfileSheet({
   last_name,
   role,
   user_name,
-  user_image,
+  image,
 }: Props) {
-  const user = typeof user_name === "undefined" ? false : true;
+  const user = typeof role === "undefined" ? false : true;
 
   const newDate = new Date(creation_date).toLocaleString("en-us", {
     weekday: "long",
@@ -53,7 +53,7 @@ export default function ProfileSheet({
       <SheetTrigger asChild>
         <Button variant="ghost" className="px-2 hover:bg-transparent">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user_image} alt={user_name} />
+            <AvatarImage src={image} alt={user_name} />
             <AvatarFallback>
               {first_name.charAt(0).toUpperCase() +
                 last_name.charAt(0).toUpperCase()}

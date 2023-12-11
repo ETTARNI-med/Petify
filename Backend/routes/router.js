@@ -11,7 +11,7 @@ const orders = require("./ordersRoutes");
 router.use("/users", users);
 router.use("/customers", customerRoutes);
 router.use("/categories", categories);
- router.use('/subcategories', subcategories);
+router.use('/subcategories', subcategories);
 router.use("/products", products);
 router.use("/orders", orders);
 

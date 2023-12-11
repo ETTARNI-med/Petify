@@ -21,6 +21,7 @@ const FilterSlider = ({ min, max, step, initialValue, onChange }: Props) => {
     <Slider
       value={changedValues}
       range
+    
       allowCross={false}
       step={step}
       min={min}
