@@ -20,16 +20,16 @@ const Home = () => {
     <>
       <Announecement></Announecement>
       <Swiper></Swiper>
-      <FeaturedSection></FeaturedSection>
-
-      <Caroussel></Caroussel>
+      {/* <FeaturedSection></FeaturedSection> */}
       <ProductsPreviewSection/>
+      <Caroussel></Caroussel>
+      
       {/* <Marquee></Marquee> */}
       <div className=" mb-10">
       <CategoriesSwiper/>
       </div>
       <Marque></Marque>
-
+   
     </>
   );
 };
