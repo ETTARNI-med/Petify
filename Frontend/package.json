@@ -30,7 +30,11 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@reduxjs/toolkit": "^2.0.1",
+
+    "axios": "^1.6.2",
+
     "@tanstack/react-table": "^8.10.7",
+
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.287.0",
@@ -40,9 +44,11 @@
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.2",
     "react-hook-form": "^7.47.0",
+
     "react-icons": "^4.12.0",
     "react-redux": "^9.0.2",
     "react-tabs": "^6.0.2",
+
     "swiper": "^11.0.4",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",

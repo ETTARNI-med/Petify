@@ -55,9 +55,9 @@ const allSubcategories = asyncHandler(async (req, res) => {
 
 //get Subcategorie By Id
 const getSubcategorieById = asyncHandler(async (req, res) => {
-  const id = req.params.id;
+  const {id} = req.params;
   try {
-    const findId = await SubCategory.findById({ _id: id });
+    const findId = await SubCategory.find({category_id:id });
     if (findId) {
       res.status(201).json(findId);
     } else {

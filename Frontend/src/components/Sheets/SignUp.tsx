@@ -12,13 +12,25 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
+
 // import { useState } from "react";
 
 const SignUp = () => {
   // const [getType, setType] = useState({ login: false, reset: false, register: false });
   // type === "register" ? setType({login : false, reset : false , register : true}) : type === "login" ? setType({login : true, reset : false , register : false}) :setType({login : false, reset : true , register : false});
+  const [showInputForm, setShowInputForm] = useState(false);
+  const [showVerificationForm, setShowVerificationForm] = useState(false);
+
+  const handleSubmit = () => {
+    setShowInputForm(false);
+    setShowVerificationForm(true);
+  };
+  const handleSheetContentClick = (e) => {
+    e.stopPropagation(); // Stop the click event from propagating to SheetClose
+  };
   return (
     <form action="">
       <Sheet>
@@ -93,18 +105,41 @@ const SignUp = () => {
           </div>
 
           <SheetFooter className="md:justify-center flex-row flex items-center justify-center">
-            <SheetClose asChild>
+           
               <Button
                 type="submit"
                 variant={"outline"}
                 className="uppercase w-3/6"
+                onClick={handleSubmit}
               >
                 Create account
               </Button>
-            </SheetClose>
+              
+            
           </SheetFooter>
-        </SheetContent>
+          </SheetContent>
+          <SheetClose asChild>
+          {showVerificationForm && (<SheetContent onClick={handleSheetContentClick}>
+       
+        <div className="grid gap-2 py-12">
+          <div>Please enter the code sent to Your Email</div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Code :
+            </Label>
+            <Input id="code" placeholder="enter code" className="col-span-3" maxLength={4} />
+          </div>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button type="submit"> Validate Account </Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>)
+   }
+        </SheetClose>
       </Sheet>
+      
     </form>
   );
 };

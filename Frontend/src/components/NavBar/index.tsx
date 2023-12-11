@@ -26,7 +26,7 @@ import {
 import SignUp from "../Sheets/SignUp";
 import SignIn from "../Sheets/SignIn";
 import { Separator } from "@radix-ui/react-separator";
-import { Bird, Cat, Dog, SmallPet, Fish } from "../CollectionHover";
+import CardContainer  from "../CollectionHover";
 import LeftMenu from "@/components/Sheets/LeftMenu"
 
 
@@ -136,11 +136,7 @@ const NavBar = () => {
       </div>
       <div className="hidden sm:flex h-10 relative mt-1">
         <div className="w-full flex justify-evenly uppercase font-Poppins">
-          <Cat></Cat>
-          <Dog></Dog>
-          <Bird></Bird>
-          <Fish></Fish>
-          <SmallPet></SmallPet>
+<CardContainer></CardContainer>
          
         </div>
       </div>
