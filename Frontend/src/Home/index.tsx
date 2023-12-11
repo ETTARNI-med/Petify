@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../styles/swiper.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import Subcategories from "@/components/Pages/Subcategories";
 
 const Home = () => {
   return (
@@ -47,6 +48,7 @@ const Home = () => {
 
       <FeaturedSection></FeaturedSection>
       <Marquee></Marquee>
+      
     </>
   );
 };
