@@ -23,6 +23,10 @@ const SignIn = () => {
   const handleForgotPasswordClick = () => {
     setShowInputForm(true);
   };
+
+
+
+
   // const [getType, setType] = useState({ login: false, reset: false, register: false });
   // type === "register" ? setType({login : false, reset : false , register : true}) : type === "login" ? setType({login : true, reset : false , register : false}) :setType({login : false, reset : true , register : false});
   return (
@@ -39,7 +43,7 @@ const SignIn = () => {
         </SheetTrigger>
         <div >
           {/* <img src={isDarkMode ? DarkBackground : LightBackground} alt="background" className="w-full h-full object-cover opacity-50 blur-[3px]	" /> */}
-        <SheetContent className="sm:w-6/12 md:5/12 " >
+        <SheetContent className="sm:w-6/12 md:5/12 "   >
 
           <SheetHeader>
             <SheetTitle className="uppercase">LOG IN</SheetTitle>
@@ -59,7 +63,10 @@ const SignIn = () => {
                 id="password"
                 placeholder="Password"
                 className="col-span-4"
+               
               />
+                          
+
               <span className="absolute right-8">
                 <EyeOff size={20} strokeWidth={1.75} />
               </span>
@@ -112,6 +119,7 @@ const SignIn = () => {
         </div>
       </Sheet>
     </form>
+   
   );
 };
 

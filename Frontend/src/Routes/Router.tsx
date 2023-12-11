@@ -17,6 +17,8 @@ import Layout from "./Layout";
 import SubCategory from "@/components/SubCategory";
 import Subcategories from "@/components/Pages/Subcategories";
 
+import ProductPage from "@/components/Productpage/ProductPage";
+
 const Router = createBrowserRouter([
   {
     path: "/",
