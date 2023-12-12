@@ -12,21 +12,11 @@ export default function Home() {
     <div className="w-[95vw] mx-auto">
       <div className="justify-center items-center w-full relative h-[92vh] xs:h-[95vh] grid md:grid-cols-2 px-0">
         {/* Navbar for md and lg scr */}
-        <div className="hidden md:flex relative h-full flex-col bg-muted p-10 text-white dark:border-r">
+        <div className="hidden md:flex relative h-full flex-col p-10 text-white dark:border-r">
           <div className="relative" />
-          <img
-            src={PetifyBack}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <img
-            src={PetifyBackDark}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover hidden dark:block"
-          />
-          <div className="relative z-20 flex items-center text-lg font-medium uppercase pt-5 dark:text-white text-black">
-            <img src={Petify} alt="Logo" className="w-14 px-2" />
-            Petify
+
+          <div className="relative z-20 flex items-center justify-center text-lg font-medium uppercase pt-5">
+            <img src={Petify} alt="Logo" className="w-8/12 px-2" />
           </div>
           <div className="relative z-20 mt-auto mx-auto bg-black dark:bg-white w-fit rounded opacity-50 backdrop-blur-md">
             <blockquote className="space-y-2 dark:text-black text-white">
