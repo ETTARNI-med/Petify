@@ -7,19 +7,20 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../styles/swiper.css";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+//import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CategoriesSwiper from "./CategoriesSwiper";
 import Marque from "./marquee";
-import ProductsPreviewSection from "./components/ProductsPreviewSection";
-
+//import ProductsPreviewSection from "./components/ProductsPreviewSection";
+import ProductsPreviewTest from "./components//svgcategories"
 const Home = () => {
   return (
     <>
       <Announecement></Announecement>
       <Swiper></Swiper>
-      <FeaturedSection></FeaturedSection>
-      <Caroussel></Caroussel>
-      <ProductsPreviewSection/>
+      
+      <ProductsPreviewTest/>
+÷      <Caroussel></Caroussel>
+      {/*<ProductsPreviewSection/>*/}
       {/* <Marquee></Marquee> */}
       <div className=" mb-10">
       <CategoriesSwiper/>

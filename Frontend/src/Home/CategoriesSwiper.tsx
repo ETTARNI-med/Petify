@@ -3,7 +3,7 @@ import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CategoryCard from './components/CategoryCard';
 import { Bird, Cat, Dog, Fish, Rat } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+//import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/Favorites/SectionHeader';
 
 export default function CategoriesSwiper() {
@@ -17,7 +17,7 @@ export default function CategoriesSwiper() {
 
   return (
     <div className='flex flex-col items-center '>
-        <div className='self-start'     >
+        <div className='self-start'>
        <SectionHeader  subtitle='Browse By Category' title='Categories'/>
         </div>
       <Swiper
