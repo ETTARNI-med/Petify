@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { Payment } from "..";
+import { Product } from "..";
 import { Row } from "@tanstack/react-table";
 
 interface Props {
-  selected: Row<Payment>[];
+  selected: Row<Product>[];
   rows: number;
   onUpdate: (variable: boolean) => void;
 }

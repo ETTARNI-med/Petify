@@ -16,13 +16,13 @@ const OrderSchema = new mongoose.Schema(
       default: Date.now,
     },
     cart_total_price: {
-      type: Schema.Types.Decimal128,
+      type: Number,
       required: true,
     },
     status: {
       type: String,
       required: true,
-      
+      default: "open",
     },
   },
   {

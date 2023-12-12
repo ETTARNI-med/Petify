@@ -37,7 +37,7 @@ import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 import UpdateSubCategories from "./components/UpdateSubCategories";
 import AddSubCategories from "./components/AddSubCategories";
-import ImageViewer from "./components/ImageViewer";
+import ImageSlider from "./components/ImageSlider";
 
 export type SubCategory = {
   _id: string;
@@ -164,7 +164,7 @@ export default function SubCategoriesPage() {
       },
       cell: ({ row }) => (
         <div className="ml-5 lowercase flex gap-2">
-          <ImageViewer path={row.original.subcategory_image} />
+          <ImageSlider path={row.original.subcategory_image} />
         </div>
       ),
     },

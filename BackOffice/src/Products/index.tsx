@@ -36,11 +36,11 @@ import AddProduct from "./components/AddProduct";
 import { Checkbox } from "@/components/ui/checkbox";
 import UpdateProduct from "./components/updateProduct";
 import axios from "axios";
-import ImageViewer from "./components/ImageViewer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SubCategory } from "@/SubCategories";
+import ImageSlider from "./components/ImageSlider";
 
-export type Payment = {
+export type Product = {
   _id: string;
   sku: string;
   price: string;
@@ -56,7 +56,7 @@ export type Payment = {
 
 export default function ProductsPage() {
   //Fetching data
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Product[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -87,7 +87,7 @@ export default function ProductsPage() {
     }
   };
 
-  const columns: ColumnDef<Payment>[] = [
+  const columns: ColumnDef<Product>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -213,9 +213,7 @@ export default function ProductsPage() {
       },
       cell: ({ row }) => (
         <div className="ml-5 lowercase flex gap-2">
-          {row.original.product_image.map((image, index) => (
-            <ImageViewer path={image} key={index} />
-          ))}
+          <ImageSlider path={row.original.product_image} />
         </div>
       ),
     },
@@ -322,7 +320,7 @@ export default function ProductsPage() {
         return (
           <UpdateProduct
             onVariable={handleReload}
-            Payment={{
+            Product={{
               id: _id,
               sku,
               price,
