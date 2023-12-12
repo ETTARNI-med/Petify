@@ -60,9 +60,8 @@ export default function NewArrival() {
           <ChevronLeft onClick={handleClickLeft} className="cursor-pointer" />
           <ChevronRight onClick={handleClickRight} className="cursor-pointer" />
         </div>
-        
       </div>
-      
+
       <div className=" backdrop-blur-md grid grid-cols-3 gap-4 justify-center overflow-y-hidden h-[440px] w-[80vw] mx-auto">
         {displayedProducts.map((contents) => (
           <Products

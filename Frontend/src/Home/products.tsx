@@ -29,7 +29,7 @@ export function Products(props: ProductProps) {
         <img
           src={props.image}
           alt="product-img"
-          className="productImage mx-auto h-60 justify-center"
+          className="productImage mx-auto h-60 justify-center cursor-pointer"
         ></img>
 
         {cartClicked ? (

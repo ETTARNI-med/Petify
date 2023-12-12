@@ -111,86 +111,86 @@ export default function ProductDetails(props: ProductDetailsProps) {
   };
 
   return (
-    <section className="flex flex-col w-full xl:gap-4 ">
-      <h1 className="font-Poppins text-md md:text-lg xl:text-xl font-thin">
-        {name}
-      </h1>
-      <h2 className="xl:text-2xl  text-lg font-Poppins">{price} MAD</h2>
-      <StarRating rating={rating} />
-      <div className="flex justify-around w-full ">
-        <div className="flex flex-col gap-1">
-          <label className="font-Poppins lg:text-lg text-md">
-            Available Colors :{" "}
-          </label>
-          <div className="flex md:gap-1 xl:gap-1.5 ">
-            {colors.map((color, index) => (
-              <ColorCircle
-                key={index}
-                color={color}
-                selected={defColor}
-                onSelectColor={(selectedColor: string) =>
-                  setDefColor(selectedColor)
-                }
-              />
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <label className="font-Poppins text-lg">Sizes :</label>
-          <div className="flex gap-2 ">
-            {sizes.map((size, index) => {
-              return (
-                <SizeSquare
-                  size={size}
+    <section className="flex flex-col backdrop-blur-lg w-[40vw] h-96 xl:gap-4 border-solid border-2 border-secondcolor rounded-xl">
+      <div className="py-8 px-10">
+        <h1 className="font-Poppins text-md md:text-lg xl:text-xl font-thin line-clamp-1">
+          {name}
+        </h1>
+        <h2 className="xl:text-2xl  text-lg font-Poppins">{price} MAD</h2>
+        <StarRating rating={rating} />
+        <div className="flex justify-around w-full ">
+          <div className="flex flex-col gap-1">
+            <label className="font-Poppins lg:text-lg text-md">
+              Available Colors :{" "}
+            </label>
+            <div className="flex md:gap-1 xl:gap-1.5 ">
+              {colors.map((color, index) => (
+                <ColorCircle
                   key={index}
-                  selected={selectedSize}
-                  onSelectSize={(selectedSize: string) =>
-                    setSelectedSize(selectedSize)
+                  color={color}
+                  selected={defColor}
+                  onSelectColor={(selectedColor: string) =>
+                    setDefColor(selectedColor)
                   }
                 />
-              );
-            })}
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <label className="font-Poppins text-lg">Sizes :</label>
+            <div className="flex gap-2 ">
+              {sizes.map((size, index) => {
+                return (
+                  <SizeSquare
+                    size={size}
+                    key={index}
+                    selected={selectedSize}
+                    onSelectSize={(selectedSize: string) =>
+                      setSelectedSize(selectedSize)
+                    }
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col items-center gap-2 md:gap-4 xl:gap-5">
-
-      <div className="flex items-center w-1/3 rounded-md font-Poppins text-xl self-center ">
-        <Button
-          onClick={DecrementQuantity}
-          variant={"ghost"}
-          disabled={prodQuantitiy === 0 ? true : false}
-          className="w-full h-full text-sm lg:text-md flex items-center justify-center"
-        >
-          -
-        </Button>
-        <div className="w-full text-sm lg:text-md border-x-2 h-full flex items-center justify-center">
-          {prodQuantitiy}
+        <div className="flex flex-col items-center gap-2 md:gap-4 xl:gap-5">
+          <div className="flex items-center w-1/3 rounded-md font-Poppins text-xl self-center ">
+            <Button
+              onClick={DecrementQuantity}
+              variant={"ghost"}
+              disabled={prodQuantitiy === 0 ? true : false}
+              className="w-full h-full text-sm lg:text-md flex items-center justify-center"
+            >
+              -
+            </Button>
+            <div className="w-full text-base lg:text-md border-x-2 h-full flex items-center justify-center">
+              {prodQuantitiy}
+            </div>
+            <Button
+              onClick={IncrementQuantity}
+              variant={"ghost"}
+              className="w-full h-full flex text-sm lg:text-md items-center justify-center"
+            >
+              +
+            </Button>
+          </div>
+          <div className="flex w-full items-center justify-center gap-4">
+            <label className="font-Poppins xl:text-xl ">
+              Total Price : {(prodQuantitiy * price).toFixed(2)}
+            </label>
+            <div className="flex flex-col h-full justify-around gap-4 items-center w-full">
+              <button className="flex bg-secondcolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins  py-3 rounded-xs px-4 dark:hover:text-secondary hover:dark:bg-primarycolor hover:bg-primary ease-linear duration-150 hover:text-secondcolor hover:outline-1 hover:outline-secondcolor">
+                Shop Now
+              </button>
+              {prodQuantitiy >= 10 && (
+                <button className="flex bg-primary justify-self-end hover:text-primarycolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins dark:bg-secondary  py-3 rounded-xs px-4 dark:hover:text-secondary hover:dark:bg-primarycolor hover:bg-secondcolor ease-linear duration-150 text-secondcolor">
+                  Buy In Large
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        <Button
-          onClick={IncrementQuantity}
-          variant={"ghost"}
-          className="w-full h-full flex text-sm lg:text-md items-center justify-center"
-        >
-          +
-        </Button>
-      </div>
-      <div className="flex w-full items-center justify-center gap-4">
-        <label className="font-Poppins xl:text-xl ">
-          Total Price : {(prodQuantitiy * price).toFixed(2)}
-        </label>
-        <div className="flex flex-col h-full justify-around gap-4 items-center w-full">
-
-        <button className="flex bg-secondcolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins  py-3 rounded-xs px-4 dark:hover:text-secondary hover:dark:bg-primarycolor hover:bg-primary ease-linear duration-150 hover:text-secondcolor hover:outline-1 hover:outline-secondcolor">
-          Shop Now
-        </button>
-      {prodQuantitiy >= 10 && 
-      <button className="flex bg-primary justify-self-end hover:text-primarycolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins dark:bg-secondary  py-3 rounded-xs px-4 dark:hover:text-secondary hover:dark:bg-primarycolor hover:bg-secondcolor ease-linear duration-150 text-secondcolor">
-      Buy In Large
-    </button>
-      }
-        </div>
-      </div>
       </div>
     </section>
   );
