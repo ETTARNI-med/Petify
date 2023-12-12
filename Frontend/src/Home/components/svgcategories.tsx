@@ -35,7 +35,7 @@ const CategoryData: Category[] = [
 
 const ProductsPreviewTest: React.FC<GalleryProps> = ({ categories = CategoryData }) => {
     return (
-    <section className=" h-screen">
+    <section className=" h-full">
       <div className="text-left {/*py-12 */}">
         <h2 className='font-bold text-6xl py-2 px-64 text-red-700 font-Poppins '>
           <span className='block text-black'>Big</span> Deals

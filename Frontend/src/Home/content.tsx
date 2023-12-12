@@ -8,7 +8,8 @@ const productData = [
       price: 220,
       rating: 5,
       timeLeft: 27,
-      totalSales: 7479 
+      totalSales: 7479 ,
+      favorite: true
     },
     {
       id: 2,
@@ -19,7 +20,8 @@ const productData = [
       price: 169,
       rating: 5,
       timeLeft: 24,
-      totalSales: 6898
+      totalSales: 6898,
+      favorite: false
     },
     {
       id: 3,
@@ -30,7 +32,8 @@ const productData = [
       price: 170,
       rating: 4,
       timeLeft: 21,
-      totalSales: 6347 
+      totalSales: 6347,
+      favorite: true 
     } 
   ];
   export default productData;

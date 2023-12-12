@@ -13,18 +13,16 @@ import ProductsPreviewTest from "./components/svgcategories";
 
 const Home = () => {
   return (
-    <>
-      <Announecement></Announecement>
-      <Swiper></Swiper>
-      <ProductsPreviewTest />
+    <div className="flex flex-col gap-5 md:gap-8 xl:gap-10"> 
+      <Announecement/>
+      <Swiper/>
+      {/* <ProductsPreviewTest  /> */}
       {/* <FeaturedSection></FeaturedSection> */}
-      <Caroussel></Caroussel>
       {/* <Marquee></Marquee> */}
-      <div className=" mb-10">
-        <CategoriesSwiper />
-      </div>
+      <Caroussel></Caroussel>
+      <CategoriesSwiper />
       <Marque></Marque>
-    </>
+    </div>
   );
 };
 
