@@ -54,7 +54,6 @@ const CardContainer = () => {
         console.error(error);
       });
   }, []);
-  console.log(categories);
   useEffect(() => {
     axios
       .get("http://127.0.0.1:4000/v1/subcategories")

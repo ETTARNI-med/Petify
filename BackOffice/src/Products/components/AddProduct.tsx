@@ -28,7 +28,7 @@ interface Props {
   onUpdate: (variable: boolean) => void;
 }
 export default function AddProduct({ onUpdate }: Props) {
-  const [paths, setPaths] = useState([]);
+  const [paths, setPaths] = useState<string[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [chosenSubCategory, setChosenSubCategory] = useState("");
@@ -38,7 +38,7 @@ export default function AddProduct({ onUpdate }: Props) {
     subcategory_id: "",
     short_description: "",
     long_description: "",
-    product_image: [],
+    product_image: [] as string[],
     active: true,
     price: "",
     sku: "",
@@ -129,7 +129,6 @@ export default function AddProduct({ onUpdate }: Props) {
             formData
           )
           .then((r) => {
-            console.log(r);
             const uploadedPath = `https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/${r.data.public_id}`;
             setPaths((prevPaths) => {
               const updatedPaths = [...prevPaths];
@@ -152,7 +151,7 @@ export default function AddProduct({ onUpdate }: Props) {
         product_image: paths,
       };
     });
-  }, []);
+  }, [paths]);
 
   //reset product into initial status
   const resetProduct = () => {
@@ -174,6 +173,7 @@ export default function AddProduct({ onUpdate }: Props) {
   //handle Submit event
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     axios
       .post("http://localhost:4000/v1/products/", product)
       .then((r) => {

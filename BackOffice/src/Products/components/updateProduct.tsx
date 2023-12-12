@@ -48,7 +48,7 @@ export default function UpdateProduct({ Product, onVariable }: Props) {
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [chosenSubCategory, setChosenSubCategory] = useState("");
   const [checkedValue, setCheckedValue] = useState(Product.active);
-  const [paths, setPaths] = useState(Product.product_image);
+  const [paths, setPaths] = useState<string[]>(Product.product_image);
   const [product, setProduct] = useState({
     product_name: Product.product_name,
     discount_price: Product.discount_price,
@@ -168,7 +168,7 @@ export default function UpdateProduct({ Product, onVariable }: Props) {
         product_image: paths,
       };
     });
-  }, []);
+  }, [paths]);
 
   // Handle Active status
   const handleActiveChange = () => {

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Subcategories = () => {
   const Card = ({ name, imageUrl, link }) => (
-    <a href={link} target="_blank" rel="noopener noreferrer">
+    <Link to={link} rel="noopener noreferrer">
       <div className="flex flex-col items-center">
         <div className="rounded-full overflow-hidden border-2 border-red-300 mb-2">
           <img src={imageUrl} alt={name} className="w-40 h-40 object-cover" />
         </div>
         <h3 className="text-xl font-bold">{name}</h3>
       </div>
-    </a>
+    </Link>
   );
 
   const { categoryId } = useParams();
@@ -61,7 +61,7 @@ const Subcategories = () => {
               key={index}
               name={subcategory.subcategory_name}
               imageUrl={subcategory.subcategory_image}
-              link="/subcategory"
+              link={`/subcategory/${categoryId}/${subcategory._id}`}
             />
           ))}
         </div>

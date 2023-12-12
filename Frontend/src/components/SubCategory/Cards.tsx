@@ -14,36 +14,47 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
+import { Filter, Product } from ".";
 
 interface Props {
-  ProductList: {
-    sku: string;
-    product_image: string;
-    product_name: string;
-    subcategory_id: string;
-    short_description: string;
-    long_description: string;
-    price: number;
-    discount_price: number;
-    options: string[];
-    active: boolean;
-  }[];
-  Filter: {
-    price: number[];
-  };
+  ProductList: Product[];
+  Filter: Filter;
 }
 
 export default function Cards({ ProductList, Filter }: Props) {
   //filter ProductList to only what the user wants
   const filteredProductList = ProductList.filter((product) => {
+    const colorOption = product.options.find((option) =>
+      option.startsWith("color : ")
+    );
+    const ageOption = product.options.find((option) =>
+      option.startsWith("age : ")
+    );
+
+    const colorsFilter = Filter.colors;
+    const agesFilter = Filter.ages;
     const priceFilter = Filter.price;
+
+    // Filter based on colors
+    if (colorsFilter) {
+      if (!colorsFilter.includes(colorOption?.split("color : ")[1] ?? "")) {
+        return false;
+      }
+    }
+
+    // Filter based on ages
+    if (agesFilter) {
+      if (!agesFilter.includes(ageOption?.split("age : ")[1] ?? "")) {
+        return false;
+      }
+    }
 
     // Filter based on price
     if (priceFilter && priceFilter.length === 2) {
       const [minPrice, maxPrice] = priceFilter;
       if (
-        product.discount_price <= minPrice ||
-        product.discount_price >= maxPrice
+        parseFloat(product.discount_price) <= minPrice ||
+        parseFloat(product.discount_price) >= maxPrice
       ) {
         return false;
       }
@@ -64,11 +75,11 @@ export default function Cards({ ProductList, Filter }: Props) {
 
         return (
           <Card
-            className="w-5/6 m-2 backdrop-blur-lg grid place-content-center"
+            className="w-5/6 m-2 backdrop-blur-xl grid place-content-center"
             key={product.sku}
           >
-            <CardHeader className="w-full overflow-hidden">
-              <CardTitle className="text-xs line-clamp-1 md:text-base lg:text-lg xl:text-xl">
+            <CardHeader className="w-full">
+              <CardTitle className="text-sm line-clamp-2 md:text-base lg:text-lg xl:text-xl">
                 {product.product_name}
               </CardTitle>
               <CardDescription className="line-clamp-1">
@@ -84,8 +95,8 @@ export default function Cards({ ProductList, Filter }: Props) {
                 <span className="text-pink-600"></span>
               </span>
               <img
-                src={product.product_image}
-                className="w-96"
+                src={product.product_image[0]}
+                className="h-60"
                 alt={product.product_name}
               />
               <span className="flex justify-between items-center">

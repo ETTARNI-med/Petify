@@ -81,7 +81,7 @@ const Router = createBrowserRouter([
         element: <Blog />,
       },
       {
-        path: "/subcategory",
+        path: "/subcategory/:categoryId/:subCategoryId",
         element: <SubCategory />,
       },
       {
