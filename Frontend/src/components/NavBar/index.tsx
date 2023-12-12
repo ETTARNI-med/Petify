@@ -43,7 +43,7 @@ const NavBar = () => {
           <SearchInput
             type="search"
             placeholder="Search..."
-            className={"w-[50vw] sm:h-8 md:h-[38px]"}
+            className={"w-[30vw] sm:h-8 md:h-[38px]"}
           />
         </span>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
