@@ -22,45 +22,61 @@ const Notifications = () => {
   return (
     <form>
       <div className="mx-auto w-10/12 grid grid-cols-2 gap-8">
-        <Label className="col-span-full text-center text-lg pb-4 text-wrap">
+        <p className="col-span-full text-center text-lg pb-4 text-wrap">
           Notify me about
-        </Label>
-        <RadioGroup defaultValue="all">
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="all" id="all" />
-            <Label htmlFor="all" className="text-wrap">
-              All new messages
+        </p>
+        <div className="border-collapse border-slate-600 border rounded py-2">
+          <div className="mx-auto flex h-8 w-10/12 justify-between items-center space-x-2">
+            <Label
+              htmlFor="receivedmessages"
+              className="ml-4 text-wrap capitalize"
+            >
+              received messages
             </Label>
+            <Switch id="receivedmessages" />
           </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="nothing" id="nothing" />
-            <Label htmlFor="nothing">Nothing</Label>
+        </div>
+        <div className="border-collapse border-slate-600 border rounded py-2">
+          <div className="mx-auto flex h-8 w-10/12 justify-between items-center space-x-2">
+            <Label htmlFor="addedproduct" className="ml-4 text-wrap capitalize">
+              added product
+            </Label>
+            <Switch id="addedproduct" />
           </div>
-        </RadioGroup>
+        </div>
       </div>
       <div className="mx-auto w-10/12 grid sm:grid-cols-2 gap-8">
         <Label className="col-span-full text-center text-lg py-4 text-wrap">
           Email Notifications
         </Label>
         <div className="border-collapse border-slate-600 border rounded py-2">
-          <div className="mx-auto flex w-10/12 justify-between items-center space-x-2">
-            <Label htmlFor="CommunicationEmails" className="text-wrap">
+          <div className="mx-auto flex h-8 w-10/12 justify-between items-center space-x-2">
+            <Label
+              htmlFor="CommunicationEmails"
+              className="text-wrap capitalize"
+            >
               Communication emails
             </Label>
             <Switch id="CommunicationEmails" />
           </div>
         </div>
         <div className="border-collapse border-slate-600 border rounded py-2">
-          <div className="mx-auto flex w-10/12 justify-between items-center space-x-2">
-            <Label htmlFor="SecurityEmails" className="ml-4 text-wrap">
+          <div className="mx-auto flex h-8 w-10/12 justify-between items-center space-x-2">
+            <Label
+              htmlFor="SecurityEmails"
+              className="ml-4 text-wrap capitalize"
+            >
               Security emails
             </Label>
             <Switch id="SecurityEmails" />
           </div>
         </div>
         <div className="border-collapse border-slate-600 border rounded py-2">
-          <div className="mx-auto flex w-10/12 justify-between items-center space-x-2">
-            <Label htmlFor="MarketingEmails" className="ml-4 text-wrap">
+          <div className="mx-auto flex h-8 w-10/12 justify-between items-center space-x-2">
+            <Label
+              htmlFor="MarketingEmails"
+              className="ml-4 text-wrap capitalize"
+            >
               Marketing emails
             </Label>
             <Switch id="MarketingEmails" />

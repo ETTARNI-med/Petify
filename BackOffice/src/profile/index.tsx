@@ -4,23 +4,66 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-// This can come from your database or API.
+import { User } from "@/Users";
+import axios from "axios";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Profile() {
-  const User = {
-    email: "ken99@yahoo.com",
-    username: "en99",
-    role: "Admin",
-    date: "2023-11-23T11:00:00",
-    first_name: "ken",
-    last_name: "aguero",
+  const [data, setData] = useState<User[]>([]);
+  const [user, setUser] = useState<(User | undefined)[]>([]);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/v1/users/allusers"
+      );
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-  const { role, date, email, username, first_name, last_name } = User;
-  const newDate = new Date(date).toLocaleString("en-us", {
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    const id = "656909592bc5e1439783b639";
+    const user: (User | undefined)[] = data.map((chrink) => {
+      if (chrink._id === id) {
+        return chrink;
+      }
+    });
+    console.log(user);
+    setUser(user);
+  }, [data]);
+
+  const currentUser =
+    typeof user[0] !== "undefined"
+      ? user[0]
+      : {
+          _id: "",
+          email: "",
+          user_name: "",
+          first_name: "",
+          last_name: "",
+          user_image: "",
+          role: "",
+          creation_date: "",
+        };
+  const {
+    role,
+    creation_date,
+    email,
+    user_name,
+    user_image,
+    first_name,
+    last_name,
+  } = currentUser;
+  const newDate = new Date(creation_date).toLocaleString("en-us", {
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -41,15 +84,24 @@ export default function Profile() {
   const [title, setTitle] = useState(false);
   return (
     <form className="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 items-center justify-start w-[80vw] mx-auto space-y-4">
-      <div className="sm:col-span-1 self-end space-y-2 sm:space-y-4 mx-auto">
-        <Badge className="w-full text-lg text-center">{role}</Badge>
+      <div className="w-80 flex justify-between items-center">
+        <Avatar className="h-32 w-32">
+          <AvatarImage src={user_image} alt={user_name} />
+          <AvatarFallback>
+            {first_name?.charAt(0).toUpperCase() +
+              last_name?.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+        <Badge className="text-lg text-center">
+          {role === "1" ? "Admin" : "Manager"}
+        </Badge>
       </div>
-      <div className="sm:col-span-1 self-end space-y-2 sm:space-y-4 mx-auto">
+      <div className="flex justify-center">
         <p>Member since : {newDate}</p>
       </div>
       <div className="sm:col-span-1 self-end space-y-2 sm:space-y-4">
         <Label className="ml-2">Username</Label>
-        <Input placeholder="amineMah" defaultValue={username} />
+        <Input placeholder="amineMah" defaultValue={user_name} />
       </div>
       <div className="sm:col-span-1 self-end space-y-2 sm:space-y-4">
         <Label className="ml-2">Email</Label>
