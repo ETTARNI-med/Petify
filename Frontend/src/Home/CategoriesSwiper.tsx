@@ -1,57 +1,27 @@
-import React from 'react';
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import CategoryCard from './components/CategoryCard';
-import { Bird, Cat, Dog, Fish, Rat } from 'lucide-react';
-//import { Button } from '@/components/ui/button';
-import SectionHeader from '@/components/Favorites/SectionHeader';
+
+import {Truck , CircleDollarSign , Phone , Lock  } from 'lucide-react';
 
 export default function CategoriesSwiper() {
   const categories = [
-    { name: 'Cats', logo: <Cat size={70} /> },
-    { name: 'Dogs', logo: <Dog size={70} /> },
-    { name: 'Birds', logo: <Bird size={70} /> },
-    { name: 'Fish', logo: <Fish size={70} /> },
-    { name: 'Others', logo: <Rat size={70} /> },
+    { name: 'Free Shipping >300 Dh', logo: <Truck  size={70} /> },
+    { name: 'Money-Back <30 days', logo: <CircleDollarSign  size={70}  /> },
+    { name: 'Secure Payments', logo: <Lock  size={70}/> },
+    { name: '24/7 Support ', logo: <Phone  size={50}  /> },
+
   ];
 
   return (
-    <div className='flex flex-col items-center '>
-        <div className='self-start'>
-       <SectionHeader  subtitle='Browse By Category' title='Categories'/>
-        </div>
-      <Swiper
-        spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{  
-          '@0.00': {
-            slidesPerView: 2,
-            spaceBetween: 15,
-          },
-          '@0.75': {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-          '@1.00': {
-            slidesPerView: 4,
-            spaceBetween: 15,
-          },
-          '@1.50': {
-            slidesPerView: categories.length,
-            spaceBetween: 15,
-          },
-        }}
-        modules={[Pagination]}
-        className="myswiper bg-slate-100/10 backdrop-blur-md px-5 py-10"
-      >
+       <div  className="flex justify-center">
+      <div className="flex gap-32 items-center">
         {categories.map(({ logo, name }, index) => (
-          <SwiperSlide className='bg-transparent ' key={index}>
-            <CategoryCard logo={logo} name={name} />
-          </SwiperSlide>
+          <div className='bg-transparent backdrop-blur-lg w-48 h-48 border rounded-sm border-2  border-secondcolor border-solid flex flex-col items-center justify-center hover:bg-orange-300' key={index}>
+            {logo}
+            <span className="mt-4 w-32 text-center mx-auto text-lg font-bold font-Poppins">
+              {name}
+            </span>
+            
+          </div>
         ))}
-      </Swiper>
-    </div>
+      </div></div>
   );
 }

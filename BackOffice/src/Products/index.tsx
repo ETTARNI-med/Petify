@@ -36,10 +36,11 @@ import AddProduct from "./components/AddProduct";
 import { Checkbox } from "@/components/ui/checkbox";
 import UpdateProduct from "./components/updateProduct";
 import axios from "axios";
-import ImageViewer from "./components/ImageViewer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SubCategory } from "@/SubCategories";
+import ImageSlider from "./components/ImageSlider";
 
-export type Payment = {
+export type Product = {
   _id: string;
   sku: string;
   price: string;
@@ -55,16 +56,22 @@ export type Payment = {
 
 export default function ProductsPage() {
   //Fetching data
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<Product[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
     try {
       // await new Promise((resolve) => setTimeout(resolve, 5000));
-      const response = await axios.get("http://localhost:4000/v1/products/");
-      setData(response.data);
-      setIsLoading(false); // Set loading state to false after data is fetched
-      console.log(response.data);
+      const responseData = await axios.get(
+        "http://localhost:4000/v1/products/"
+      );
+      setData(responseData.data);
+      const responseSubCategories = await axios.get(
+        "http://localhost:4000/v1/subcategories/"
+      );
+      setSubCategories(responseSubCategories.data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -80,7 +87,7 @@ export default function ProductsPage() {
     }
   };
 
-  const columns: ColumnDef<Payment>[] = [
+  const columns: ColumnDef<Product>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -148,7 +155,13 @@ export default function ProductsPage() {
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("subcategory_id")}</div>
+        <div className="lowercase line-clamp-1">
+          {
+            subCategories.find(
+              (subcategory) => subcategory._id === row.original.subcategory_id
+            )?.subcategory_name
+          }
+        </div>
       ),
     },
     {
@@ -200,9 +213,7 @@ export default function ProductsPage() {
       },
       cell: ({ row }) => (
         <div className="ml-5 lowercase flex gap-2">
-          {row.original.product_image.map((image, index) => (
-            <ImageViewer path={image} key={index} />
-          ))}
+          <ImageSlider path={row.original.product_image} />
         </div>
       ),
     },
@@ -309,7 +320,7 @@ export default function ProductsPage() {
         return (
           <UpdateProduct
             onVariable={handleReload}
-            Payment={{
+            Product={{
               id: _id,
               sku,
               price,

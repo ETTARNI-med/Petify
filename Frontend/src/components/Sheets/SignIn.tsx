@@ -14,12 +14,15 @@ import {
 } from "@/components/ui/sheet";
 import { EyeOff } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
+declare module 'react/jsx-runtime';
 
-
-
+ import { useState } from "react";
 
 const SignIn = () => {
- 
+  const [showInputForm, setShowInputForm] = useState(false);
+  const handleForgotPasswordClick = () => {
+    setShowInputForm(true);
+  };
   // const [getType, setType] = useState({ login: false, reset: false, register: false });
   // type === "register" ? setType({login : false, reset : false , register : true}) : type === "login" ? setType({login : true, reset : false , register : false}) :setType({login : false, reset : true , register : false});
   return (
@@ -36,15 +39,14 @@ const SignIn = () => {
         </SheetTrigger>
         <div >
           {/* <img src={isDarkMode ? DarkBackground : LightBackground} alt="background" className="w-full h-full object-cover opacity-50 blur-[3px]	" /> */}
-        <SheetContent className="sm:w-6/12 md:5/12 "   >
+        <SheetContent className="sm:w-6/12 md:5/12 " >
 
           <SheetHeader>
             <SheetTitle className="uppercase">LOG IN</SheetTitle>
             <SheetDescription className="py-2">
               <span className="uppercase">Welcome back.</span>{" "}
-              <span className="underline absolute right-7 text-sm">
-                Forgot your password?
-              </span>
+             
+              
             </SheetDescription>
           </SheetHeader>
           <div className="grid py-4">
@@ -57,10 +59,7 @@ const SignIn = () => {
                 id="password"
                 placeholder="Password"
                 className="col-span-4"
-               
               />
-                          
-
               <span className="absolute right-8">
                 <EyeOff size={20} strokeWidth={1.75} />
               </span>
@@ -74,6 +73,28 @@ const SignIn = () => {
               >
                 Remember me
               </Label>
+              <a className="underline absolute right-7 text-sm" onClick={handleForgotPasswordClick}>
+                Forgot your password?
+              </a>
+              {showInputForm && <SheetContent>
+     
+
+        <div className="grid gap-4 py-12">
+        <div> Please enter Your Email to get a verification link throw your email</div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            
+            <Label htmlFor="email" className="text-right">
+              Email :
+            </Label>
+            <Input id="Email" placeholder="Enter email" className="col-span-3"  />
+          </div>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button type="submit"> Send  </Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>}
             </div>
           </div>
           <SheetFooter className="md:justify-center flex-row flex items-center justify-center">
@@ -91,7 +112,6 @@ const SignIn = () => {
         </div>
       </Sheet>
     </form>
-   
   );
 };
 

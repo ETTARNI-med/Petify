@@ -36,6 +36,7 @@ import AddUser from "./components/AddUser";
 import ProfileSheet from "@/Container/components/ProfileSheet";
 import axios from "axios";
 import UpdateUser from "./components/UpdateUser";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type User = {
   _id: string;
@@ -50,12 +51,14 @@ export type User = {
 
 export default function UsersPage() {
   const [data, setData] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
     try {
       const response = await axios.get(
         "http://localhost:4000/v1/users/allusers"
       );
+      setIsLoading(false);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -94,7 +97,7 @@ export default function UsersPage() {
       ),
     },
     {
-      accessorKey: "username",
+      accessorKey: "user_name",
       header: () => {
         return <Button variant="ghost">Username</Button>;
       },
@@ -261,10 +264,10 @@ export default function UsersPage() {
         <Input
           placeholder="Filter by username..."
           value={
-            (table.getColumn("username")?.getFilterValue() as string) ?? ""
+            (table.getColumn("user_name")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) => {
-            table.getColumn("username")?.setFilterValue(event.target.value);
+            table.getColumn("user_name")?.setFilterValue(event.target.value);
           }}
           className="w-30 xsm:w-40 xs:w-50 md:w-90"
         />
@@ -304,10 +307,10 @@ export default function UsersPage() {
           <Input
             placeholder="Filter by username..."
             value={
-              (table.getColumn("username")?.getFilterValue() as string) ?? ""
+              (table.getColumn("user_name")?.getFilterValue() as string) ?? ""
             }
             onChange={(event) => {
-              table.getColumn("username")?.setFilterValue(event.target.value);
+              table.getColumn("user_name")?.setFilterValue(event.target.value);
             }}
             className="w-36 xs:w-auto"
           />
@@ -366,7 +369,19 @@ export default function UsersPage() {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              <>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <TableRow key={i} className="h-12">
+                    {Array.from({ length: 9 }).map((_, index) => (
+                      <TableCell key={index}>
+                        <Skeleton className="h-7 w-auto" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

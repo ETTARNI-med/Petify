@@ -7,25 +7,25 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../styles/swiper.css";
-//import { Autoplay, Pagination, Navigation } from "swiper/modules";
+// import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CategoriesSwiper from "./CategoriesSwiper";
 import Marque from "./marquee";
-//import ProductsPreviewSection from "./components/ProductsPreviewSection";
-import ProductsPreviewTest from "./components//svgcategories"
+import ProductsPreviewSection from "./components/ProductsPreviewSection";
+
 const Home = () => {
   return (
     <>
       <Announecement></Announecement>
       <Swiper></Swiper>
-      
-      <ProductsPreviewTest/>
-÷      <Caroussel></Caroussel>
-      {/*<ProductsPreviewSection/>*/}
+      {/* <FeaturedSection></FeaturedSection> */}
+      <ProductsPreviewSection/>
+      <Caroussel></Caroussel>
       {/* <Marquee></Marquee> */}
       <div className=" mb-10">
       <CategoriesSwiper/>
       </div>
       <Marque></Marque>
+   
     </>
   );
 };

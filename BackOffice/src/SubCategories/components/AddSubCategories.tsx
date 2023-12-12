@@ -13,6 +13,14 @@ import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Category } from "@/Categories";
 import ImageViewer from "./ImageViewer";
 
 interface Props {
@@ -21,13 +29,28 @@ interface Props {
 
 export default function AddCategories({ onUpdate }: Props) {
   const [path, setPath] = useState("");
-  const [category, setCategory] = useState({
-    category_name: "",
-    category_image: "",
+  const [subCategory, setSubCategory] = useState({
+    subcategory_name: "",
+    subcategory_image: "",
+    category_id: "",
     active: true,
   });
-  const handleProductChange = (target: string, value: string) => {
-    setCategory((prevValue) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/v1/categories/")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error(error);
+      });
+  }, []);
+
+  const handleSubCategoryChange = (target: string, value: string) => {
+    setSubCategory((prevValue) => {
       return {
         ...prevValue,
         [target]: value,
@@ -64,20 +87,21 @@ export default function AddCategories({ onUpdate }: Props) {
 
   // Handle paths updates
   useEffect(() => {
-    setCategory((prevValue) => {
+    setSubCategory((prevValue) => {
       return {
         ...prevValue,
-        category_image: path,
+        subcategory_image: path,
       };
     });
-  }, [path, category.category_image]);
+  }, [path, subCategory.subcategory_image]);
 
   //reset product into initial status
-  const resetCategory = () => {
+  const resetSubCategory = () => {
     setPath("");
-    setCategory({
-      category_name: "",
-      category_image: "",
+    setSubCategory({
+      subcategory_name: "",
+      subcategory_image: "",
+      category_id: "",
       active: true,
     });
     const dialogCloseElement = document.getElementById("dialogClose");
@@ -90,11 +114,11 @@ export default function AddCategories({ onUpdate }: Props) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
-      .post("http://localhost:4000/v1/categories/", category)
+      .post("http://localhost:4000/v1/subcategories/", subCategory)
       .then((r) => {
         console.log(r);
         onUpdate(true);
-        resetCategory();
+        resetSubCategory();
       })
       .catch((e) => {
         console.log(e);
@@ -104,31 +128,58 @@ export default function AddCategories({ onUpdate }: Props) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          Category <Plus className="ml-2 h-4 w-4" />
+          SubCategory <Plus className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:w-[50vw] lg:w-[40vw]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add New Category</DialogTitle>
+            <DialogTitle>Add New SubCategory</DialogTitle>
           </DialogHeader>
           <div className="grid gap-8 py-8">
             <div className="grid xsm:grid-cols-4 items-center gap-4">
               <Label htmlFor="category_name" className="xsm:text-right pl-2">
                 <span className="text-red-700">*</span>
-                Category Name
+                SubCategory Name
               </Label>
               <Input
-                value={category.category_name}
+                value={subCategory.subcategory_name}
                 onChange={(e) =>
-                  handleProductChange("category_name", e.target.value)
+                  handleSubCategoryChange("subcategory_name", e.target.value)
                 }
-                id="category_name"
-                name="category_name"
-                placeholder="dog"
+                id="subcategory_name"
+                name="subcategory_name"
+                placeholder="dry food"
                 className="col-span-3"
                 autoComplete="off"
               />
+            </div>
+            <div className="grid grid-row-2 xsm:grid-cols-4   items-center gap-4">
+              <Label htmlFor="category_id" className="xsm:text-right pl-2">
+                <span className="text-red-700">*</span>
+                Category
+              </Label>
+              <Select
+                required
+                value={subCategory.category_id}
+                onValueChange={(value) =>
+                  handleSubCategoryChange("category_id", value)
+                }
+              >
+                <SelectTrigger
+                  id="category_id"
+                  className="ml-auto min-w-fit col-span-3"
+                >
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem value={category._id} key={category._id}>
+                      {category.category_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid xsm:grid-cols-4 items-start gap-4">
               <Label htmlFor="category_image" className="xsm:text-right pl-2">
@@ -151,7 +202,7 @@ export default function AddCategories({ onUpdate }: Props) {
           </div>
           <DialogFooter>
             <DialogClose id="dialogClose"></DialogClose>
-            <Button type="submit">Add Category</Button>
+            <Button type="submit">Add SubCategory</Button>
           </DialogFooter>
         </form>
       </DialogContent>
