@@ -49,7 +49,7 @@ const ProductsPreviewTest: React.FC<GalleryProps> = ({ categories = CategoryData
           <div key={index} className={` ${getGridClass(index + 1)} relative overflow-hidden w-auto `}>
             <img className="w-full object-cover" src={category.imageUrl} alt={category.name} />
             <div className="absolute inset-0 flex items-center justify-center">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+              <button className="bg-orange-100 hover:bg-orange-200 text-white font-bold py-2 px-4 rounded-full">
                 Shop
               </button>
             </div>
