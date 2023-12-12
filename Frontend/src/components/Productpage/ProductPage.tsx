@@ -1,6 +1,5 @@
 import ProductDetails from './components/ProductDetails'
 import ProductSwiper from './components/ProductSwiper';
-import SwiperCustom from './components/swiper/App';
 
 export default function ProductPage() {
   const productProps = {

@@ -30,7 +30,7 @@ const StarRating = ({ rating }: { rating: number }) => {
       );
     }
     return (
-      <span className=" text-xl xl:text-3xl cursor-pointer" key={index}>
+      <span className=" text-xl xl:text-3xl cursor-pointer  " key={index}>
         &#9734;
       </span>
     );
