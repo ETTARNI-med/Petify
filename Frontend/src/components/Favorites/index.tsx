@@ -19,28 +19,37 @@ const Favorites = () => {
 
   const products = [
     {
-      imgLink: "https://via.placeholder.com/1640x624",
-      title: "Product 1",
-      price: 19.99,
-      description: "Description for Product 1",
+      imgLink:
+        "https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/t3jcnaulo6pht2rs1v0x",
+      title: "Feline Natural Lamb & King Salmon Grain, case of 12",
+      price: 650.99,
+      description:
+        "Grain-free, lamb and salmon flavored cat food pouches that are made in New Zealand.",
     },
     {
-      imgLink: "https://via.placeholder.com/1640x624",
-      title: "Product 2",
-      price: 29.99,
-      description: "Description for Product 2",
+      imgLink:
+        "https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/ylxapg8ilkuyixampdye",
+      title:
+        "James Wellbeloved Grain Free Adult Cat Food Turkey in Gravy, case of 12",
+      price: 420.99,
+      description:
+        "At James Wellbeloved, a lot of love is put into the creation of recipes cats will love.",
     },
     {
-      imgLink: "https://via.placeholder.com/1640x624",
-      title: "Product 3",
+      imgLink:
+        "https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/bxz1y1q06sudjjqkaugy",
+      title: "KONG - Wrangler Avocato",
       price: 39.99,
-      description: "Description for Product 3",
+      description:
+        "At James Wellbeloved, a lot of love is put into the creation of recipes cats will love.",
     },
     {
-      imgLink: "https://via.placeholder.com/1640x624",
-      title: "Product 4",
-      price: 29.99,
-      description: "Description for Product 2",
+      imgLink:
+        "https://res.cloudinary.com/defnf0hzt/image/upload/f_auto,q_auto/gvvlpdvdnbo48fnfwtqb",
+      title: "Royal Canin Kitten Chunks In Gravy Pouches",
+      price: 269.99,
+      description:
+        "Formulated to match the natural nutrition for kittens in their growth",
     },
     {
       imgLink: "https://via.placeholder.com/1640x624",
@@ -91,11 +100,12 @@ const Favorites = () => {
       logo: <CiHome size={30} />,
       path: "/",
       title: "Home",
-    },{
-      logo: <CiHeart size={30} />,
+    },
+    {
+      logo: <></>,
       path: "/wishlist",
       title: "Wishlist",
-    }
+    },
   ];
 
   const showAllProducts = () => {

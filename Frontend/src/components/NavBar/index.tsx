@@ -31,6 +31,9 @@ import LeftMenu from "@/components/Sheets/LeftMenu";
 
 const NavBar = () => {
   const [singIn, setSingIn] = useState(false);
+  const handleReload = () => {
+    setSingIn(true);
+  };
   return (
     <div className="w-full grid grid-rows-2  gap-5 font-Poppins rounded-lg bg-primarycolor dark:bg-darkcolor">
       <div className="flex px-2  sm:px-0 justify-between sm:justify-around items-center ">
@@ -131,7 +134,7 @@ const NavBar = () => {
         ) : (
           <>
             <div className="hidden sm:flex sm:w-[20vw] sm:text-sm md:w-[20vw] lg:text-base lg:w-[16vw] justify-between">
-              <SignUp></SignUp>
+              <SignUp onUpdate={handleReload}></SignUp>
               <SignIn></SignIn>
             </div>
           </>
