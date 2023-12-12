@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import "swiper/css";
+import "swiper/css/scrollbar";
+import  { useState } from "react";
 import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -14,22 +16,14 @@ import SwiperCore from "swiper";
 import { Navigation, Thumbs } from "swiper/modules";
 // install Swiper modules\
 SwiperCore.use([Navigation, Thumbs]);
-interface ProductImages {
-  image1: string;
-  image2: string;
-  image3: string;
-  image4: string;
-  image5: string;
-  image6: string;
-  image7: string;
-  image8: string;
+
+interface ProductSwiperProps {
+  images: string[];
+  defaultImg: string;
 }
 
-export default function ProductSwiper(props: ProductImages) {
-  const { image1, image2, image3, image4, image5, image6, image7, image8 } =
-    props;
-    const AllImages = [image1, image2, image3, image4, image5, image6, image7, image8 ]
-  const [CurentMain, setCurrentMain] = useState(image1);
+export default function ProductSwiper({ images ,defaultImg }: ProductSwiperProps) {
+  const [currentMain, setCurrentMain] = useState(defaultImg);
   const ChangeImg = (image: string) => {
     setCurrentMain(image);
   };
@@ -47,7 +41,7 @@ export default function ProductSwiper(props: ProductImages) {
           }}
           modules={[Pagination]}
         >
-          {AllImages.map((item,index)=>{
+          {images.map((item,index)=>{
             return (
               <SwiperSlide
                 onClick={() => {
@@ -73,12 +67,10 @@ export default function ProductSwiper(props: ProductImages) {
           modules={[Scrollbar]}
         >
           <SwiperSlide>
-            <img src={CurentMain} className="transition ease-linear duration-150" alt="IMG1" />
+            <img src={currentMain} className="transition ease-linear duration-150" alt="IMG1" />
           </SwiperSlide>
         </Swiper>
       </div>
     </div>
   );
 }
-import "swiper/css";
-import "swiper/css/scrollbar";

@@ -112,10 +112,10 @@ export default function ProductDetails(props: ProductDetailsProps) {
 
   return (
     <section className="flex flex-col w-full xl:gap-4 ">
-      <h1 className="font-Poppins text-lg md:text-lg xl:text-xl font-thin">
+      <h1 className="font-Poppins text-md md:text-lg xl:text-xl font-thin">
         {name}
       </h1>
-      <h2 className="xl:text-2xl  text-xl font-Poppins">{price} MAD</h2>
+      <h2 className="xl:text-2xl  text-lg font-Poppins">{price} MAD</h2>
       <StarRating rating={rating} />
       <div className="flex justify-around w-full ">
         <div className="flex flex-col gap-1">
@@ -179,9 +179,17 @@ export default function ProductDetails(props: ProductDetailsProps) {
         <label className="font-Poppins xl:text-xl ">
           Total Price : {(prodQuantitiy * price).toFixed(2)}
         </label>
-        <button className="flex bg-secondcolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins  py-3 rounded-xs px-4 hover:bg-primarycolor ease-linear duration-150 hover:text-secondcolor ">
+        <div className="flex flex-col h-full justify-around gap-4 items-center w-full">
+
+        <button className="flex bg-secondcolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins  py-3 rounded-xs px-4 dark:hover:text-secondary hover:dark:bg-primarycolor hover:bg-primary ease-linear duration-150 hover:text-secondcolor hover:outline-1 hover:outline-secondcolor">
           Shop Now
         </button>
+      {prodQuantitiy >= 10 && 
+      <button className="flex bg-primary justify-self-end hover:text-primarycolor w-1/2 text-xs md:text-md xl:text-lg text-center justify-center font-Poppins dark:bg-secondary  py-3 rounded-xs px-4 dark:hover:text-secondary hover:dark:bg-primarycolor hover:bg-secondcolor ease-linear duration-150 text-secondcolor">
+      Buy In Large
+    </button>
+      }
+        </div>
       </div>
       </div>
     </section>
