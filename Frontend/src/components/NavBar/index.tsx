@@ -46,24 +46,28 @@ const NavBar = () => {
             className={"w-[30vw] sm:h-8 md:h-[38px]"}
           />
         </span>
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-          <ModeToggle></ModeToggle>
-        </ThemeProvider>
+        <span className="-ml-40">
+          <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <ModeToggle></ModeToggle>
+          </ThemeProvider>
+        </span>
         <Separator className="sm:hidden absolute top-12 w-full h-px right-0 bg-slate-200" />
-        <Link
-          to="/favorites"
-          unstable_viewTransition
-          className="hidden sm:flex"
-        >
-          <Button variant={"ghost"} size="icon">
-            <Heart size={20} className="sm:w-4 sm:h-auto md:w-5" />
-          </Button>
-        </Link>
-        <Link to="/cart" unstable_viewTransition className="hidden sm:flex">
-          <Button variant={"ghost"} size="icon">
-            <ShoppingCart size={20} className="sm:w-4 sm:h-auto md:w-5" />
-          </Button>
-        </Link>
+        <span className="flex w-36 -mr-24 justify-between items-center">
+          <Link
+            to="/favorites"
+            unstable_viewTransition
+            className="hidden sm:flex"
+          >
+            <Button variant={"ghost"} size="icon">
+              <Heart size={20} className="sm:w-4 sm:h-auto md:w-5" />
+            </Button>
+          </Link>
+          <Link to="/cart" unstable_viewTransition className="hidden sm:flex">
+            <Button variant={"ghost"} size="icon">
+              <ShoppingCart size={20} className="sm:w-4 sm:h-auto md:w-5" />
+            </Button>
+          </Link>
+        </span>
         {singIn ? (
           <>
             <span className="hidden sm:flex account">

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Home";
-import Collections from "../components/Collections";
 import Favorites from "../components/Favorites";
 import Orders from "../components/Orders";
 import Cart from "../Cart";
@@ -18,7 +17,6 @@ import SubCategory from "@/components/SubCategory";
 
 import Subcategories from "@/components/Pages/Subcategories";
 
-
 import ProductPage from "@/components/Productpage/ProductPage";
 
 const Router = createBrowserRouter([
@@ -29,10 +27,6 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/collections",
-        element: <Collections />,
       },
       {
         path: "/favorites",
@@ -93,7 +87,7 @@ const Router = createBrowserRouter([
       {
         path: `/subcategories/:categoryId`,
         element: <Subcategories />,
-      }
+      },
     ],
   },
 ]);
