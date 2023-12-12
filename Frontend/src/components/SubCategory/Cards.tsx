@@ -29,8 +29,6 @@ interface Props {
     active: boolean;
   }[];
   Filter: {
-    colors: string | string[];
-    ages: string | string[];
     price: number[];
   };
 }
@@ -38,42 +36,7 @@ interface Props {
 export default function Cards({ ProductList, Filter }: Props) {
   //filter ProductList to only what the user wants
   const filteredProductList = ProductList.filter((product) => {
-    const colorOption = product.options.find((option) =>
-      option.startsWith("Color: ")
-    );
-    const ageOption = product.options.find((option) =>
-      option.startsWith("Age: ")
-    );
-
-    const colorsFilter = Filter.colors;
-    const agesFilter = Filter.ages;
     const priceFilter = Filter.price;
-
-    // Filter based on colors
-    if (colorsFilter && colorsFilter !== "" && colorsFilter !== "all") {
-      if (Array.isArray(colorsFilter)) {
-        if (!colorsFilter.includes(colorOption?.split("Color: ")[1] ?? "")) {
-          return false;
-        }
-      } else {
-        if (colorOption?.split("Color: ")[1] !== colorsFilter) {
-          return false;
-        }
-      }
-    }
-
-    // Filter based on ages
-    if (agesFilter && agesFilter !== "" && agesFilter !== "all") {
-      if (Array.isArray(agesFilter)) {
-        if (!agesFilter.includes(ageOption?.split("Age: ")[1] ?? "")) {
-          return false;
-        }
-      } else {
-        if (ageOption?.split("Age: ")[1] !== agesFilter) {
-          return false;
-        }
-      }
-    }
 
     // Filter based on price
     if (priceFilter && priceFilter.length === 2) {
@@ -101,11 +64,11 @@ export default function Cards({ ProductList, Filter }: Props) {
 
         return (
           <Card
-            className="w-5/6 m-2 bg-secondcolor grid place-content-center"
+            className="w-5/6 m-2 backdrop-blur-lg grid place-content-center"
             key={product.sku}
           >
-            <CardHeader className="w-full">
-              <CardTitle className="text-sm md:text-base lg:text-lg xl:text-xl text-wrap-none">
+            <CardHeader className="w-full overflow-hidden">
+              <CardTitle className="text-xs line-clamp-1 md:text-base lg:text-lg xl:text-xl">
                 {product.product_name}
               </CardTitle>
               <CardDescription className="line-clamp-1">
@@ -120,7 +83,11 @@ export default function Cards({ ProductList, Filter }: Props) {
                 <span className="text-beige-600"></span>
                 <span className="text-pink-600"></span>
               </span>
-              <img src={product.product_image} alt={product.product_name} />
+              <img
+                src={product.product_image}
+                className="w-96"
+                alt={product.product_name}
+              />
               <span className="flex justify-between items-center">
                 {colorOption && (
                   <>
@@ -182,7 +149,9 @@ export default function Cards({ ProductList, Filter }: Props) {
               </span>
             </CardContent>
             <CardFooter className="justify-self-end w-full">
-              <Button className="w-full">Add To My Card</Button>
+              <Button className="w-full dark:bg-secondcolor">
+                Add To My Card
+              </Button>
             </CardFooter>
           </Card>
         );

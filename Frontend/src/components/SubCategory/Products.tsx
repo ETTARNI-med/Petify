@@ -14,8 +14,6 @@ interface Props {
     active: boolean;
   }[];
   Filter: {
-    colors: string | string[];
-    ages: string | string[];
     price: number[];
   };
 }

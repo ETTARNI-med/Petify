@@ -61,7 +61,7 @@ const Subcategories = () => {
               key={index}
               name={subcategory.subcategory_name}
               imageUrl={subcategory.subcategory_image}
-              link={subcategory.link}
+              link="/subcategory"
             />
           ))}
         </div>
