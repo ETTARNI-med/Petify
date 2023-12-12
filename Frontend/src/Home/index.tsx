@@ -1,5 +1,4 @@
 import Swiper from "./swiper";
-import FeaturedSection from "./featuredSection";
 // import Marquee from "./marquee";
 import Announecement from "./announcement";
 import Caroussel from "./caroussel";
@@ -10,22 +9,21 @@ import "../styles/swiper.css";
 // import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CategoriesSwiper from "./CategoriesSwiper";
 import Marque from "./marquee";
-import ProductsPreviewSection from "./components/ProductsPreviewSection";
+import ProductsPreviewTest from "./components/svgcategories";
 
 const Home = () => {
   return (
     <>
       <Announecement></Announecement>
       <Swiper></Swiper>
+      <ProductsPreviewTest />
       {/* <FeaturedSection></FeaturedSection> */}
-      <ProductsPreviewSection/>
       <Caroussel></Caroussel>
       {/* <Marquee></Marquee> */}
       <div className=" mb-10">
-      <CategoriesSwiper/>
+        <CategoriesSwiper />
       </div>
       <Marque></Marque>
-   
     </>
   );
 };
