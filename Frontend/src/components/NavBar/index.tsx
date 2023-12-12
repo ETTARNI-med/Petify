@@ -1,4 +1,4 @@
-import PetifyLogo from "@/assets/petlogonew.svg";
+import PetifyLogo from "@/assets/petlogonew.png";
 import { SearchInput } from "@/components/ui/searchInput";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {

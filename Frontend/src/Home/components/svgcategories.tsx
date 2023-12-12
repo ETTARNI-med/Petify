@@ -39,7 +39,7 @@ const ProductsPreviewTest: React.FC<GalleryProps> = ({
     <section className=" h-full">
       <div className="text-left">
         <h2 className="font-bold text-6xl py-2 px-64 text-red-700 font-Poppins ">
-          <span className="block text-black">Big</span> Deals
+          <span className="block text-black dark:text-white">Big</span> Deals
           <hr className="my-3 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
         </h2>
       </div>

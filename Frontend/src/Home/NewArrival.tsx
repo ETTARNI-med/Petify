@@ -54,14 +54,16 @@ export default function NewArrival() {
     <>
       <div className="flex justify-between w-full mx-auto">
         <h2 className="font-bold text-6xl px-64 text-secondcolor font-Poppins ">
-          <span className="block text-black">New</span> Arrival
+          <span className="block text-black dark:text-white">New</span> Arrival
         </h2>
         <div className="flex justify-start w-64 items-center">
           <ChevronLeft onClick={handleClickLeft} className="cursor-pointer" />
           <ChevronRight onClick={handleClickRight} className="cursor-pointer" />
         </div>
+        
       </div>
-      <div className="-mt-4 backdrop-blur-md grid grid-cols-3 gap-4 justify-center overflow-y-hidden h-[440px] w-[80vw] mx-auto">
+      
+      <div className=" backdrop-blur-md grid grid-cols-3 gap-4 justify-center overflow-y-hidden h-[440px] w-[80vw] mx-auto">
         {displayedProducts.map((contents) => (
           <Products
             _id={contents._id}

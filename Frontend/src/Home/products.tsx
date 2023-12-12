@@ -21,7 +21,7 @@ export function Products(props: ProductProps) {
     setHeartClicked(!heartClicked);
   };
   return (
-    <div className="flex my-2 justify-evenly bg-white h-[440px] p-8 rounded-lg backdrop-blur-md">
+    <div className="flex my-2 justify-evenly bg-white dark:text-black h-[440px] p-8 rounded-sm backdrop-blur-md">
       <div
         key={props._id}
         className="  m-4 flex-1 flex-shrink-0 w-6 max-w-6 max-h-6 transition duration-200 "
