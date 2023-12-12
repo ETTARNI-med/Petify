@@ -11,21 +11,42 @@ import { useEffect, useState } from "react";
 import { Customer } from "@/Customers";
 import axios from "axios";
 
+export type Order = {
+  _id: string;
+  customer_id: string;
+  order_items: string[];
+  order_date: string;
+  cart_total_price: number;
+  status: "confirmed" | "completed" | "open" | "cancelled";
+  createdAt: string;
+  updatedAt: string;
+};
+
 export default function Dashboard() {
   const [activeCustomers, setActiveCustomers] = useState<number>(0);
   const [newCustomers, setNewCustomers] = useState<number>(0);
   const [newCustomersPercent, setNewCustomersPercent] = useState<string>("0");
   const [previousMonthCustomers, setPreviousMonthCustomers] =
     useState<number>(0);
-  const [customersData, setCustomersData] = useState<Customer[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [newOrdersCount, setNewOrdersCount] = useState<number>(0);
+  const [previousMonthOrders, setPreviousMonthOrders] = useState<number>(0);
+  const [newOrdersPercent, setNewOrdersPercent] = useState<string>("0");
+  const [newOrdersTotalPrice, setNewOrdersTotalPrice] = useState<number>(0);
+  const [previousMonthTotalPrice, setPreviousMonthTotalPrice] =
+    useState<number>(0);
+  const [ordersTotalPricePercent, setOrdersTotalPricePercent] =
+    useState<string>("0");
 
   const getData = async () => {
     try {
-      const response = await axios.get(
+      const customers = await axios.get(
         "http://localhost:4000/v1/customers/search"
       );
-
-      setCustomersData(response.data);
+      setCustomers(customers.data);
+      const oredrs = await axios.get("http://localhost:4000/v1/orders/");
+      setOrders(oredrs.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -37,7 +58,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     // counting customers that's active at this moment
-    const activeCustomersCount = customersData.filter(
+    const activeCustomersCount = customers.filter(
       (customer) => customer.active
     ).length;
     setActiveCustomers(activeCustomersCount);
@@ -46,7 +67,7 @@ export default function Dashboard() {
     const currentYear = currentDate.getFullYear();
 
     // counting customers that's registred this month
-    const newCustomersCount = customersData.filter((customer) => {
+    const newCustomersCount = customers.filter((customer) => {
       const customerDate = new Date(customer.createdAt);
       const customerMonth = customerDate.getMonth();
       const customerYear = customerDate.getFullYear();
@@ -59,7 +80,7 @@ export default function Dashboard() {
     const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
     const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
 
-    const previousMonthCustomersCount = customersData.filter((customer) => {
+    const previousMonthCustomersCount = customers.filter((customer) => {
       const customerDate = new Date(customer.createdAt);
       const customerMonth = customerDate.getMonth();
       const customerYear = customerDate.getFullYear();
@@ -68,13 +89,107 @@ export default function Dashboard() {
     const previousMonthCustomersCountNumber =
       previousMonthCustomersCount === 0 ? 1 : previousMonthCustomersCount;
     setPreviousMonthCustomers(previousMonthCustomersCountNumber);
+  }, [customers]);
 
+  useEffect(() => {
     const newCustomersPercent = (
       (newCustomers * 100) /
       previousMonthCustomers
     ).toFixed(2);
     setNewCustomersPercent(newCustomersPercent);
-  }, [customersData]);
+  }, [previousMonthCustomers, newCustomers]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const newOrdersCount = orders.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+      const orderMonth = orderDate.getMonth();
+      const orderYear = orderDate.getFullYear();
+      return (
+        orderMonth === currentMonth &&
+        orderYear === currentYear &&
+        order.status === "completed"
+      );
+    }).length;
+
+    setNewOrdersCount(newOrdersCount);
+
+    const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    const previousMonthOrdersCount = orders.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+      const orderMonth = orderDate.getMonth();
+      const orderYear = orderDate.getFullYear();
+      return orderMonth === previousMonth && orderYear === previousYear;
+    }).length;
+
+    const previousMonthOrdersCountNumber =
+      previousMonthOrdersCount === 0 ? 1 : previousMonthOrdersCount;
+    setPreviousMonthOrders(previousMonthOrdersCountNumber);
+  }, [orders]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const newOrdersTotalPrice = orders.reduce((total, order) => {
+      const orderDate = new Date(order.createdAt);
+      console.log(orderDate);
+      const orderMonth = orderDate.getMonth();
+      const orderYear = orderDate.getFullYear();
+
+      if (
+        orderMonth === currentMonth &&
+        orderYear === currentYear &&
+        order.status === "completed"
+      ) {
+        return total + order.cart_total_price;
+      } else {
+        return total;
+      }
+    }, 0);
+
+    setNewOrdersTotalPrice(newOrdersTotalPrice);
+    const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    const previousMonthOrders = orders.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+      const orderMonth = orderDate.getMonth();
+      const orderYear = orderDate.getFullYear();
+      return orderMonth === previousMonth && orderYear === previousYear;
+    });
+
+    const previousMonthTotalPrice = previousMonthOrders.reduce(
+      (total, order) => {
+        return total + order.cart_total_price;
+      },
+      0
+    );
+
+    setPreviousMonthTotalPrice(previousMonthTotalPrice);
+  }, [orders]);
+
+  useEffect(() => {
+    const newOrdersPercent = (
+      (newOrdersCount * 100) /
+      previousMonthOrders
+    ).toFixed(2);
+    setNewOrdersPercent(newOrdersPercent);
+  }, [previousMonthOrders, newOrdersCount]);
+
+  useEffect(() => {
+    const ordersTotalPrice = (
+      (newOrdersTotalPrice * 100) /
+      previousMonthTotalPrice
+    ).toFixed(2);
+    setOrdersTotalPricePercent(ordersTotalPrice);
+  }, [previousMonthTotalPrice, newOrdersTotalPrice]);
 
   return (
     <>
@@ -101,9 +216,11 @@ export default function Dashboard() {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$45,231.89</div>
+                <div className="text-2xl font-bold">
+                  {newOrdersTotalPrice.toFixed(2)} MAD
+                </div>
                 <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
+                  {ordersTotalPricePercent}% from last month
                 </p>
               </CardContent>
             </Card>
@@ -152,9 +269,9 @@ export default function Dashboard() {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+12,234</div>
+                <div className="text-2xl font-bold">{newOrdersCount}</div>
                 <p className="text-xs text-muted-foreground">
-                  +19% from last month
+                  {newOrdersPercent}% from last month
                 </p>
               </CardContent>
             </Card>
@@ -194,7 +311,7 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle>Recent Sales</CardTitle>
                 <CardDescription>
-                  You made 265 sales this month.
+                  You made {newOrdersCount} sales this month.
                 </CardDescription>
               </CardHeader>
               <CardContent>

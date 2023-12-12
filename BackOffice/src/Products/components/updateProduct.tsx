@@ -28,7 +28,7 @@ import { SubCategory } from "@/SubCategories";
 import { Category } from "@/Categories";
 // import { Cloudinary } from "@cloudinary/url-gen";
 interface Props {
-  Payment: {
+  Product: {
     id: string;
     sku: string;
     price: string;
@@ -43,23 +43,23 @@ interface Props {
   };
   onVariable: (variable: boolean) => void;
 }
-export default function UpdateProduct({ Payment, onVariable }: Props) {
+export default function UpdateProduct({ Product, onVariable }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [chosenSubCategory, setChosenSubCategory] = useState("");
-  const [checkedValue, setCheckedValue] = useState(Payment.active);
-  const [paths, setPaths] = useState(Payment.product_image);
+  const [checkedValue, setCheckedValue] = useState(Product.active);
+  const [paths, setPaths] = useState(Product.product_image);
   const [product, setProduct] = useState({
-    product_name: Payment.product_name,
-    discount_price: Payment.discount_price,
-    subcategory_id: Payment.subcategory_id,
-    short_description: Payment.short_description,
-    long_description: Payment.long_description,
-    product_image: Payment.product_image,
-    active: Payment.active,
-    price: Payment.price,
-    sku: Payment.sku,
-    options: Payment.options,
+    product_name: Product.product_name,
+    discount_price: Product.discount_price,
+    subcategory_id: Product.subcategory_id,
+    short_description: Product.short_description,
+    long_description: Product.long_description,
+    product_image: Product.product_image,
+    active: Product.active,
+    price: Product.price,
+    sku: Product.sku,
+    options: Product.options,
   });
   const handleProductChange = (target: string, value: string) => {
     setProduct((prevValue) => {
@@ -188,7 +188,7 @@ export default function UpdateProduct({ Payment, onVariable }: Props) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
-      .patch("http://localhost:4000/v1/products/" + Payment.id, product)
+      .patch("http://localhost:4000/v1/products/" + Product.id, product)
       .then((r) => {
         console.log(r);
         onVariable(true);

@@ -34,7 +34,7 @@ import {
 import Alert from "./components/Alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import axios from "axios";
-import ImageViewer from "./components/ImageViewer";
+import ImageSlider from "./components/ImageSlider";
 import { Skeleton } from "@/components/ui/skeleton";
 import UpdateCategories from "./components/UpdateCategories";
 import AddCategories from "./components/AddCategories";
@@ -139,7 +139,7 @@ export default function CategoriesPage() {
       },
       cell: ({ row }) => (
         <div className="ml-5 lowercase flex gap-2">
-          <ImageViewer path={row.original.category_image} />
+          <ImageSlider path={row.original.category_image} />
         </div>
       ),
     },

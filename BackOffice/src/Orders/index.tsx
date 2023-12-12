@@ -31,15 +31,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Status } from "./components/Status";
+import { Customer } from "@/Customers";
+import { Product } from "@/Products";
 
 export type Order = {
-  id: string;
+  _id: string;
   customer_id: string;
-  order_items: string[] | string;
+  order_items: string[];
   status: "open" | "cancelled" | "confirmed" | "completed";
   order_date: string;
   cart_total_price: number;
@@ -48,6 +49,8 @@ export type Order = {
 export default function ProductsPage() {
   //Fetching data
   const [data, setData] = useState<Order[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
@@ -55,8 +58,15 @@ export default function ProductsPage() {
       // await new Promise((resolve) => setTimeout(resolve, 5000));
       const response = await axios.get("http://localhost:4000/v1/orders/");
       setData(response.data);
-      setIsLoading(false); // Set loading state to false after data is fetched
-      console.log(response.data);
+      const responseCustomers = await axios.get(
+        "http://localhost:4000/v1/customers/search"
+      );
+      setCustomers(responseCustomers.data);
+      const responseProducts = await axios.get(
+        "http://localhost:4000/v1/products/"
+      );
+      setProducts(responseProducts.data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -74,25 +84,6 @@ export default function ProductsPage() {
 
   const columns: ColumnDef<Order>[] = [
     {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
       accessorKey: "customer_id",
       header: ({ column }) => {
         return (
@@ -100,13 +91,20 @@ export default function ProductsPage() {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            customer id
+            customer username
             <ArrowUpDown className="ml-1 lg:ml-2 h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("customer_id")}</div>
+        <div className="lowercase">
+          {customers.map((customer) => {
+            if (customer._id === row.getValue("customer_id")) {
+              return customer.username;
+            }
+            return null;
+          })}
+        </div>
       ),
     },
     {
@@ -123,7 +121,15 @@ export default function ProductsPage() {
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("order_items")}</div>
+        <div className="lowercase">
+          {row.original.order_items.map((itemId) => {
+            const product = products.find((product) => product._id === itemId);
+            if (product) {
+              return <p className="line-clamp-1">{product.product_name}</p>;
+            }
+            return null;
+          })}
+        </div>
       ),
     },
     {
@@ -176,7 +182,9 @@ export default function ProductsPage() {
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("order_date")}</div>
+        <div className="lowercase">
+          {new Date(row.getValue("order_date")).toLocaleString()}
+        </div>
       ),
     },
   ];
@@ -326,7 +334,7 @@ export default function ProductsPage() {
               <>
                 {Array.from({ length: 10 }).map((_, i) => (
                   <TableRow key={i} className="h-12">
-                    {Array.from({ length: 6 }).map((_, index) => (
+                    {Array.from({ length: 5 }).map((_, index) => (
                       <TableCell key={index}>
                         <Skeleton className="h-7 w-auto" />
                       </TableCell>
