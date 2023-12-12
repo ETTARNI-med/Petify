@@ -12,9 +12,6 @@ import CategoriesSwiper from "./CategoriesSwiper";
 import Marque from "./marquee";
 import ProductsPreviewSection from "./components/ProductsPreviewSection";
 
-
-
-
 const Home = () => {
   return (
     <>
@@ -23,7 +20,6 @@ const Home = () => {
       {/* <FeaturedSection></FeaturedSection> */}
       <ProductsPreviewSection/>
       <Caroussel></Caroussel>
-      
       {/* <Marquee></Marquee> */}
       <div className=" mb-10">
       <CategoriesSwiper/>
