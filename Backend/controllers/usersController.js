@@ -1,4 +1,3 @@
-const express = require("express");
 const User = require("../models/Users");
 const asyncHandler = require("express-async-handler");
 const JWT = require("jsonwebtoken");
@@ -46,7 +45,6 @@ const addUser = asyncHandler(async (req, res) => {
 //Login Controller
 const login = async (req, res) => {
   const email = req.body.email;
-  //const user_name = req.body.user_name;
   const password = req.body.password;
 
   try {
@@ -65,7 +63,6 @@ const login = async (req, res) => {
     if (matched) {
       const token = await JWT.sign(
         {
-          //findRole: we will need the role to check if he has the right to login
           findRole,
           findId,
         },
