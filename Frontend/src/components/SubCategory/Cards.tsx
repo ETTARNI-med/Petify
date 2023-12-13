@@ -161,7 +161,7 @@ export default function Cards({ ProductList, Filter }: Props) {
             </CardContent>
             <CardFooter className="justify-self-end w-full">
               <Button className="w-full dark:bg-secondcolor">
-                Add To My Card
+                Add to my cart
               </Button>
             </CardFooter>
           </Card>
