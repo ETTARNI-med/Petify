@@ -56,7 +56,6 @@ export type Customer = {
   active: boolean;
   createdAt: string;
 };
-
 export default function CustomersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<Customer[]>([]);
